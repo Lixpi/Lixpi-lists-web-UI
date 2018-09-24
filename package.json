@@ -1,0 +1,34 @@
+{
+  "name": "Lixpi-lists-web-UI",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "watchify src/app.js -o public/scripts.js -t [babelify --presets [ @babel/preset-env @babel/preset-react ] ]",
+    "server": "cd public; live-server --port=1234 --entry-file=index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lixpi/Lixpi-lists-web-UI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lixpi/Lixpi-lists-web-UI/issues"
+  },
+  "homepage": "https://github.com/Lixpi/Lixpi-lists-web-UI#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babelify": "^10.0.0",
+    "watchify": "^3.11.0"
+  },
+  "dependencies": {
+    "live-server": "^1.2.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "redux": "^4.0.0"
+  }
+}
