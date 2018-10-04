@@ -22276,7 +22276,26 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import { createStore, combineReducers } as Redux from 'redux';
-console.log('asdf');
-console.log(_react.default);
+var cards = function cards(state, action) {
+  switch (action.type) {
+    case 'ADD_CARD':
+      var newCard = Object.assign({}, action.data, {
+        score: 1,
+        id: +new Date()
+      });
+      return state.concat([newCard]);
+
+    default:
+      return state || [];
+  }
+};
+
+var App = function App(props) {
+  return _react.default.createElement("div", {
+    className: "app"
+  }, _react.default.createElement("h1", null, props.children));
+};
+
+_reactDom.default.render(_react.default.createElement(App, null, " Test 2 "), document.getElementById('root'));
 
 },{"react":10,"react-dom":7,"redux":11}]},{},[20]);
