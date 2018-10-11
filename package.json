@@ -26,6 +26,7 @@
     "watchify": "^3.11.0"
   },
   "dependencies": {
+    "create-react-class": "^15.6.3",
     "live-server": "^1.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
