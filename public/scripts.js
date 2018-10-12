@@ -22268,15 +22268,110 @@ function symbolObservablePonyfill(root) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.hideAddDeck = exports.showAddDeck = exports.addDeck = void 0;
+
+var addDeck = function addDeck(name) {
+  return {
+    type: 'ADD_DECK',
+    data: name
+  };
+};
+
+exports.addDeck = addDeck;
+
+var showAddDeck = function showAddDeck() {
+  return {
+    type: 'SHOW_ADD_DECK'
+  };
+};
+
+exports.showAddDeck = showAddDeck;
+
+var hideAddDeck = function hideAddDeck() {
+  return {
+    type: 'HIDE_ADD_DECK'
+  };
+};
+
+exports.hideAddDeck = hideAddDeck;
+
+},{}],21:[function(require,module,exports){
+"use strict";
 
 var _react = _interopRequireDefault(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
-var Redux = _interopRequireWildcard(require("redux"));
+var _redux = require("redux");
+
+var _actions = require("./actions");
+
+var reducers = _interopRequireWildcard(require("./reducers"));
+
+var _App = _interopRequireDefault(require("./components/App"));
+
+var _Sidebar = _interopRequireDefault(require("./components/Sidebar"));
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import * as Redux from 'redux';
+var store = (0, _redux.createStore)((0, _redux.combineReducers)(reducers));
+
+function run() {
+  var state = store.getState();
+
+  _reactDom.default.render(_react.default.createElement(_App.default, null, _react.default.createElement(_Sidebar.default, {
+    decks: state.decks,
+    addingDeck: state.addingDeck,
+    addDeck: function addDeck(name) {
+      return store.dispatch((0, _actions.addDeck)(name));
+    },
+    showAddDeck: function showAddDeck() {
+      return store.dispatch((0, _actions.showAddDeck)());
+    },
+    hideAddDeck: function hideAddDeck() {
+      return store.dispatch((0, _actions.hideAddDeck)());
+    }
+  })), document.getElementById('root'));
+}
+
+run();
+store.subscribe(run);
+
+},{"./actions":20,"./components/App":22,"./components/Sidebar":23,"./reducers":24,"react":10,"react-dom":7,"redux":11}],22:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var App = function App(props) {
+  return _react.default.createElement("div", {
+    className: "app"
+  }, props.children);
+};
+
+var _default = App;
+exports.default = _default;
+
+},{"react":10}],23:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactDom = _interopRequireDefault(require("react-dom"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22297,79 +22392,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-// import { createStore, combineReducers } as Redux from 'redux';
-var _addDeck = function addDeck(name) {
-  return {
-    type: 'ADD_DECK',
-    data: name
-  };
-};
-
-var _showAddDeck = function showAddDeck() {
-  return {
-    type: 'SHOW_ADD_DECK'
-  };
-};
-
-var _hideAddDeck = function hideAddDeck() {
-  return {
-    type: 'HIDE_ADD_DECK'
-  };
-};
-
-var cards = function cards(state, action) {
-  switch (action.type) {
-    case 'ADD_CARD':
-      var newCard = Object.assign({}, action.data, {
-        score: 1,
-        id: +new Date()
-      });
-      return state.concat([newCard]);
-
-    default:
-      return state || [];
-  }
-};
-
-var decks = function decks(state, action) {
-  switch (action.type) {
-    case 'ADD_DECK':
-      var newDeck = {
-        name: action.data,
-        id: +new Date()
-      };
-      return state.concat([newDeck]);
-
-    default:
-      return state || [];
-  }
-};
-
-var addingDeck = function addingDeck(state, action) {
-  switch (action.type) {
-    case 'SHOW_ADD_DECK':
-      return true;
-
-    case 'HIDE_ADD_DECK':
-      return false;
-
-    default:
-      return !!state;
-  }
-};
-
-var store = Redux.createStore(Redux.combineReducers({
-  cards: cards,
-  decks: decks,
-  addingDeck: addingDeck
-}));
-
-var App = function App(props) {
-  return _react.default.createElement("div", {
-    className: "app"
-  }, props.children);
-};
 
 var Sidebar =
 /*#__PURE__*/
@@ -22423,9 +22445,6 @@ function (_React$Component) {
         return;
       }
 
-      console.log('this');
-      console.log(this);
-
       var name = _reactDom.default.findDOMNode(this.refs.add).value;
 
       this.props.addDeck(name);
@@ -22438,25 +22457,59 @@ function (_React$Component) {
 
 exports.default = Sidebar;
 
-function run() {
-  var state = store.getState();
+},{"react":10,"react-dom":7}],24:[function(require,module,exports){
+"use strict";
 
-  _reactDom.default.render(_react.default.createElement(App, null, _react.default.createElement(Sidebar, {
-    decks: state.decks,
-    addingDeck: state.addingDeck,
-    addDeck: function addDeck(name) {
-      return store.dispatch(_addDeck(name));
-    },
-    showAddDeck: function showAddDeck() {
-      return store.dispatch(_showAddDeck());
-    },
-    hideAddDeck: function hideAddDeck() {
-      return store.dispatch(_hideAddDeck());
-    }
-  })), document.getElementById('root'));
-}
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addingDeck = exports.decks = exports.cards = void 0;
 
-run();
-store.subscribe(run);
+var cards = function cards(state, action) {
+  switch (action.type) {
+    case 'ADD_CARD':
+      var newCard = Object.assign({}, action.data, {
+        score: 1,
+        id: +new Date()
+      });
+      return state.concat([newCard]);
 
-},{"react":10,"react-dom":7,"redux":11}]},{},[20]);
+    default:
+      return state || [];
+  }
+};
+
+exports.cards = cards;
+
+var decks = function decks(state, action) {
+  switch (action.type) {
+    case 'ADD_DECK':
+      var newDeck = {
+        name: action.data,
+        id: +new Date()
+      };
+      return state.concat([newDeck]);
+
+    default:
+      return state || [];
+  }
+};
+
+exports.decks = decks;
+
+var addingDeck = function addingDeck(state, action) {
+  switch (action.type) {
+    case 'SHOW_ADD_DECK':
+      return true;
+
+    case 'HIDE_ADD_DECK':
+      return false;
+
+    default:
+      return !!state;
+  }
+};
+
+exports.addingDeck = addingDeck;
+
+},{}]},{},[21]);
