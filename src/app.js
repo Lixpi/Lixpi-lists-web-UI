@@ -58,6 +58,16 @@ const App = (props) => {
 }
 
 export default class Sidebar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.createDeck = this.createDeck.bind(this);
+    }
+    componentDidUpdate() {
+        var el = ReactDOM.findDOMNode(this.refs.add);
+        if (el) {
+            el.focus();
+        }
+    }
     render() {
         let props = this.props;
 
@@ -71,14 +81,17 @@ export default class Sidebar extends React.Component {
             </ul>
             { props.addingDeck && <input ref='add' onKeyPress={this.createDeck} />}
         </div>)
-    },
+    }
     createDeck(evt) {
         if(evt.which !== 13) {
             return
         }
+        console.log('this');
+        console.log(this);
+
         var name = ReactDOM.findDOMNode(this.refs.add).value;
         this.props.addDeck(name);
-        this.props.hideDeck();
+        this.props.hideAddDeck();
     }
 }
 
