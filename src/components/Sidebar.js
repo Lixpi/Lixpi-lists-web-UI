@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { addDeck, showAddDeck, hideAddDeck } from '../actions';
 
@@ -34,7 +35,10 @@ class Sidebar extends React.Component {
             <button onClick={ e => this.props.showAddDeck() }>+ New Deck</button>
             <ul>
             {props.decks.map((deck, i) => 
-                <li key={i}> {deck.name} </li>
+                <li key={i}>
+                        {console.log(deck)}
+                    <Link to={`/deck/${deck.id}`}> {deck.name} </Link>
+                </li>
             )}
             </ul>
             { props.addingDeck && <input ref='add' onKeyPress={this.createDeck} />}
