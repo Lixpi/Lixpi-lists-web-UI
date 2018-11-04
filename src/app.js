@@ -1,46 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-
-// import { Router, Route, Switch } from 'react-router';
-
 import { Router, Route, Switch } from 'react-router-dom';
-
-// import { Router, Route, browserHistory } from 'react-router';
 import { createBrowserHistory } from 'history';
-
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-reducers.routing = routerReducer;
-
-import * as reducers from './reducers';
-
+import { ConnectedRouter } from 'connected-react-router'
+import createRootReducer from './reducers'
 import App from './components/App';
 import VisibleCards from './components/VisibleCards';
 
+import * as localStore from './localStore';
 
-
-const store = createStore(combineReducers(reducers));
-const history = syncHistoryWithStore(createBrowserHistory(), store);
-
-console.log('asdf');
-
+const history = createBrowserHistory();
+const store = createStore(createRootReducer(history), localStore.get());
 
 function run() {
     let state = store.getState();
+    localStore.set(state, ['decks', 'cards']);
 
-    ReactDOM.render((<Provider store={store}>
-        
-        <Router history={history}> 
-            <App>
-                <Switch>
-                    <Route path='/deck/:deckId' component={VisibleCards}></Route>
-                </Switch>
-            </App>
+    ReactDOM.render(
+        <Provider store={store}>
+            <ConnectedRouter history={history}>
+                <App>
+                    <Switch>
+                        <Route path='/deck/:deckId' component={VisibleCards}></Route>
+                    </Switch>
+                </App>
 
-        </Router>
-
-        </Provider>), document.getElementById('root'));
+            </ConnectedRouter>
+        </Provider>,
+        document.getElementById('root')
+    );
 }
 
 run();

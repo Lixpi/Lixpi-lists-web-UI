@@ -1,4 +1,8 @@
-export const cards = (state, action) => {
+import { combineReducers } from 'redux'
+import { connectRouter } from 'connected-react-router'
+
+
+const cards = (state, action) => {
     switch (action.type) {
         case 'ADD_CARD':
             let newCard = Object.assign({}, action.data, {
@@ -11,7 +15,7 @@ export const cards = (state, action) => {
     }
 };
 
-export const decks = (state, action) => {
+const decks = (state, action) => {
     switch (action.type) {
         case 'ADD_DECK':
              let newDeck = {
@@ -24,13 +28,20 @@ export const decks = (state, action) => {
     }
 }
 
-export const addingDeck = (state, action) => {
+const addingDeck = (state, action) => {
     switch (action.type) {
-        case 'SHOW_ADD_DECK': 
+        case 'SHOW_ADD_DECK':
             return true;
         case 'HIDE_ADD_DECK':
             return false;
-        default: 
+        default:
             return !!state;
     }
 };
+
+export default (history) => combineReducers({
+    router: connectRouter(history),
+    cards,
+    decks,
+    addingDeck
+})

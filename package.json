@@ -26,6 +26,7 @@
     "watchify": "^3.11.0"
   },
   "dependencies": {
+    "connected-react-router": "^5.0.0",
     "create-react-class": "^15.6.3",
     "live-server": "^1.2.0",
     "react": "^16.5.2",
