@@ -1,8 +1,13 @@
 import React from 'react';
+import Sidebar from './Sidebar';
 
-const App = (props) => {
+const App = ({ children }) => {
+    console.log('children');
+    console.log(children);
+
     return (<div className="app">
-        {props.children}
+        <Sidebar />
+        {children}
     </div>);
 }
 
