@@ -1,39 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { Router, Route, Switch } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-import { ConnectedRouter } from 'connected-react-router'
-import createRootReducer from './reducers'
-import App from './components/App';
-import VisibleCards from './components/VisibleCards';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import * as localStore from './localStore';
-
-const history = createBrowserHistory();
-const store = createStore(createRootReducer(history), localStore.get());
+import StorePicker from './components/StorePicker'
+import App from './components/App'
+import NotFound from './components/NotFound'
 
 function run() {
-    let state = store.getState();
-    localStore.set(state, ['decks', 'cards']);
-
     ReactDOM.render(
-        <Provider store={store}>
-            <ConnectedRouter history={history}>
-                <App>
-                    <Switch>
-                        <Route path='/deck/:deckId' component={VisibleCards}></Route>
-                    </Switch>
-                </App>
-
-            </ConnectedRouter>
-        </Provider>,
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/" component={StorePicker} />
+                <Route path="/store/:storeId" component={App} />
+                <Route component={NotFound} />
+            </Switch>
+        </BrowserRouter>,
         document.getElementById('root')
     );
 }
 
 run();
-
-store.subscribe(run);
-

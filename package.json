@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "watchify src/app.js -o public/scripts.js -t [babelify --presets [ @babel/preset-env @babel/preset-react ] ]",
+    "watch-js": "watchify src/app.js -o public/scripts.js -t [babelify --presets [ @babel/preset-env @babel/preset-react ] --plugins [ babel-plugin-transform-class-properties ] ]",
+    "watch-scss": "node-sass -rw src/scss -o public",
     "server": "cd public; live-server --port=1234 --entry-file=index.html"
   },
   "repository": {
@@ -22,7 +23,9 @@
     "@babel/core": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babelify": "^10.0.0",
+    "node-sass": "^4.10.0",
     "watchify": "^3.11.0"
   },
   "dependencies": {
