@@ -1,18 +1,33 @@
 import React from 'react';
-import Sidebar from './Sidebar';
-import Toolbar from './Toolbar';
-import { connect } from 'react-redux';
 
-const mapStateToProps = state => ({ deckId: state.router.location.pathname.split("/").pop() });
+// import Header from './Header';
+// import Order from './Order';
+// import Inventory from './Inventory';
 
-const App = ({ deckId, children }) => {
-    return (<div className="app">
-        <Toolbar deckId={deckId} />
-        <Sidebar />
 
-        {children}
-    </div>);
+class App extends React.Component {
+    // state = {
+    //     fishes: {},
+    //     order: {}
+    // }
+    // addFish = fish => {
+    //     const fishes = { ...this.state.fishes };
+    //     fishes[`fish${Date.now()}`] = fish;
+    //     this.setState({
+    //         fishes
+    //     });
+    // }
+    render() {
+        return (
+            <div className="catch-of-the-day">
+                {/*<div className="menu">
+                    <Header tagLine="Wes Is Cool"/>
+                </div>
+                <Order />
+                <Inventory addFish={this.addFish} />*/}
+            </div>
+        );
+    }
 }
 
-export default connect(mapStateToProps)(App);
-// export default App;
+export default App;
