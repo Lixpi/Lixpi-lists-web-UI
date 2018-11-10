@@ -1,13 +1,18 @@
 import React from 'react';
-import { getFunName } from '../helpers';
+import PropTypes from 'prop-types';
 
-class StorePicker extends React.Component {
+class LoginForm extends React.Component {
+
+    //Specifying required props format
+    static propTypes = {
+        loginName: PropTypes.string,
+        loginPassword: PropTypes.string
+    }
 
     storeName = React.createRef();
 
     goToStore = event => {
         event.preventDefault();
-        console.log(this);
         const storeName = this.storeName.current.value;
         this.props.history.push(`/store/${storeName}`);
     }
@@ -20,8 +25,8 @@ class StorePicker extends React.Component {
                 <div id="login-form-container">
                     <form className="store-selector" onSubmit={this.goToStore}>
                         <h2>Who are you?</h2>
-                        <input type="text" required placeholder="Username" ref={this.storeName} />
-                        <input type="text" required placeholder="Password" ref={this.storeName} />
+                        <input type="text" required placeholder="Username" ref={this.loginName} />
+                        <input type="text" required placeholder="Password" ref={this.loginPassword} />
                         <button type="submit">Enter</button>
                     </form>
                 </div>
@@ -31,4 +36,4 @@ class StorePicker extends React.Component {
     }
 }
 
-export default StorePicker;
+export default LoginForm;
