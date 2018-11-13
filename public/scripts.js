@@ -25767,7 +25767,7 @@ var _reactDom = _interopRequireDefault(require("react-dom"));
 
 var _reactRouterDom = require("react-router-dom");
 
-var _StorePicker = _interopRequireDefault(require("./components/StorePicker"));
+var _LoginForm = _interopRequireDefault(require("./components/LoginForm"));
 
 var _App = _interopRequireDefault(require("./components/App"));
 
@@ -25779,7 +25779,7 @@ function run() {
   _reactDom.default.render(_react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {
     exact: true,
     path: "/",
-    component: _StorePicker.default
+    component: _LoginForm.default
   }), _react.default.createElement(_reactRouterDom.Route, {
     path: "/store/:storeId",
     component: _App.default
@@ -25790,7 +25790,7 @@ function run() {
 
 run();
 
-},{"./components/App":62,"./components/NotFound":63,"./components/StorePicker":64,"react":51,"react-dom":23,"react-router-dom":36}],62:[function(require,module,exports){
+},{"./components/App":62,"./components/LoginForm":63,"./components/NotFound":64,"react":51,"react-dom":23,"react-router-dom":36}],62:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -25870,26 +25870,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var NotFound = function NotFound() {
-  return _react.default.createElement("div", null, _react.default.createElement("h2", null, "Not found..."));
-};
-
-var _default = NotFound;
-exports.default = _default;
-
-},{"react":51}],64:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _helpers = require("../helpers");
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25911,23 +25892,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var StorePicker =
+var LoginForm =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(StorePicker, _React$Component);
+  _inherits(LoginForm, _React$Component);
 
-  function StorePicker() {
+  function LoginForm() {
     var _getPrototypeOf2;
 
     var _temp, _this;
 
-    _classCallCheck(this, StorePicker);
+    _classCallCheck(this, LoginForm);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(StorePicker)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.storeName = _react.default.createRef(), _this.goToStore = function (event) {
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(LoginForm)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.storeName = _react.default.createRef(), _this.goToStore = function (event) {
       event.preventDefault();
       var storeName = _this.storeName.current.value;
 
@@ -25935,73 +25916,85 @@ function (_React$Component) {
     }, _temp));
   }
 
-  _createClass(StorePicker, [{
+  _createClass(LoginForm, [{
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
+        className: "container full-height",
         id: "login-page-container"
       }, _react.default.createElement("div", {
+        className: "row full-height ",
         id: "logo-container"
+      }, _react.default.createElement("div", {
+        className: "col align-self-center d-flex flex-column"
       }, _react.default.createElement("img", {
         src: "images/logo.png",
         alt: "Lixpi Lists"
-      })), _react.default.createElement("div", {
+      }))), _react.default.createElement("div", {
+        className: "row full-height ",
         id: "login-form-container"
       }, _react.default.createElement("form", {
-        className: "store-selector",
+        className: "store-selector  d-flex flex-column",
         onSubmit: this.goToStore
       }, _react.default.createElement("h2", null, "Who are you?"), _react.default.createElement("input", {
         type: "text",
         required: true,
         placeholder: "Username",
-        ref: this.storeName
+        ref: this.loginName
       }), _react.default.createElement("input", {
         type: "text",
         required: true,
         placeholder: "Password",
-        ref: this.storeName
-      }), _react.default.createElement("button", {
+        ref: this.loginPassword
+      }), _react.default.createElement("div", {
+        className: " d-flex justify-content-end"
+      }, _react.default.createElement("button", {
+        className: "",
         type: "submit"
-      }, "Enter"))));
+      }, "Go"))))) // <div id="login-page-container">
+      //     <div id="logo-container">
+      //         <img src="images/logo.png" alt="Lixpi Lists" />
+      //     </div>
+      //     <div id="login-form-container">
+      //         <form className="store-selector" onSubmit={this.goToStore}>
+      //             <h2>Who are you?</h2>
+      //             <input type="text" required placeholder="Username" ref={this.loginName} />
+      //             <input type="text" required placeholder="Password" ref={this.loginPassword} />
+      //             <button type="submit">Go</button>
+      //         </form>
+      //     </div>
+      // </div>
+      ;
     }
   }]);
 
-  return StorePicker;
+  return LoginForm;
 }(_react.default.Component);
 
-var _default = StorePicker;
+LoginForm.propTypes = {
+  loginName: _propTypes.default.string,
+  loginPassword: _propTypes.default.string
+};
+var _default = LoginForm;
 exports.default = _default;
 
-},{"../helpers":65,"react":51}],65:[function(require,module,exports){
+},{"prop-types":19,"react":51}],64:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.formatPrice = formatPrice;
-exports.rando = rando;
-exports.slugify = slugify;
-exports.getFunName = getFunName;
+exports.default = void 0;
 
-function formatPrice(cents) {
-  return (cents / 100).toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD"
-  });
-}
+var _react = _interopRequireDefault(require("react"));
 
-function rando(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function slugify(text) {
-  return text.toString().toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "").replace(/--+/g, "-").replace(/^-+/, "").replace(/-+$/, "");
-}
+var NotFound = function NotFound() {
+  return _react.default.createElement("div", null, _react.default.createElement("h2", null, "Not found..."));
+};
 
-function getFunName() {
-  var adjectives = ["adorable", "beautiful", "clean", "drab", "elegant", "fancy", "glamorous", "handsome", "long", "magnificent", "old-fashioned", "plain", "quaint", "sparkling", "ugliest", "unsightly", "angry", "bewildered", "clumsy", "defeated", "embarrassed", "fierce", "grumpy", "helpless", "itchy", "jealous", "lazy", "mysterious", "nervous", "obnoxious", "panicky", "repulsive", "scary", "thoughtless", "uptight", "worried"];
-  var nouns = ["women", "men", "children", "teeth", "feet", "people", "leaves", "mice", "geese", "halves", "knives", "wives", "lives", "elves", "loaves", "potatoes", "tomatoes", "cacti", "foci", "fungi", "nuclei", "syllabuses", "analyses", "diagnoses", "oases", "theses", "crises", "phenomena", "criteria", "data"];
-  return "".concat(rando(adjectives), "-").concat(rando(adjectives), "-").concat(rando(nouns));
-}
+var _default = NotFound;
+exports.default = _default;
 
-},{}]},{},[61]);
+},{"react":51}]},{},[61]);

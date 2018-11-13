@@ -18,22 +18,42 @@ class LoginForm extends React.Component {
     }
     render() {
         return (
-            <div id="login-page-container">
-                <div id="logo-container">
+            <div className="container full-height" id="login-page-container">
+              <div className="row full-height " id="logo-container">
+                <div className="col align-self-center d-flex flex-column" >
                     <img src="images/logo.png" alt="Lixpi Lists" />
                 </div>
-                <div id="login-form-container">
-                    <form className="store-selector" onSubmit={this.goToStore}>
-                        <h2>Who are you?</h2>
-                        <input type="text" required placeholder="Username" ref={this.loginName} />
-                        <input type="text" required placeholder="Password" ref={this.loginPassword} />
-                        <button type="submit">Enter</button>
-                    </form>
-                </div>
-
+              </div>
+              <div className="row full-height " id="login-form-container">
+                 <form className="store-selector  d-flex flex-column" onSubmit={this.goToStore}>
+                     <h2>Who are you?</h2>
+                     <input type="text" required placeholder="Username" ref={this.loginName} />
+                     <input type="text" required placeholder="Password" ref={this.loginPassword} />
+                     <div className=" d-flex justify-content-end">
+                        <button className="" type="submit">Go</button>
+                     </div>
+                 </form>
+              </div>
             </div>
+            // <div id="login-page-container">
+            //     <div id="logo-container">
+            //         <img src="images/logo.png" alt="Lixpi Lists" />
+            //     </div>
+            //     <div id="login-form-container">
+            //         <form className="store-selector" onSubmit={this.goToStore}>
+            //             <h2>Who are you?</h2>
+            //             <input type="text" required placeholder="Username" ref={this.loginName} />
+            //             <input type="text" required placeholder="Password" ref={this.loginPassword} />
+            //             <button type="submit">Go</button>
+            //         </form>
+            //     </div>
+            // </div>
         )
     }
 }
 
 export default LoginForm;
+
+
+
+
