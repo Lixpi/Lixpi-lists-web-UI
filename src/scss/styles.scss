@@ -1,5 +1,6 @@
 @import 'components/_reset';
 @import 'components/_login-page';
+@import '../vendor_clones/bootstrap-4-grid/scss/grid.scss';
 
 @import url(http://fonts.googleapis.com/css?family=Raleway:400,200,100,300,500,600,700,900,800);
 
@@ -24,4 +25,13 @@ html, body {
 img {
     width: 100%;
     max-width: 200px;
+
+}
+
+.container {
+    max-width: none !important;
+}
+
+.full-height {
+    height: 100%;
 }
