@@ -25951,20 +25951,7 @@ function (_React$Component) {
       }, _react.default.createElement("button", {
         className: "",
         type: "submit"
-      }, "Go"))))) // <div id="login-page-container">
-      //     <div id="logo-container">
-      //         <img src="images/logo.png" alt="Lixpi Lists" />
-      //     </div>
-      //     <div id="login-form-container">
-      //         <form className="store-selector" onSubmit={this.goToStore}>
-      //             <h2>Who are you?</h2>
-      //             <input type="text" required placeholder="Username" ref={this.loginName} />
-      //             <input type="text" required placeholder="Password" ref={this.loginPassword} />
-      //             <button type="submit">Go</button>
-      //         </form>
-      //     </div>
-      // </div>
-      ;
+      }, "Go")))));
     }
   }]);
 
