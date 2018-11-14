@@ -13,8 +13,9 @@ class LoginForm extends React.Component {
 
     goToStore = event => {
         event.preventDefault();
-        const storeName = this.storeName.current.value;
-        this.props.history.push(`/store/${storeName}`);
+        // const storeName = this.storeName.current.value;
+        // this.props.history.push(`/store/${storeName}`);
+        this.props.history.push(`/store`);
     }
     render() {
         return (
