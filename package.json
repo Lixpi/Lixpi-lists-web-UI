@@ -26,6 +26,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babelify": "^10.0.0",
     "node-sass": "^4.10.0",
+    "react-transition-group": "^2.5.0",
     "watchify": "^3.11.0"
   },
   "dependencies": {
