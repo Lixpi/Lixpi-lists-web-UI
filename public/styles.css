@@ -43,40 +43,70 @@ table {
 *:focus {
   outline: none; }
 
-#login-page-container #logo-container {
-  height: 50%;
-  background: #7FA950; }
-  #login-page-container #logo-container img {
-    margin: auto; }
+.route-enter-active {
+  display: none; }
 
-#login-page-container #login-form-container {
-  height: 50%; }
-  #login-page-container #login-form-container form {
-    box-sizing: border-box;
-    max-width: 600px;
-    height: 100%;
-    margin: auto; }
-    #login-page-container #login-form-container form h2 {
-      font-size: 2rem;
-      margin: 2rem 0; }
-    #login-page-container #login-form-container form input {
-      margin: .5em 0;
-      font-size: 1em;
-      padding: .3em;
-      border-radius: 2px;
-      border: 1px solid #e1e1e1; }
-    #login-page-container #login-form-container form button {
-      text-transform: uppercase;
-      background: #7FA950;
-      color: #fff;
-      border: none;
-      padding: .5em .9em;
-      font-size: .9em;
-      border-radius: 3px;
-      cursor: pointer;
-      margin: 1em 0; }
-      #login-page-container #login-form-container form button:hover {
-        background: #8cb35f; }
+#login-page-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden; }
+  #login-page-container.route-exit-active #logo-container {
+    background: #fff; }
+    #login-page-container.route-exit-active #logo-container img {
+      transform: translateY(-206%); }
+  #login-page-container.route-exit-active #login-form-container form {
+    transform: translateY(206%); }
+  #login-page-container #logo-container {
+    height: 50%;
+    background: #7FA950;
+    -webkit-transition: all 0.3s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+    -moz-transition: all 0.3s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+    -ms-transition: all 0.3s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+    -o-transition: all 0.3s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+    transition: all 0.3s cubic-bezier(0.585, -0.6, 0.43, 1.65); }
+    #login-page-container #logo-container img {
+      margin: auto;
+      -webkit-transition: all 0.2s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      -moz-transition: all 0.2s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      -ms-transition: all 0.2s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      -o-transition: all 0.2s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      transition: all 0.2s cubic-bezier(0.585, -0.6, 0.43, 1.65); }
+  #login-page-container #login-form-container {
+    height: 50%; }
+    #login-page-container #login-form-container form {
+      -webkit-transition: all 0.15s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      -moz-transition: all 0.15s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      -ms-transition: all 0.15s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      -o-transition: all 0.15s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      transition: all 0.15s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      box-sizing: border-box;
+      max-width: 600px;
+      height: 100%;
+      margin: auto; }
+      #login-page-container #login-form-container form h2 {
+        font-size: 2rem;
+        margin: 2rem 0; }
+      #login-page-container #login-form-container form input {
+        margin: .5em 0;
+        font-size: 1em;
+        padding: .3em;
+        border-radius: 2px;
+        border: 1px solid #e1e1e1; }
+      #login-page-container #login-form-container form button {
+        text-transform: uppercase;
+        background: #7FA950;
+        color: #fff;
+        border: none;
+        padding: .5em .9em;
+        font-size: .9em;
+        border-radius: 3px;
+        cursor: pointer;
+        margin: 1em 0; }
+        #login-page-container #login-form-container form button:hover {
+          background: #8cb35f; }
 
 /*!
  * Bootstrap Grid v4.1.2 (https://getbootstrap.com/)
@@ -3131,11 +3161,12 @@ html {
   visibility: hidden !important; }
 
 html, body {
-  width: 100%;
-  height: 100%;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
   color: #4f525c; }
+  html, html > div, html #root > div, body, body > div, body #root > div {
+    width: 100%;
+    height: 100%; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Raleway', sans-serif; }
@@ -3153,6 +3184,3 @@ img {
 
 .full-height {
   height: 100%; }
-
-.post-enter-active {
-  display: none; }

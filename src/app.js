@@ -9,7 +9,7 @@ import NotFound from './components/NotFound'
 
 
 const currentKey = location.pathname.split('/')[1] || '/'
-const timeout = { enter: 11300, exit: 11200 }
+const timeout = { enter: 300, exit: 300 }
 
 console.log('currentKey');
 console.log(currentKey);
@@ -21,9 +21,10 @@ function run() {
         <Route render={({ location }) => (
             <TransitionGroup>
                 {/*<CSSTransition key={location.key} timeout={{ enter: 11300, exit: 11300 }} >*/}
-                <CSSTransition key={location.key} timeout={{ enter: 1000, exit: 1000 }}  classNames="post">
+                <CSSTransition key={location.key} timeout={timeout}  classNames="route">
                     <Switch location={location}>
                         <Route exact path="/" component={LoginForm} />
+                        {/*<Route path="/lists/:listId" component={App} />*/}
                         <Route path="/store/:storeId" component={App} />
                         <Route component={NotFound} />
                     </Switch>

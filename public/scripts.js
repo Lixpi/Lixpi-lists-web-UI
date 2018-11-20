@@ -27465,8 +27465,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var currentKey = location.pathname.split('/')[1] || '/';
 var timeout = {
-  enter: 11300,
-  exit: 11200
+  enter: 300,
+  exit: 300
 };
 console.log('currentKey');
 console.log(currentKey);
@@ -27477,11 +27477,8 @@ function run() {
       var location = _ref.location;
       return _react.default.createElement(_reactTransitionGroup.TransitionGroup, null, _react.default.createElement(_reactTransitionGroup.CSSTransition, {
         key: location.key,
-        timeout: {
-          enter: 1000,
-          exit: 1000
-        },
-        classNames: "post"
+        timeout: timeout,
+        classNames: "route"
       }, _react.default.createElement(_reactRouterDom.Switch, {
         location: location
       }, _react.default.createElement(_reactRouterDom.Route, {
@@ -27559,8 +27556,8 @@ function (_React$Component) {
     // }
     value: function render() {
       return _react.default.createElement("div", {
-        className: "catch-of-the-day"
-      });
+        className: "task-tracker"
+      }, _react.default.createElement("h1", null, "Root"), _react.default.createElement(Lists, null), _react.default.createElement(List, null));
     }
   }]);
 
@@ -27622,7 +27619,7 @@ function (_React$Component) {
       event.preventDefault(); // const storeName = this.storeName.current.value;
       // this.props.history.push(`/store/${storeName}`);
 
-      _this.props.history.push("/store");
+      _this.props.history.push("/lists/1");
     }, _temp));
   }
 
@@ -27650,11 +27647,13 @@ function (_React$Component) {
         type: "text",
         required: true,
         placeholder: "Username",
+        defaultValue: "jira-admin",
         ref: this.loginName
       }), _react.default.createElement("input", {
-        type: "text",
+        type: "password",
         required: true,
         placeholder: "Password",
+        defaultValue: "",
         ref: this.loginPassword
       }), _react.default.createElement("div", {
         className: " d-flex justify-content-end"
