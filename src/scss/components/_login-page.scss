@@ -1,21 +1,65 @@
+
+.route-enter-active {
+    display: none;
+}
+
+
 #login-page-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
 
     // height: 100%;
+
+    &.route-exit-active {
+        // display: none;
+        #logo-container {
+            background: #fff;
+            img {
+                transform: translateY(-206%);
+            }
+        }
+        #login-form-container {
+            form {
+                transform: translateY(206%);
+            }
+        }
+    }
+
+
+
+
 
     #logo-container {
         height: 50%;
         // min-height: 150px;
         background: #7FA950;
+        -webkit-transition: all .3s cubic-bezier(0.585,-.6,.43,1.65);
+        -moz-transition: all .3s cubic-bezier(0.585,-.6,.43,1.65);
+        -ms-transition: all .3s cubic-bezier(0.585,-.6,.43,1.65);
+        -o-transition: all .3s cubic-bezier(0.585,-.6,.43,1.65);
+        transition: all .3s cubic-bezier(0.585,-.6,.43,1.65);
         img {
             margin: auto;
+            -webkit-transition: all .200s cubic-bezier(0.585,-.6,.43,1.65);
+            -moz-transition: all .200s cubic-bezier(0.585,-.6,.43,1.65);
+            -ms-transition: all .200s cubic-bezier(0.585,-.6,.43,1.65);
+            -o-transition: all .200s cubic-bezier(0.585,-.6,.43,1.65);
+            transition: all .200s cubic-bezier(0.585,-.6,.43,1.65);
         }
     }
     #login-form-container {
 
         height: 50%;
         form {
-
-
+            -webkit-transition: all .150s cubic-bezier(0.585,-.6,.43,1.65);
+            -moz-transition: all .150s cubic-bezier(0.585,-.6,.43,1.65);
+            -ms-transition: all .150s cubic-bezier(0.585,-.6,.43,1.65);
+            -o-transition: all .150s cubic-bezier(0.585,-.6,.43,1.65);
+            transition: all .150s cubic-bezier(0.585,-.6,.43,1.65);
             box-sizing: border-box;
             max-width: 600px;
             height: 100%;

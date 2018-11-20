@@ -19,7 +19,12 @@ class App extends React.Component {
     // }
     render() {
         return (
-            <div className="catch-of-the-day">
+            <div className="task-tracker">
+                <h1>Root</h1>
+                <Lists />
+                <List />
+
+
                 {/*<div className="menu">
                     <Header tagLine="Wes Is Cool"/>
                 </div>

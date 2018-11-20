@@ -15,7 +15,7 @@ class LoginForm extends React.Component {
         event.preventDefault();
         // const storeName = this.storeName.current.value;
         // this.props.history.push(`/store/${storeName}`);
-        this.props.history.push(`/store`);
+        this.props.history.push(`/lists/1`);
     }
     render() {
         return (
@@ -28,8 +28,8 @@ class LoginForm extends React.Component {
               <div className="row full-height " id="login-form-container">
                  <form className="store-selector  d-flex flex-column" onSubmit={this.goToStore}>
                      <h2>Who are you?</h2>
-                     <input type="text" required placeholder="Username" ref={this.loginName} />
-                     <input type="text" required placeholder="Password" ref={this.loginPassword} />
+                     <input type="text" required placeholder="Username" defaultValue="jira-admin" ref={this.loginName} />
+                     <input type="password" required placeholder="Password" defaultValue="" ref={this.loginPassword} />
                      <div className=" d-flex justify-content-end">
                         <button className="" type="submit">Go</button>
                      </div>
