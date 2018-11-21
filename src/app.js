@@ -9,7 +9,7 @@ import NotFound from './components/NotFound'
 
 
 const currentKey = location.pathname.split('/')[1] || '/'
-const timeout = { enter: 300, exit: 300 }
+const timeout = { enter: 200, exit: 1000 }
 
 console.log('currentKey');
 console.log(currentKey);
