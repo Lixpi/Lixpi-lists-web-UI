@@ -29,7 +29,7 @@ class LoginForm extends React.Component {
                  <form className="store-selector  d-flex flex-column" onSubmit={this.goToStore}>
                      <h2>Who are you?</h2>
                      <input type="text" required placeholder="Username" defaultValue="jira-admin" ref={this.loginName} />
-                     <input type="password" required placeholder="Password" defaultValue="" ref={this.loginPassword} />
+                     <input type="password" required placeholder="Password" defaultValue="asdf" ref={this.loginPassword} />
                      <div className=" d-flex justify-content-end">
                         <button className="" type="submit">Go</button>
                      </div>

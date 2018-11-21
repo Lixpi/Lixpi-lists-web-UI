@@ -27465,8 +27465,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var currentKey = location.pathname.split('/')[1] || '/';
 var timeout = {
-  enter: 300,
-  exit: 300
+  enter: 200,
+  exit: 1000
 };
 console.log('currentKey');
 console.log(currentKey);
@@ -27653,7 +27653,7 @@ function (_React$Component) {
         type: "password",
         required: true,
         placeholder: "Password",
-        defaultValue: "",
+        defaultValue: "asdf",
         ref: this.loginPassword
       }), _react.default.createElement("div", {
         className: " d-flex justify-content-end"
