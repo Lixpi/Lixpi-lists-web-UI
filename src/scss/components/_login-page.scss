@@ -19,7 +19,7 @@
         #logo-container {
             background: #fff;
             img {
-                transform: translateY(-206%);
+                transform: translateY(-600%);
             }
         }
         #login-form-container {
@@ -44,11 +44,11 @@
         transition: all 1s cubic-bezier(0.585,-.6,.43,1.65);
         img {
             margin: auto;
-            -webkit-transition: all .600s cubic-bezier(0.585,-.6,.43,1.65);
-            -moz-transition: all .600s cubic-bezier(0.585,-.6,.43,1.65);
-            -ms-transition: all .600s cubic-bezier(0.585,-.6,.43,1.65);
-            -o-transition: all .600s cubic-bezier(0.585,-.6,.43,1.65);
-            transition: all .600s cubic-bezier(0.585,-.6,.43,1.65);
+            -webkit-transition: all .500s cubic-bezier(0.585,-.6,.43,1.65);
+            -moz-transition: all .500s cubic-bezier(0.585,-.6,.43,1.65);
+            -ms-transition: all .500s cubic-bezier(0.585,-.6,.43,1.65);
+            -o-transition: all .500s cubic-bezier(0.585,-.6,.43,1.65);
+            transition: all .500s cubic-bezier(0.585,-.6,.43,1.65);
         }
     }
     #login-form-container {
