@@ -1,0 +1,32 @@
+.project-row {
+    padding: 10px 7px 10px $color-coded-border-size + 7px;
+    .project-logo {
+        img {
+            width: 30px;
+        }
+        span {
+            display: block;
+            border: 2px solid $dark-asphalt;
+            color: $dark-asphalt-wet;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            border-radius: 999px;
+            font-size: 1.2em;
+            line-height: 1.3em;
+            font-weight: 700;
+            vertical-align: middle;
+            @extend .noselect;
+        }
+    }
+    h4.project-name {
+        font-weight: 600;
+    }
+    p {
+        margin-bottom: .4em;
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+}

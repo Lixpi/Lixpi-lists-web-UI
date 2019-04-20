@@ -30,6 +30,7 @@
     "watchify": "^3.11.0"
   },
   "dependencies": {
+    "bootstrap-4-grid": "^2.4.1",
     "live-server": "^1.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
