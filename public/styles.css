@@ -345,40 +345,33 @@ input {
   position: relative;
   width: 43px;
   transform: translate(0, 2px); }
+  .switch:before, .switch .switch-icon-container {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    text-align: center;
+    border-radius: 999px; }
   .switch:before {
     content: "";
     display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 10px;
     background: #78828a;
     z-index: 4;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 999px;
     -webkit-box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.9);
     box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.9); }
   .switch .switch-icon-container {
-    -webkit-box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.6);
-    box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.6);
-    position: absolute;
-    top: -50%;
-    left: 0;
+    left: 10px;
+    width: 28px;
+    height: 28px;
     font-size: .9em;
     line-height: 28px;
     z-index: 5;
     background: #5c656d;
-    width: 28px;
-    height: 28px;
-    border-radius: 999px;
     vertical-align: middle;
-    text-align: center;
-    left: 10px;
-    top: 50%;
-    transform: translate(-50%, -50%); }
+    -webkit-box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.6); }
 
 .project-row {
   padding: 10px 7px 10px 14px; }
