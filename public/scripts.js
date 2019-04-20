@@ -27692,7 +27692,211 @@ var NotFound = function NotFound() {
   return _react.default.createElement(_reactTransitionGroup.CSSTransition, {
     timeout: 11000,
     classNames: "post"
-  }, _react.default.createElement("div", null, _react.default.createElement("h2", null, "Not found...")));
+  }, _react.default.createElement("div", {
+    className: "container full-height",
+    id: "login-page-container"
+  }, _react.default.createElement("div", {
+    className: "row align-items-center ",
+    id: "nav-bar"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("img", {
+    className: "logo",
+    src: "/images/logo.png",
+    alt: "Lixpi Lists"
+  })), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", {
+    className: "mr-4"
+  }, "Feed")), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", null, "Projscts")), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", null, "Tasks")), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("div", {
+    className: "create-new-wrapper"
+  }, _react.default.createElement("button", {
+    className: "create-new mr-1"
+  }, "Create"), _react.default.createElement("ul", null, _react.default.createElement("li", null, "Task"), _react.default.createElement("li", null, "List"), _react.default.createElement("li", null, "Project")))), _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("div", {
+    className: "navbar-search-wrapper"
+  }, _react.default.createElement("input", {
+    type: "text",
+    className: "navbar-search",
+    placeholder: "Search"
+  }))), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("div", {
+    className: "switch"
+  }, _react.default.createElement("span", {
+    className: "switch-icon-container"
+  }, _react.default.createElement("span", {
+    className: "icon-tasks"
+  })))), _react.default.createElement("div", {
+    className: "col col-lg-2 d-flex justify-content-end"
+  }, _react.default.createElement("div", {
+    className: "user-menu"
+  }, _react.default.createElement("img", {
+    className: "avatar",
+    src: "/images/avatar.jpg",
+    alt: "Kate"
+  })))), _react.default.createElement("div", {
+    className: "projects-listing mt-4"
+  }, _react.default.createElement("div", {
+    className: "color-coded-row code-red project-row"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center mb-2"
+  }, _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto project-logo"
+  }, _react.default.createElement("img", {
+    className: "",
+    src: "/images/logo.png",
+    alt: "Lixpi Lists"
+  })), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("h4", {
+    className: "project-name ml-2"
+  }, "Lixpi Lists Project")))), _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("h4", null, _react.default.createElement("span", {
+    className: "icon-hash"
+  }), "765 open / 200 done"))))), _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-user"
+  }), "Lead: John Doe"), _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-flow-cascade"
+  }), "Next release: Mar 17")), _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-clock"
+  }), "Duration: 1w"), _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-attention"
+  }), "3: issues requires your attention")))), _react.default.createElement("div", {
+    className: "color-coded-row code-green project-row"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center mb-2"
+  }, _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto project-logo"
+  }, _react.default.createElement("span", null, "A")), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("h4", {
+    className: "project-name ml-2"
+  }, "A Project, uses letter if logo is not available")))), _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("h4", null, _react.default.createElement("span", {
+    className: "icon-hash"
+  }), "765 open / 200 done"))))), _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-user"
+  }), "Lead: John Doe"), _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-flow-cascade"
+  }), "Next release: Mar 17")), _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-clock"
+  }), "Duration: 1w"), _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-attention"
+  }), "3: issues requires your attention")))), _react.default.createElement("div", {
+    className: "color-coded-row code-yellow project-row"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center mb-2"
+  }, _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto project-logo"
+  }, _react.default.createElement("span", null, "B")), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("h4", {
+    className: "project-name ml-2"
+  }, "B project, for B players")))), _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("h4", null, _react.default.createElement("span", {
+    className: "icon-hash"
+  }), "765 open / 200 done"))))), _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-user"
+  }), "Lead: John Doe"), _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-flow-cascade"
+  }), "Next release: Mar 17")), _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-clock"
+  }), "Duration: 1w"), _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-attention"
+  }), "3: issues requires your attention")))), _react.default.createElement("div", {
+    className: "color-coded-row code-grey project-row"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center mb-2"
+  }, _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto project-logo"
+  }, _react.default.createElement("img", {
+    className: "",
+    src: "/images/logo.png",
+    alt: "Lixpi Lists"
+  })), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("h4", {
+    className: "project-name ml-2"
+  }, "Lixpi Lists Project")))), _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("h4", null, _react.default.createElement("span", {
+    className: "icon-hash"
+  }), "765 open / 200 done"))))), _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-user"
+  }), "Lead: John Doe"), _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-flow-cascade"
+  }), "Next release: Mar 17")), _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-clock"
+  }), "Duration: 1w"), _react.default.createElement("p", null, _react.default.createElement("span", {
+    className: "icon-attention"
+  }), "3: issues requires your attention")))))));
 };
 
 var _default = NotFound;
