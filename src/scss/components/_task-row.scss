@@ -1,0 +1,33 @@
+.task-row {
+    padding: 10px 7px 10px $task-color-coded-row-border-size + 7px;
+    &:before {
+        width: $task-color-coded-row-border-size;
+    }
+    h4.project-name {
+        font-weight: 600;
+    }
+    p {
+        margin-bottom: .4em;
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+    .vertical-divider {
+        display: block;
+        height: 1em;
+        width: 1px;
+        background: $light-grey;
+        margin: 0 .5em;
+    }
+    .task-assignee {
+        img {
+            border-radius: 999px;
+            width: 20px;
+            height: auto;
+        }
+
+    }
+}
+
+
+

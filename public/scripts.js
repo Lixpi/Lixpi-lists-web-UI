@@ -27459,6 +27459,10 @@ var _LoginForm = _interopRequireDefault(require("./components/LoginForm"));
 
 var _App = _interopRequireDefault(require("./components/App"));
 
+var _ProjectsListing = _interopRequireDefault(require("./components/ProjectsListing"));
+
+var _TasksListing = _interopRequireDefault(require("./components/TasksListing"));
+
 var _NotFound = _interopRequireDefault(require("./components/NotFound"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -27486,6 +27490,14 @@ function run() {
         path: "/",
         component: _LoginForm.default
       }), _react.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/projects",
+        component: _ProjectsListing.default
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/tasks",
+        component: _TasksListing.default
+      }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/store/:storeId",
         component: _App.default
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -27497,7 +27509,7 @@ function run() {
 
 run();
 
-},{"./components/App":74,"./components/LoginForm":75,"./components/NotFound":76,"react":63,"react-dom":27,"react-router-dom":41,"react-transition-group":58}],74:[function(require,module,exports){
+},{"./components/App":74,"./components/LoginForm":75,"./components/NotFound":76,"./components/ProjectsListing":77,"./components/TasksListing":78,"react":63,"react-dom":27,"react-router-dom":41,"react-transition-group":58}],74:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27689,6 +27701,37 @@ var _reactTransitionGroup = require("react-transition-group");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var NotFound = function NotFound() {
+  return _react.default.createElement(_reactTransitionGroup.CSSTransition, {
+    timeout: 11000,
+    classNames: "post"
+  }, _react.default.createElement("div", {
+    className: "container full-height",
+    id: "not-found-page-container"
+  }, _react.default.createElement("div", {
+    className: "row align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("h2", null, "Not found...")))));
+};
+
+var _default = NotFound;
+exports.default = _default;
+
+},{"react":63,"react-transition-group":58}],77:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactTransitionGroup = require("react-transition-group");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ProjectsListing = function ProjectsListing() {
   return _react.default.createElement(_reactTransitionGroup.CSSTransition, {
     timeout: 11000,
     classNames: "post"
@@ -27899,7 +27942,125 @@ var NotFound = function NotFound() {
   }), "3: issues requires your attention")))))));
 };
 
-var _default = NotFound;
+var _default = ProjectsListing;
+exports.default = _default;
+
+},{"react":63,"react-transition-group":58}],78:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactTransitionGroup = require("react-transition-group");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var TasksListing = function TasksListing() {
+  return _react.default.createElement(_reactTransitionGroup.CSSTransition, {
+    timeout: 11000,
+    classNames: "post"
+  }, _react.default.createElement("div", {
+    className: "container full-height",
+    id: "login-page-container"
+  }, _react.default.createElement("div", {
+    className: "row align-items-center ",
+    id: "nav-bar"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("img", {
+    className: "logo",
+    src: "/images/logo.png",
+    alt: "Lixpi Lists"
+  })), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", {
+    className: "mr-4"
+  }, "Feed")), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", null, "Projscts")), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", null, "Tasks")), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("div", {
+    className: "create-new-wrapper"
+  }, _react.default.createElement("button", {
+    className: "create-new mr-1"
+  }, "Create"), _react.default.createElement("ul", null, _react.default.createElement("li", null, "Task"), _react.default.createElement("li", null, "List"), _react.default.createElement("li", null, "Project")))), _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("div", {
+    className: "navbar-search-wrapper"
+  }, _react.default.createElement("input", {
+    type: "text",
+    className: "navbar-search",
+    placeholder: "Search"
+  }))), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("div", {
+    className: "switch"
+  }, _react.default.createElement("span", {
+    className: "switch-icon-container"
+  }, _react.default.createElement("span", {
+    className: "icon-tasks"
+  })))), _react.default.createElement("div", {
+    className: "col col-lg-2 d-flex justify-content-end"
+  }, _react.default.createElement("div", {
+    className: "user-menu"
+  }, _react.default.createElement("img", {
+    className: "avatar",
+    src: "/images/avatar.jpg",
+    alt: "Kate"
+  })))), _react.default.createElement("div", {
+    className: "taksk-listing mt-4"
+  }, _react.default.createElement("div", {
+    className: "color-coded-row code-red task-row"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", {
+    className: "icon-info-circled"
+  })), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", {
+    className: "icon-hash"
+  })), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", {
+    className: "task-key"
+  }, "ICC-215")), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", {
+    className: "vertical-divider"
+  })), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", {
+    className: "task-title"
+  }, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam dignissimos minus id")), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", {
+    className: "task-due"
+  }, "Apr/01/19")), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("div", {
+    className: "row no-gutters align-items-center task-assignee"
+  }, _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("img", {
+    className: "avatar",
+    src: "/images/avatar.jpg",
+    alt: "Kate"
+  })), _react.default.createElement("div", {
+    className: "col-md-auto"
+  }, _react.default.createElement("span", {
+    className: ""
+  }, "Kate Wilson")))))))));
+};
+
+var _default = TasksListing;
 exports.default = _default;
 
 },{"react":63,"react-transition-group":58}]},{},[73]);
