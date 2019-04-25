@@ -5,6 +5,8 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import LoginForm from './components/LoginForm'
 import App from './components/App'
+import ProjectsListing from './components/ProjectsListing'
+import TasksListing from './components/TasksListing'
 import NotFound from './components/NotFound'
 
 
@@ -24,6 +26,8 @@ function run() {
                 <CSSTransition key={location.key} timeout={timeout}  classNames="route">
                     <Switch location={location}>
                         <Route exact path="/" component={LoginForm} />
+                        <Route exact path="/projects" component={ProjectsListing} />
+                        <Route exact path="/tasks" component={TasksListing} />
                         {/*<Route path="/lists/:listId" component={App} />*/}
                         <Route path="/store/:storeId" component={App} />
                         <Route component={NotFound} />

@@ -5,11 +5,13 @@
 @import 'components/_fonts';
 @import 'components/_icons';
 
+@import 'components/_nano-components';
 @import 'components/_login-page';
 @import 'components/_nav-bar';
-@import 'components/_rows';
+@import 'components/_color-coded-rows';
 @import 'components/_switch';
 @import 'components/_project-row';
+@import 'components/_task-row';
 @import 'components/_projects-listing';
 
 @import 'node_modules/bootstrap-4-grid/scss/grid.scss';
@@ -41,7 +43,6 @@ p, ul, ol, dl, span, b, i {
 #root {
     width: 100%;
     height: 100%;
-    // border: 5px solid green;
 }
 
 img {
