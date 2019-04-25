@@ -7,6 +7,3282 @@ function _interopRequireDefault(obj) {
 
 module.exports = _interopRequireDefault;
 },{}],2:[function(require,module,exports){
+/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+		// register as 'classnames', consistent with npm package name
+		define('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+},{}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = addUTCMinutes;
+
+var _index = require('../../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function addUTCMinutes(dirtyDate, dirtyAmount, dirtyOptions) {
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var amount = Number(dirtyAmount);
+  date.setUTCMinutes(date.getUTCMinutes() + amount);
+  return date;
+}
+module.exports = exports['default'];
+},{"../../toDate/index.js":52}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = cloneObject;
+function cloneObject(dirtyObject) {
+  dirtyObject = dirtyObject || {};
+  var object = {};
+
+  for (var property in dirtyObject) {
+    if (dirtyObject.hasOwnProperty(property)) {
+      object[property] = dirtyObject[property];
+    }
+  }
+
+  return object;
+}
+module.exports = exports["default"];
+},{}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getUTCDayOfYear;
+
+var _index = require('../../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MILLISECONDS_IN_DAY = 86400000;
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function getUTCDayOfYear(dirtyDate, dirtyOptions) {
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var timestamp = date.getTime();
+  date.setUTCMonth(0, 1);
+  date.setUTCHours(0, 0, 0, 0);
+  var startOfYearTimestamp = date.getTime();
+  var difference = timestamp - startOfYearTimestamp;
+  return Math.floor(difference / MILLISECONDS_IN_DAY) + 1;
+}
+module.exports = exports['default'];
+},{"../../toDate/index.js":52}],6:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getUTCISOWeek;
+
+var _index = require('../../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = require('../startOfUTCISOWeek/index.js');
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _index5 = require('../startOfUTCISOWeekYear/index.js');
+
+var _index6 = _interopRequireDefault(_index5);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MILLISECONDS_IN_WEEK = 604800000;
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function getUTCISOWeek(dirtyDate, dirtyOptions) {
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var diff = (0, _index4.default)(date, dirtyOptions).getTime() - (0, _index6.default)(date, dirtyOptions).getTime();
+
+  // Round the number of days to the nearest integer
+  // because the number of milliseconds in a week is not constant
+  // (e.g. it's different in the week of the daylight saving time clock shift)
+  return Math.round(diff / MILLISECONDS_IN_WEEK) + 1;
+}
+module.exports = exports['default'];
+},{"../../toDate/index.js":52,"../startOfUTCISOWeek/index.js":8,"../startOfUTCISOWeekYear/index.js":9}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getUTCISOWeekYear;
+
+var _index = require('../../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = require('../startOfUTCISOWeek/index.js');
+
+var _index4 = _interopRequireDefault(_index3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function getUTCISOWeekYear(dirtyDate, dirtyOptions) {
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var year = date.getUTCFullYear();
+
+  var fourthOfJanuaryOfNextYear = new Date(0);
+  fourthOfJanuaryOfNextYear.setUTCFullYear(year + 1, 0, 4);
+  fourthOfJanuaryOfNextYear.setUTCHours(0, 0, 0, 0);
+  var startOfNextYear = (0, _index4.default)(fourthOfJanuaryOfNextYear, dirtyOptions);
+
+  var fourthOfJanuaryOfThisYear = new Date(0);
+  fourthOfJanuaryOfThisYear.setUTCFullYear(year, 0, 4);
+  fourthOfJanuaryOfThisYear.setUTCHours(0, 0, 0, 0);
+  var startOfThisYear = (0, _index4.default)(fourthOfJanuaryOfThisYear, dirtyOptions);
+
+  if (date.getTime() >= startOfNextYear.getTime()) {
+    return year + 1;
+  } else if (date.getTime() >= startOfThisYear.getTime()) {
+    return year;
+  } else {
+    return year - 1;
+  }
+}
+module.exports = exports['default'];
+},{"../../toDate/index.js":52,"../startOfUTCISOWeek/index.js":8}],8:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = startOfUTCISOWeek;
+
+var _index = require('../../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function startOfUTCISOWeek(dirtyDate, dirtyOptions) {
+  var weekStartsOn = 1;
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var day = date.getUTCDay();
+  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+
+  date.setUTCDate(date.getUTCDate() - diff);
+  date.setUTCHours(0, 0, 0, 0);
+  return date;
+}
+module.exports = exports['default'];
+},{"../../toDate/index.js":52}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = startOfUTCISOWeekYear;
+
+var _index = require('../getUTCISOWeekYear/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = require('../startOfUTCISOWeek/index.js');
+
+var _index4 = _interopRequireDefault(_index3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function startOfUTCISOWeekYear(dirtyDate, dirtyOptions) {
+  var year = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var fourthOfJanuary = new Date(0);
+  fourthOfJanuary.setUTCFullYear(year, 0, 4);
+  fourthOfJanuary.setUTCHours(0, 0, 0, 0);
+  var date = (0, _index4.default)(fourthOfJanuary, dirtyOptions);
+  return date;
+}
+module.exports = exports['default'];
+},{"../getUTCISOWeekYear/index.js":7,"../startOfUTCISOWeek/index.js":8}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = addDays;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name addDays
+ * @category Day Helpers
+ * @summary Add the specified number of days to the given date.
+ *
+ * @description
+ * Add the specified number of days to the given date.
+ *
+ * @param {Date|String|Number} date - the date to be changed
+ * @param {Number} amount - the amount of days to be added
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the new date with the days added
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Add 10 days to 1 September 2014:
+ * var result = addDays(new Date(2014, 8, 1), 10)
+ * //=> Thu Sep 11 2014 00:00:00
+ */
+function addDays(dirtyDate, dirtyAmount, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var amount = Number(dirtyAmount);
+  date.setDate(date.getDate() + amount);
+  return date;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],11:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = addMonths;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = require('../getDaysInMonth/index.js');
+
+var _index4 = _interopRequireDefault(_index3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name addMonths
+ * @category Month Helpers
+ * @summary Add the specified number of months to the given date.
+ *
+ * @description
+ * Add the specified number of months to the given date.
+ *
+ * @param {Date|String|Number} date - the date to be changed
+ * @param {Number} amount - the amount of months to be added
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the new date with the months added
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Add 5 months to 1 September 2014:
+ * var result = addMonths(new Date(2014, 8, 1), 5)
+ * //=> Sun Feb 01 2015 00:00:00
+ */
+function addMonths(dirtyDate, dirtyAmount, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var amount = Number(dirtyAmount);
+  var desiredMonth = date.getMonth() + amount;
+  var dateWithDesiredMonth = new Date(0);
+  dateWithDesiredMonth.setFullYear(date.getFullYear(), desiredMonth, 1);
+  dateWithDesiredMonth.setHours(0, 0, 0, 0);
+  var daysInMonth = (0, _index4.default)(dateWithDesiredMonth, dirtyOptions);
+  // Set the last day of the new month
+  // if the original date was the last day of the longer month
+  date.setMonth(desiredMonth, Math.min(daysInMonth, date.getDate()));
+  return date;
+}
+module.exports = exports['default'];
+},{"../getDaysInMonth/index.js":24,"../toDate/index.js":52}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = addYears;
+
+var _index = require('../addMonths/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name addYears
+ * @category Year Helpers
+ * @summary Add the specified number of years to the given date.
+ *
+ * @description
+ * Add the specified number of years to the given date.
+ *
+ * @param {Date|String|Number} date - the date to be changed
+ * @param {Number} amount - the amount of years to be added
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the new date with the years added
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Add 5 years to 1 September 2014:
+ * var result = addYears(new Date(2014, 8, 1), 5)
+ * //=> Sun Sep 01 2019 00:00:00
+ */
+function addYears(dirtyDate, dirtyAmount, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var amount = Number(dirtyAmount);
+  return (0, _index2.default)(dirtyDate, amount * 12, dirtyOptions);
+}
+module.exports = exports['default'];
+},{"../addMonths/index.js":11}],13:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = areIntervalsOverlapping;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name areIntervalsOverlapping
+ * @category Interval Helpers
+ * @summary Is the given time interval overlapping with another time interval?
+ *
+ * @description
+ * Is the given time interval overlapping with another time interval?
+ *
+ * @param {Interval} intervalLeft - the first interval to compare. See [Interval]{@link docs/types/Interval}
+ * @param {Interval} intervalRight - the second interval to compare. See [Interval]{@link docs/types/Interval}
+ * @param {Options} [options] - the object with options. See [Options]{@link docs/types/Options}
+ * @returns {Boolean} whether the time intervals are overlapping
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ * @throws {RangeError} The start of an interval cannot be after its end
+ * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ *
+ * @example
+ * // For overlapping time intervals:
+ * areIntervalsOverlapping(
+ *   {start: new Date(2014, 0, 10), end: new Date(2014, 0, 20)},
+ *   {start: new Date(2014, 0, 17), end: new Date(2014, 0, 21)}
+ * )
+ * //=> true
+ *
+ * @example
+ * // For non-overlapping time intervals:
+ * areIntervalsOverlapping(
+ *   {start: new Date(2014, 0, 10), end: new Date(2014, 0, 20)},
+ *   {start: new Date(2014, 0, 21), end: new Date(2014, 0, 22)}
+ * )
+ * //=> false
+ */
+function areIntervalsOverlapping(dirtyIntervalLeft, dirtyIntervalRight, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var intervalLeft = dirtyIntervalLeft || {};
+  var intervalRight = dirtyIntervalRight || {};
+  var leftStartTime = (0, _index2.default)(intervalLeft.start, dirtyOptions).getTime();
+  var leftEndTime = (0, _index2.default)(intervalLeft.end, dirtyOptions).getTime();
+  var rightStartTime = (0, _index2.default)(intervalRight.start, dirtyOptions).getTime();
+  var rightEndTime = (0, _index2.default)(intervalRight.end, dirtyOptions).getTime();
+
+  // Throw an exception if start date is after end date or if any date is `Invalid Date`
+  if (!(leftStartTime <= leftEndTime && rightStartTime <= rightEndTime)) {
+    throw new RangeError('Invalid interval');
+  }
+
+  return leftStartTime < rightEndTime && rightStartTime < leftEndTime;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],14:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = compareAsc;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name compareAsc
+ * @category Common Helpers
+ * @summary Compare the two dates and return -1, 0 or 1.
+ *
+ * @description
+ * Compare the two dates and return 1 if the first date is after the second,
+ * -1 if the first date is before the second or 0 if dates are equal.
+ *
+ * @param {Date|String|Number} dateLeft - the first date to compare
+ * @param {Date|String|Number} dateRight - the second date to compare
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Number} the result of the comparison
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Compare 11 February 1987 and 10 July 1989:
+ * var result = compareAsc(
+ *   new Date(1987, 1, 11),
+ *   new Date(1989, 6, 10)
+ * )
+ * //=> -1
+ *
+ * @example
+ * // Sort the array of dates:
+ * var result = [
+ *   new Date(1995, 6, 2),
+ *   new Date(1987, 1, 11),
+ *   new Date(1989, 6, 10)
+ * ].sort(compareAsc)
+ * //=> [
+ * //   Wed Feb 11 1987 00:00:00,
+ * //   Mon Jul 10 1989 00:00:00,
+ * //   Sun Jul 02 1995 00:00:00
+ * // ]
+ */
+function compareAsc(dirtyDateLeft, dirtyDateRight, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var dateLeft = (0, _index2.default)(dirtyDateLeft, dirtyOptions);
+  var dateRight = (0, _index2.default)(dirtyDateRight, dirtyOptions);
+
+  var diff = dateLeft.getTime() - dateRight.getTime();
+
+  if (diff < 0) {
+    return -1;
+  } else if (diff > 0) {
+    return 1;
+    // Return 0 if diff is 0; return NaN if diff is NaN
+  } else {
+    return diff;
+  }
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],15:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = differenceInCalendarDays;
+
+var _index = require('../startOfDay/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MILLISECONDS_IN_MINUTE = 60000;
+var MILLISECONDS_IN_DAY = 86400000;
+
+/**
+ * @name differenceInCalendarDays
+ * @category Day Helpers
+ * @summary Get the number of calendar days between the given dates.
+ *
+ * @description
+ * Get the number of calendar days between the given dates.
+ *
+ * @param {Date|String|Number} dateLeft - the later date
+ * @param {Date|String|Number} dateRight - the earlier date
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Number} the number of calendar days
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // How many calendar days are between
+ * // 2 July 2011 23:00:00 and 2 July 2012 00:00:00?
+ * var result = differenceInCalendarDays(
+ *   new Date(2012, 6, 2, 0, 0),
+ *   new Date(2011, 6, 2, 23, 0)
+ * )
+ * //=> 366
+ */
+function differenceInCalendarDays(dirtyDateLeft, dirtyDateRight, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var startOfDayLeft = (0, _index2.default)(dirtyDateLeft, dirtyOptions);
+  var startOfDayRight = (0, _index2.default)(dirtyDateRight, dirtyOptions);
+
+  var timestampLeft = startOfDayLeft.getTime() - startOfDayLeft.getTimezoneOffset() * MILLISECONDS_IN_MINUTE;
+  var timestampRight = startOfDayRight.getTime() - startOfDayRight.getTimezoneOffset() * MILLISECONDS_IN_MINUTE;
+
+  // Round the number of days to the nearest integer
+  // because the number of milliseconds in a day is not constant
+  // (e.g. it's different in the day of the daylight saving time clock shift)
+  return Math.round((timestampLeft - timestampRight) / MILLISECONDS_IN_DAY);
+}
+module.exports = exports['default'];
+},{"../startOfDay/index.js":49}],16:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = differenceInCalendarMonths;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name differenceInCalendarMonths
+ * @category Month Helpers
+ * @summary Get the number of calendar months between the given dates.
+ *
+ * @description
+ * Get the number of calendar months between the given dates.
+ *
+ * @param {Date|String|Number} dateLeft - the later date
+ * @param {Date|String|Number} dateRight - the earlier date
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Number} the number of calendar months
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // How many calendar months are between 31 January 2014 and 1 September 2014?
+ * var result = differenceInCalendarMonths(
+ *   new Date(2014, 8, 1),
+ *   new Date(2014, 0, 31)
+ * )
+ * //=> 8
+ */
+function differenceInCalendarMonths(dirtyDateLeft, dirtyDateRight, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var dateLeft = (0, _index2.default)(dirtyDateLeft, dirtyOptions);
+  var dateRight = (0, _index2.default)(dirtyDateRight, dirtyOptions);
+
+  var yearDiff = dateLeft.getFullYear() - dateRight.getFullYear();
+  var monthDiff = dateLeft.getMonth() - dateRight.getMonth();
+
+  return yearDiff * 12 + monthDiff;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],17:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = differenceInDays;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = require('../differenceInCalendarDays/index.js');
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _index5 = require('../compareAsc/index.js');
+
+var _index6 = _interopRequireDefault(_index5);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name differenceInDays
+ * @category Day Helpers
+ * @summary Get the number of full days between the given dates.
+ *
+ * @description
+ * Get the number of full days between the given dates.
+ *
+ * @param {Date|String|Number} dateLeft - the later date
+ * @param {Date|String|Number} dateRight - the earlier date
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Number} the number of full days
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // How many full days are between
+ * // 2 July 2011 23:00:00 and 2 July 2012 00:00:00?
+ * var result = differenceInDays(
+ *   new Date(2012, 6, 2, 0, 0),
+ *   new Date(2011, 6, 2, 23, 0)
+ * )
+ * //=> 365
+ */
+function differenceInDays(dirtyDateLeft, dirtyDateRight, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var dateLeft = (0, _index2.default)(dirtyDateLeft, dirtyOptions);
+  var dateRight = (0, _index2.default)(dirtyDateRight, dirtyOptions);
+
+  var sign = (0, _index6.default)(dateLeft, dateRight, dirtyOptions);
+  var difference = Math.abs((0, _index4.default)(dateLeft, dateRight, dirtyOptions));
+  dateLeft.setDate(dateLeft.getDate() - sign * difference);
+
+  // Math.abs(diff in full days - diff in calendar days) === 1 if last calendar day is not full
+  // If so, result must be decreased by 1 in absolute value
+  var isLastDayNotFull = (0, _index6.default)(dateLeft, dateRight, dirtyOptions) === -sign;
+  return sign * (difference - isLastDayNotFull);
+}
+module.exports = exports['default'];
+},{"../compareAsc/index.js":14,"../differenceInCalendarDays/index.js":15,"../toDate/index.js":52}],18:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = eachDayOfInterval;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name eachDayOfInterval
+ * @category Interval Helpers
+ * @summary Return the array of dates within the specified time interval.
+ *
+ * @description
+ * Return the array of dates within the specified time interval.
+ *
+ * @param {Interval} interval - the interval. See [Interval]{@link docs/types/Interval}
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date[]} the array with starts of days from the day of the interval start to the day of the interval end
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ * @throws {RangeError} The start of an interval cannot be after its end
+ * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ *
+ * @example
+ * // Each day between 6 October 2014 and 10 October 2014:
+ * var result = eachDayOfInterval({
+ *   start: new Date(2014, 9, 6),
+ *   end: new Date(2014, 9, 10)
+ * })
+ * //=> [
+ * //   Mon Oct 06 2014 00:00:00,
+ * //   Tue Oct 07 2014 00:00:00,
+ * //   Wed Oct 08 2014 00:00:00,
+ * //   Thu Oct 09 2014 00:00:00,
+ * //   Fri Oct 10 2014 00:00:00
+ * // ]
+ */
+function eachDayOfInterval(dirtyInterval, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var interval = dirtyInterval || {};
+  var startDate = (0, _index2.default)(interval.start, dirtyOptions);
+  var endDate = (0, _index2.default)(interval.end, dirtyOptions);
+
+  var endTime = endDate.getTime();
+
+  // Throw an exception if start date is after end date or if any date is `Invalid Date`
+  if (!(startDate.getTime() <= endTime)) {
+    throw new RangeError('Invalid interval');
+  }
+
+  var dates = [];
+
+  var currentDate = startDate;
+  currentDate.setHours(0, 0, 0, 0);
+
+  while (currentDate.getTime() <= endTime) {
+    dates.push((0, _index2.default)(currentDate, dirtyOptions));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dates;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],19:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = endOfDay;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name endOfDay
+ * @category Day Helpers
+ * @summary Return the end of a day for the given date.
+ *
+ * @description
+ * Return the end of a day for the given date.
+ * The result will be in the local timezone.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the end of a day
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // The end of a day for 2 September 2014 11:55:00:
+ * var result = endOfDay(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Tue Sep 02 2014 23:59:59.999
+ */
+function endOfDay(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  date.setHours(23, 59, 59, 999);
+  return date;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],20:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = endOfMonth;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name endOfMonth
+ * @category Month Helpers
+ * @summary Return the end of a month for the given date.
+ *
+ * @description
+ * Return the end of a month for the given date.
+ * The result will be in the local timezone.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the end of a month
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // The end of a month for 2 September 2014 11:55:00:
+ * var result = endOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Tue Sep 30 2014 23:59:59.999
+ */
+function endOfMonth(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var month = date.getMonth();
+  date.setFullYear(date.getFullYear(), month + 1, 0);
+  date.setHours(23, 59, 59, 999);
+  return date;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],21:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = endOfWeek;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name endOfWeek
+ * @category Week Helpers
+ * @summary Return the end of a week for the given date.
+ *
+ * @description
+ * Return the end of a week for the given date.
+ * The result will be in the local timezone.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+ * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+ * @returns {Date} the end of a week
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ *
+ * @example
+ * // The end of a week for 2 September 2014 11:55:00:
+ * var result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Sat Sep 06 2014 23:59:59.999
+ *
+ * @example
+ * // If the week starts on Monday, the end of the week for 2 September 2014 11:55:00:
+ * var result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0), {weekStartsOn: 1})
+ * //=> Sun Sep 07 2014 23:59:59.999
+ */
+function endOfWeek(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var options = dirtyOptions || {};
+
+  var locale = options.locale;
+  var localeWeekStartsOn = locale && locale.options && locale.options.weekStartsOn;
+  var defaultWeekStartsOn = localeWeekStartsOn === undefined ? 0 : Number(localeWeekStartsOn);
+  var weekStartsOn = options.weekStartsOn === undefined ? defaultWeekStartsOn : Number(options.weekStartsOn);
+
+  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, options);
+  var day = date.getDay();
+  var diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
+
+  date.setDate(date.getDate() + diff);
+  date.setHours(23, 59, 59, 999);
+  return date;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],22:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = require('../../../_lib/getUTCDayOfYear/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = require('../../../_lib/getUTCISOWeek/index.js');
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _index5 = require('../../../_lib/getUTCISOWeekYear/index.js');
+
+var _index6 = _interopRequireDefault(_index5);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var formatters = {
+  // Month: 1, 2, ..., 12
+  'M': function M(date) {
+    return date.getUTCMonth() + 1;
+  },
+
+  // Month: 1st, 2nd, ..., 12th
+  'Mo': function Mo(date, options) {
+    var month = date.getUTCMonth() + 1;
+    return options.locale.localize.ordinalNumber(month, { unit: 'month' });
+  },
+
+  // Month: 01, 02, ..., 12
+  'MM': function MM(date) {
+    return addLeadingZeros(date.getUTCMonth() + 1, 2);
+  },
+
+  // Month: Jan, Feb, ..., Dec
+  'MMM': function MMM(date, options) {
+    return options.locale.localize.month(date.getUTCMonth(), { type: 'short' });
+  },
+
+  // Month: January, February, ..., December
+  'MMMM': function MMMM(date, options) {
+    return options.locale.localize.month(date.getUTCMonth(), { type: 'long' });
+  },
+
+  // Quarter: 1, 2, 3, 4
+  'Q': function Q(date) {
+    return Math.ceil((date.getUTCMonth() + 1) / 3);
+  },
+
+  // Quarter: 1st, 2nd, 3rd, 4th
+  'Qo': function Qo(date, options) {
+    var quarter = Math.ceil((date.getUTCMonth() + 1) / 3);
+    return options.locale.localize.ordinalNumber(quarter, { unit: 'quarter' });
+  },
+
+  // Day of month: 1, 2, ..., 31
+  'D': function D(date) {
+    return date.getUTCDate();
+  },
+
+  // Day of month: 1st, 2nd, ..., 31st
+  'Do': function Do(date, options) {
+    return options.locale.localize.ordinalNumber(date.getUTCDate(), { unit: 'dayOfMonth' });
+  },
+
+  // Day of month: 01, 02, ..., 31
+  'DD': function DD(date) {
+    return addLeadingZeros(date.getUTCDate(), 2);
+  },
+
+  // Day of year: 1, 2, ..., 366
+  'DDD': function DDD(date) {
+    return (0, _index2.default)(date);
+  },
+
+  // Day of year: 1st, 2nd, ..., 366th
+  'DDDo': function DDDo(date, options) {
+    return options.locale.localize.ordinalNumber((0, _index2.default)(date), { unit: 'dayOfYear' });
+  },
+
+  // Day of year: 001, 002, ..., 366
+  'DDDD': function DDDD(date) {
+    return addLeadingZeros((0, _index2.default)(date), 3);
+  },
+
+  // Day of week: Su, Mo, ..., Sa
+  'dd': function dd(date, options) {
+    return options.locale.localize.weekday(date.getUTCDay(), { type: 'narrow' });
+  },
+
+  // Day of week: Sun, Mon, ..., Sat
+  'ddd': function ddd(date, options) {
+    return options.locale.localize.weekday(date.getUTCDay(), { type: 'short' });
+  },
+
+  // Day of week: Sunday, Monday, ..., Saturday
+  'dddd': function dddd(date, options) {
+    return options.locale.localize.weekday(date.getUTCDay(), { type: 'long' });
+  },
+
+  // Day of week: 0, 1, ..., 6
+  'd': function d(date) {
+    return date.getUTCDay();
+  },
+
+  // Day of week: 0th, 1st, 2nd, ..., 6th
+  'do': function _do(date, options) {
+    return options.locale.localize.ordinalNumber(date.getUTCDay(), { unit: 'dayOfWeek' });
+  },
+
+  // Day of ISO week: 1, 2, ..., 7
+  'E': function E(date) {
+    return date.getUTCDay() || 7;
+  },
+
+  // ISO week: 1, 2, ..., 53
+  'W': function W(date) {
+    return (0, _index4.default)(date);
+  },
+
+  // ISO week: 1st, 2nd, ..., 53th
+  'Wo': function Wo(date, options) {
+    return options.locale.localize.ordinalNumber((0, _index4.default)(date), { unit: 'isoWeek' });
+  },
+
+  // ISO week: 01, 02, ..., 53
+  'WW': function WW(date) {
+    return addLeadingZeros((0, _index4.default)(date), 2);
+  },
+
+  // Year: 00, 01, ..., 99
+  'YY': function YY(date) {
+    return addLeadingZeros(date.getUTCFullYear(), 4).substr(2);
+  },
+
+  // Year: 1900, 1901, ..., 2099
+  'YYYY': function YYYY(date) {
+    return addLeadingZeros(date.getUTCFullYear(), 4);
+  },
+
+  // ISO week-numbering year: 00, 01, ..., 99
+  'GG': function GG(date) {
+    return String((0, _index6.default)(date)).substr(2);
+  },
+
+  // ISO week-numbering year: 1900, 1901, ..., 2099
+  'GGGG': function GGGG(date) {
+    return (0, _index6.default)(date);
+  },
+
+  // Hour: 0, 1, ... 23
+  'H': function H(date) {
+    return date.getUTCHours();
+  },
+
+  // Hour: 00, 01, ..., 23
+  'HH': function HH(date) {
+    return addLeadingZeros(date.getUTCHours(), 2);
+  },
+
+  // Hour: 1, 2, ..., 12
+  'h': function h(date) {
+    var hours = date.getUTCHours();
+    if (hours === 0) {
+      return 12;
+    } else if (hours > 12) {
+      return hours % 12;
+    } else {
+      return hours;
+    }
+  },
+
+  // Hour: 01, 02, ..., 12
+  'hh': function hh(date) {
+    return addLeadingZeros(formatters['h'](date), 2);
+  },
+
+  // Minute: 0, 1, ..., 59
+  'm': function m(date) {
+    return date.getUTCMinutes();
+  },
+
+  // Minute: 00, 01, ..., 59
+  'mm': function mm(date) {
+    return addLeadingZeros(date.getUTCMinutes(), 2);
+  },
+
+  // Second: 0, 1, ..., 59
+  's': function s(date) {
+    return date.getUTCSeconds();
+  },
+
+  // Second: 00, 01, ..., 59
+  'ss': function ss(date) {
+    return addLeadingZeros(date.getUTCSeconds(), 2);
+  },
+
+  // 1/10 of second: 0, 1, ..., 9
+  'S': function S(date) {
+    return Math.floor(date.getUTCMilliseconds() / 100);
+  },
+
+  // 1/100 of second: 00, 01, ..., 99
+  'SS': function SS(date) {
+    return addLeadingZeros(Math.floor(date.getUTCMilliseconds() / 10), 2);
+  },
+
+  // Millisecond: 000, 001, ..., 999
+  'SSS': function SSS(date) {
+    return addLeadingZeros(date.getUTCMilliseconds(), 3);
+  },
+
+  // Timezone: -01:00, +00:00, ... +12:00
+  'Z': function Z(date, options) {
+    var originalDate = options._originalDate || date;
+    return formatTimezone(originalDate.getTimezoneOffset(), ':');
+  },
+
+  // Timezone: -0100, +0000, ... +1200
+  'ZZ': function ZZ(date, options) {
+    var originalDate = options._originalDate || date;
+    return formatTimezone(originalDate.getTimezoneOffset());
+  },
+
+  // Seconds timestamp: 512969520
+  'X': function X(date, options) {
+    var originalDate = options._originalDate || date;
+    return Math.floor(originalDate.getTime() / 1000);
+  },
+
+  // Milliseconds timestamp: 512969520900
+  'x': function x(date, options) {
+    var originalDate = options._originalDate || date;
+    return originalDate.getTime();
+  },
+
+  // AM, PM
+  'A': function A(date, options) {
+    return options.locale.localize.timeOfDay(date.getUTCHours(), { type: 'uppercase' });
+  },
+
+  // am, pm
+  'a': function a(date, options) {
+    return options.locale.localize.timeOfDay(date.getUTCHours(), { type: 'lowercase' });
+  },
+
+  // a.m., p.m.
+  'aa': function aa(date, options) {
+    return options.locale.localize.timeOfDay(date.getUTCHours(), { type: 'long' });
+  }
+};
+
+function formatTimezone(offset, delimeter) {
+  delimeter = delimeter || '';
+  var sign = offset > 0 ? '-' : '+';
+  var absOffset = Math.abs(offset);
+  var hours = Math.floor(absOffset / 60);
+  var minutes = absOffset % 60;
+  return sign + addLeadingZeros(hours, 2) + delimeter + addLeadingZeros(minutes, 2);
+}
+
+function addLeadingZeros(number, targetLength) {
+  var output = Math.abs(number).toString();
+  while (output.length < targetLength) {
+    output = '0' + output;
+  }
+  return output;
+}
+
+exports.default = formatters;
+module.exports = exports['default'];
+},{"../../../_lib/getUTCDayOfYear/index.js":5,"../../../_lib/getUTCISOWeek/index.js":6,"../../../_lib/getUTCISOWeekYear/index.js":7}],23:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = format;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = require('../isValid/index.js');
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _index5 = require('../locale/en-US/index.js');
+
+var _index6 = _interopRequireDefault(_index5);
+
+var _index7 = require('./_lib/formatters/index.js');
+
+var _index8 = _interopRequireDefault(_index7);
+
+var _index9 = require('../_lib/cloneObject/index.js');
+
+var _index10 = _interopRequireDefault(_index9);
+
+var _index11 = require('../_lib/addUTCMinutes/index.js');
+
+var _index12 = _interopRequireDefault(_index11);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var longFormattingTokensRegExp = /(\[[^[]*])|(\\)?(LTS|LT|LLLL|LLL|LL|L|llll|lll|ll|l)/g;
+var defaultFormattingTokensRegExp = /(\[[^[]*])|(\\)?(x|ss|s|mm|m|hh|h|do|dddd|ddd|dd|d|aa|a|ZZ|Z|YYYY|YY|X|Wo|WW|W|SSS|SS|S|Qo|Q|Mo|MMMM|MMM|MM|M|HH|H|GGGG|GG|E|Do|DDDo|DDDD|DDD|DD|D|A|.)/g;
+
+/**
+ * @name format
+ * @category Common Helpers
+ * @summary Format the date.
+ *
+ * @description
+ * Return the formatted date string in the given format.
+ *
+ * Accepted tokens:
+ * | Unit                    | Token | Result examples                  |
+ * |-------------------------|-------|----------------------------------|
+ * | Month                   | M     | 1, 2, ..., 12                    |
+ * |                         | Mo    | 1st, 2nd, ..., 12th              |
+ * |                         | MM    | 01, 02, ..., 12                  |
+ * |                         | MMM   | Jan, Feb, ..., Dec               |
+ * |                         | MMMM  | January, February, ..., December |
+ * | Quarter                 | Q     | 1, 2, 3, 4                       |
+ * |                         | Qo    | 1st, 2nd, 3rd, 4th               |
+ * | Day of month            | D     | 1, 2, ..., 31                    |
+ * |                         | Do    | 1st, 2nd, ..., 31st              |
+ * |                         | DD    | 01, 02, ..., 31                  |
+ * | Day of year             | DDD   | 1, 2, ..., 366                   |
+ * |                         | DDDo  | 1st, 2nd, ..., 366th             |
+ * |                         | DDDD  | 001, 002, ..., 366               |
+ * | Day of week             | d     | 0, 1, ..., 6                     |
+ * |                         | do    | 0th, 1st, ..., 6th               |
+ * |                         | dd    | Su, Mo, ..., Sa                  |
+ * |                         | ddd   | Sun, Mon, ..., Sat               |
+ * |                         | dddd  | Sunday, Monday, ..., Saturday    |
+ * | Day of ISO week         | E     | 1, 2, ..., 7                     |
+ * | ISO week                | W     | 1, 2, ..., 53                    |
+ * |                         | Wo    | 1st, 2nd, ..., 53rd              |
+ * |                         | WW    | 01, 02, ..., 53                  |
+ * | Year                    | YY    | 00, 01, ..., 99                  |
+ * |                         | YYYY  | 1900, 1901, ..., 2099            |
+ * | ISO week-numbering year | GG    | 00, 01, ..., 99                  |
+ * |                         | GGGG  | 1900, 1901, ..., 2099            |
+ * | AM/PM                   | A     | AM, PM                           |
+ * |                         | a     | am, pm                           |
+ * |                         | aa    | a.m., p.m.                       |
+ * | Hour                    | H     | 0, 1, ... 23                     |
+ * |                         | HH    | 00, 01, ... 23                   |
+ * |                         | h     | 1, 2, ..., 12                    |
+ * |                         | hh    | 01, 02, ..., 12                  |
+ * | Minute                  | m     | 0, 1, ..., 59                    |
+ * |                         | mm    | 00, 01, ..., 59                  |
+ * | Second                  | s     | 0, 1, ..., 59                    |
+ * |                         | ss    | 00, 01, ..., 59                  |
+ * | 1/10 of second          | S     | 0, 1, ..., 9                     |
+ * | 1/100 of second         | SS    | 00, 01, ..., 99                  |
+ * | Millisecond             | SSS   | 000, 001, ..., 999               |
+ * | Timezone                | Z     | -01:00, +00:00, ... +12:00       |
+ * |                         | ZZ    | -0100, +0000, ..., +1200         |
+ * | Seconds timestamp       | X     | 512969520                        |
+ * | Milliseconds timestamp  | x     | 512969520900                     |
+ * | Long format             | LT    | 05:30 a.m.                       |
+ * |                         | LTS   | 05:30:15 a.m.                    |
+ * |                         | L     | 07/02/1995                       |
+ * |                         | l     | 7/2/1995                         |
+ * |                         | LL    | July 2 1995                      |
+ * |                         | ll    | Jul 2 1995                       |
+ * |                         | LLL   | July 2 1995 05:30 a.m.           |
+ * |                         | lll   | Jul 2 1995 05:30 a.m.            |
+ * |                         | LLLL  | Sunday, July 2 1995 05:30 a.m.   |
+ * |                         | llll  | Sun, Jul 2 1995 05:30 a.m.       |
+ *
+ * The characters wrapped in square brackets are escaped.
+ *
+ * The result may vary by locale.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @param {String} format - the string of tokens
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+ * @returns {String} the formatted date string
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ * @throws {RangeError} `options.locale` must contain `localize` property
+ * @throws {RangeError} `options.locale` must contain `formatLong` property
+ *
+ * @example
+ * // Represent 11 February 2014 in middle-endian format:
+ * var result = format(
+ *   new Date(2014, 1, 11),
+ *   'MM/DD/YYYY'
+ * )
+ * //=> '02/11/2014'
+ *
+ * @example
+ * // Represent 2 July 2014 in Esperanto:
+ * import { eoLocale } from 'date-fns/locale/eo'
+ * var result = format(
+ *   new Date(2014, 6, 2),
+ *   'Do [de] MMMM YYYY',
+ *   {locale: eoLocale}
+ * )
+ * //=> '2-a de julio 2014'
+ */
+function format(dirtyDate, dirtyFormatStr, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var formatStr = String(dirtyFormatStr);
+  var options = dirtyOptions || {};
+
+  var locale = options.locale || _index6.default;
+
+  if (!locale.localize) {
+    throw new RangeError('locale must contain localize property');
+  }
+
+  if (!locale.formatLong) {
+    throw new RangeError('locale must contain formatLong property');
+  }
+
+  var localeFormatters = locale.formatters || {};
+  var formattingTokensRegExp = locale.formattingTokensRegExp || defaultFormattingTokensRegExp;
+  var formatLong = locale.formatLong;
+
+  var originalDate = (0, _index2.default)(dirtyDate, options);
+
+  if (!(0, _index4.default)(originalDate, options)) {
+    return 'Invalid Date';
+  }
+
+  // Convert the date in system timezone to the same date in UTC+00:00 timezone.
+  // This ensures that when UTC functions will be implemented, locales will be compatible with them.
+  // See an issue about UTC functions: https://github.com/date-fns/date-fns/issues/376
+  var timezoneOffset = originalDate.getTimezoneOffset();
+  var utcDate = (0, _index12.default)(originalDate, -timezoneOffset, options);
+
+  var formatterOptions = (0, _index10.default)(options);
+  formatterOptions.locale = locale;
+  formatterOptions.formatters = _index8.default;
+
+  // When UTC functions will be implemented, options._originalDate will likely be a part of public API.
+  // Right now, please don't use it in locales. If you have to use an original date,
+  // please restore it from `date`, adding a timezone offset to it.
+  formatterOptions._originalDate = originalDate;
+
+  var result = formatStr.replace(longFormattingTokensRegExp, function (substring) {
+    if (substring[0] === '[') {
+      return substring;
+    }
+
+    if (substring[0] === '\\') {
+      return cleanEscapedString(substring);
+    }
+
+    return formatLong(substring);
+  }).replace(formattingTokensRegExp, function (substring) {
+    var formatter = localeFormatters[substring] || _index8.default[substring];
+
+    if (formatter) {
+      return formatter(utcDate, formatterOptions);
+    } else {
+      return cleanEscapedString(substring);
+    }
+  });
+
+  return result;
+}
+
+function cleanEscapedString(input) {
+  if (input.match(/\[[\s\S]/)) {
+    return input.replace(/^\[|]$/g, '');
+  }
+  return input.replace(/\\/g, '');
+}
+module.exports = exports['default'];
+},{"../_lib/addUTCMinutes/index.js":3,"../_lib/cloneObject/index.js":4,"../isValid/index.js":29,"../locale/en-US/index.js":44,"../toDate/index.js":52,"./_lib/formatters/index.js":22}],24:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getDaysInMonth;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name getDaysInMonth
+ * @category Month Helpers
+ * @summary Get the number of days in a month of the given date.
+ *
+ * @description
+ * Get the number of days in a month of the given date.
+ *
+ * @param {Date|String|Number} date - the given date
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Number} the number of days in a month
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // How many days are in February 2000?
+ * var result = getDaysInMonth(new Date(2000, 1))
+ * //=> 29
+ */
+function getDaysInMonth(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var year = date.getFullYear();
+  var monthIndex = date.getMonth();
+  var lastDayOfMonth = new Date(0);
+  lastDayOfMonth.setFullYear(year, monthIndex + 1, 0);
+  lastDayOfMonth.setHours(0, 0, 0, 0);
+  return lastDayOfMonth.getDate();
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],25:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isAfter;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name isAfter
+ * @category Common Helpers
+ * @summary Is the first date after the second one?
+ *
+ * @description
+ * Is the first date after the second one?
+ *
+ * @param {Date|String|Number} date - the date that should be after the other one to return true
+ * @param {Date|String|Number} dateToCompare - the date to compare with
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Boolean} the first date is after the second date
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Is 10 July 1989 after 11 February 1987?
+ * var result = isAfter(new Date(1989, 6, 10), new Date(1987, 1, 11))
+ * //=> true
+ */
+function isAfter(dirtyDate, dirtyDateToCompare, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var dateToCompare = (0, _index2.default)(dirtyDateToCompare, dirtyOptions);
+  return date.getTime() > dateToCompare.getTime();
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],26:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isBefore;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name isBefore
+ * @category Common Helpers
+ * @summary Is the first date before the second one?
+ *
+ * @description
+ * Is the first date before the second one?
+ *
+ * @param {Date|String|Number} date - the date that should be before the other one to return true
+ * @param {Date|String|Number} dateToCompare - the date to compare with
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Boolean} the first date is before the second date
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Is 10 July 1989 before 11 February 1987?
+ * var result = isBefore(new Date(1989, 6, 10), new Date(1987, 1, 11))
+ * //=> false
+ */
+function isBefore(dirtyDate, dirtyDateToCompare, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var dateToCompare = (0, _index2.default)(dirtyDateToCompare, dirtyOptions);
+  return date.getTime() < dateToCompare.getTime();
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],27:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isSameDay;
+
+var _index = require('../startOfDay/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name isSameDay
+ * @category Day Helpers
+ * @summary Are the given dates in the same day?
+ *
+ * @description
+ * Are the given dates in the same day?
+ *
+ * @param {Date|String|Number} dateLeft - the first date to check
+ * @param {Date|String|Number} dateRight - the second date to check
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Boolean} the dates are in the same day
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Are 4 September 06:00:00 and 4 September 18:00:00 in the same day?
+ * var result = isSameDay(
+ *   new Date(2014, 8, 4, 6, 0),
+ *   new Date(2014, 8, 4, 18, 0)
+ * )
+ * //=> true
+ */
+function isSameDay(dirtyDateLeft, dirtyDateRight, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var dateLeftStartOfDay = (0, _index2.default)(dirtyDateLeft, dirtyOptions);
+  var dateRightStartOfDay = (0, _index2.default)(dirtyDateRight, dirtyOptions);
+
+  return dateLeftStartOfDay.getTime() === dateRightStartOfDay.getTime();
+}
+module.exports = exports['default'];
+},{"../startOfDay/index.js":49}],28:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isSameMonth;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name isSameMonth
+ * @category Month Helpers
+ * @summary Are the given dates in the same month?
+ *
+ * @description
+ * Are the given dates in the same month?
+ *
+ * @param {Date|String|Number} dateLeft - the first date to check
+ * @param {Date|String|Number} dateRight - the second date to check
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Boolean} the dates are in the same month
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Are 2 September 2014 and 25 September 2014 in the same month?
+ * var result = isSameMonth(
+ *   new Date(2014, 8, 2),
+ *   new Date(2014, 8, 25)
+ * )
+ * //=> true
+ */
+function isSameMonth(dirtyDateLeft, dirtyDateRight, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var dateLeft = (0, _index2.default)(dirtyDateLeft, dirtyOptions);
+  var dateRight = (0, _index2.default)(dirtyDateRight, dirtyOptions);
+  return dateLeft.getFullYear() === dateRight.getFullYear() && dateLeft.getMonth() === dateRight.getMonth();
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],29:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isValid;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name isValid
+ * @category Common Helpers
+ * @summary Is the given date valid?
+ *
+ * @description
+ * Returns false if argument is Invalid Date and true otherwise.
+ * Argument is converted to Date using `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * Invalid Date is a Date, whose time value is NaN.
+ *
+ * Time value of Date: http://es5.github.io/#x15.9.1.1
+ *
+ * @param {*} date - the date to check
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Boolean} the date is valid
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // For the valid date:
+ * var result = isValid(new Date(2014, 1, 31))
+ * //=> true
+ *
+ * @example
+ * // For the value, convertable into a date:
+ * var result = isValid('2014-02-31')
+ * //=> true
+ *
+ * @example
+ * // For the invalid date:
+ * var result = isValid(new Date(''))
+ * //=> false
+ */
+function isValid(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  return !isNaN(date);
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],30:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isWeekend;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name isWeekend
+ * @category Weekday Helpers
+ * @summary Does the given date fall on a weekend?
+ *
+ * @description
+ * Does the given date fall on a weekend?
+ *
+ * @param {Date|String|Number} date - the date to check
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Boolean} the date falls on a weekend
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Does 5 October 2014 fall on a weekend?
+ * var result = isWeekend(new Date(2014, 9, 5))
+ * //=> true
+ */
+function isWeekend(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var day = date.getDay();
+  return day === 0 || day === 6;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],31:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isWithinInterval;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name isWithinInterval
+ * @category Interval Helpers
+ * @summary Is the given date within the interval?
+ *
+ * @description
+ * Is the given date within the interval?
+ *
+ * @param {Date|String|Number} date - the date to check
+ * @param {Interval} interval - the interval to check
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Boolean} the date is within the interval
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ * @throws {RangeError} The start of an interval cannot be after its end
+ * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ *
+ * @example
+ * // For the date within the interval:
+ * isWithinInterval(
+ *   new Date(2014, 0, 3),
+ *   {start: new Date(2014, 0, 1), end: new Date(2014, 0, 7)}
+ * )
+ * //=> true
+ *
+ * @example
+ * // For the date outside of the interval:
+ * isWithinInterval(
+ *   new Date(2014, 0, 10),
+ *   {start: new Date(2014, 0, 1), end: new Date(2014, 0, 7)}
+ * )
+ * //=> false
+ */
+function isWithinInterval(dirtyDate, dirtyInterval, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var interval = dirtyInterval || {};
+  var time = (0, _index2.default)(dirtyDate, dirtyOptions).getTime();
+  var startTime = (0, _index2.default)(interval.start, dirtyOptions).getTime();
+  var endTime = (0, _index2.default)(interval.end, dirtyOptions).getTime();
+
+  // Throw an exception if start date is after end date or if any date is `Invalid Date`
+  if (!(startTime <= endTime)) {
+    throw new RangeError('Invalid interval');
+  }
+
+  return time >= startTime && time <= endTime;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],32:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = buildFormatLongFn;
+var tokensToBeShortedPattern = /MMMM|MM|DD|dddd/g;
+
+function buildShortLongFormat(format) {
+  return format.replace(tokensToBeShortedPattern, function (token) {
+    return token.slice(1);
+  });
+}
+
+/**
+ * @name buildFormatLongFn
+ * @category Locale Helpers
+ * @summary Build `formatLong` property for locale used by `format`, `formatRelative` and `parse` functions.
+ *
+ * @description
+ * Build `formatLong` property for locale used by `format`, `formatRelative` and `parse` functions.
+ * Returns a function which takes one of the following tokens as the argument:
+ * `'LTS'`, `'LT'`, `'L'`, `'LL'`, `'LLL'`, `'l'`, `'ll'`, `'lll'`, `'llll'`
+ * and returns a long format string written as `format` token strings.
+ * See [format]{@link https://date-fns.org/docs/format}
+ *
+ * `'l'`, `'ll'`, `'lll'` and `'llll'` formats are built automatically
+ * by shortening some of the tokens from corresponding unshortened formats
+ * (e.g., if `LL` is `'MMMM DD YYYY'` then `ll` will be `MMM D YYYY`)
+ *
+ * @param {Object} obj - the object with long formats written as `format` token strings
+ * @param {String} obj.LT - time format: hours and minutes
+ * @param {String} obj.LTS - time format: hours, minutes and seconds
+ * @param {String} obj.L - short date format: numeric day, month and year
+ * @param {String} [obj.l] - short date format: numeric day, month and year (shortened)
+ * @param {String} obj.LL - long date format: day, month in words, and year
+ * @param {String} [obj.ll] - long date format: day, month in words, and year (shortened)
+ * @param {String} obj.LLL - long date and time format
+ * @param {String} [obj.lll] - long date and time format (shortened)
+ * @param {String} obj.LLLL - long date, time and weekday format
+ * @param {String} [obj.llll] - long date, time and weekday format (shortened)
+ * @returns {Function} `formatLong` property of the locale
+ *
+ * @example
+ * // For `en-US` locale:
+ * locale.formatLong = buildFormatLongFn({
+ *   LT: 'h:mm aa',
+ *   LTS: 'h:mm:ss aa',
+ *   L: 'MM/DD/YYYY',
+ *   LL: 'MMMM D YYYY',
+ *   LLL: 'MMMM D YYYY h:mm aa',
+ *   LLLL: 'dddd, MMMM D YYYY h:mm aa'
+ * })
+ */
+function buildFormatLongFn(obj) {
+  var formatLongLocale = {
+    LTS: obj.LTS,
+    LT: obj.LT,
+    L: obj.L,
+    LL: obj.LL,
+    LLL: obj.LLL,
+    LLLL: obj.LLLL,
+    l: obj.l || buildShortLongFormat(obj.L),
+    ll: obj.ll || buildShortLongFormat(obj.LL),
+    lll: obj.lll || buildShortLongFormat(obj.LLL),
+    llll: obj.llll || buildShortLongFormat(obj.LLLL)
+  };
+
+  return function (token) {
+    return formatLongLocale[token];
+  };
+}
+module.exports = exports["default"];
+},{}],33:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = buildLocalizeArrayFn;
+/**
+ * @name buildLocalizeArrayFn
+ * @category Locale Helpers
+ * @summary Build `localize.weekdays`, `localize.months` and `localize.timesOfDay` properties for the locale.
+ *
+ * @description
+ * Build `localize.weekdays`, `localize.months` and `localize.timesOfDay` properties for the locale.
+ * If no `type` is supplied to the options of the resulting function, `defaultType` will be used (see example).
+ *
+ * @param {Object} values - the object with arrays of values
+ * @param {String} defaultType - the default type for the localize function
+ * @returns {Function} the resulting function
+ *
+ * @example
+ * var weekdayValues = {
+ *   narrow: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+ *   short: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+ *   long: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+ * }
+ * locale.localize.weekdays = buildLocalizeArrayFn(weekdayValues, 'long')
+ * locale.localize.weekdays({type: 'narrow'}) //=> ['Su', 'Mo', ...]
+ * locale.localize.weekdays() //=> ['Sunday', 'Monday', ...]
+ */
+function buildLocalizeArrayFn(values, defaultType) {
+  return function (dirtyOptions) {
+    var options = dirtyOptions || {};
+    var type = options.type ? String(options.type) : defaultType;
+    return values[type] || values[defaultType];
+  };
+}
+module.exports = exports["default"];
+},{}],34:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = buildLocalizeFn;
+/**
+ * @name buildLocalizeFn
+ * @category Locale Helpers
+ * @summary Build `localize.weekday`, `localize.month` and `localize.timeOfDay` properties for the locale.
+ *
+ * @description
+ * Build `localize.weekday`, `localize.month` and `localize.timeOfDay` properties for the locale
+ * used by `format` function.
+ * If no `type` is supplied to the options of the resulting function, `defaultType` will be used (see example).
+ *
+ * `localize.weekday` function takes the weekday index as argument (0 - Sunday).
+ * `localize.month` takes the month index (0 - January).
+ * `localize.timeOfDay` takes the hours. Use `indexCallback` to convert them to an array index (see example).
+ *
+ * @param {Object} values - the object with arrays of values
+ * @param {String} defaultType - the default type for the localize function
+ * @param {Function} [indexCallback] - the callback which takes the resulting function argument
+ *   and converts it into value array index
+ * @returns {Function} the resulting function
+ *
+ * @example
+ * var timeOfDayValues = {
+ *   uppercase: ['AM', 'PM'],
+ *   lowercase: ['am', 'pm'],
+ *   long: ['a.m.', 'p.m.']
+ * }
+ * locale.localize.timeOfDay = buildLocalizeFn(timeOfDayValues, 'long', function (hours) {
+ *   // 0 is a.m. array index, 1 is p.m. array index
+ *   return (hours / 12) >= 1 ? 1 : 0
+ * })
+ * locale.localize.timeOfDay(16, {type: 'uppercase'}) //=> 'PM'
+ * locale.localize.timeOfDay(5) //=> 'a.m.'
+ */
+function buildLocalizeFn(values, defaultType, indexCallback) {
+  return function (dirtyIndex, dirtyOptions) {
+    var options = dirtyOptions || {};
+    var type = options.type ? String(options.type) : defaultType;
+    var valuesArray = values[type] || values[defaultType];
+    var index = indexCallback ? indexCallback(Number(dirtyIndex)) : Number(dirtyIndex);
+    return valuesArray[index];
+  };
+}
+module.exports = exports["default"];
+},{}],35:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = buildMatchFn;
+/**
+ * @name buildMatchFn
+ * @category Locale Helpers
+ * @summary Build `match.weekdays`, `match.months` and `match.timesOfDay` properties for the locale.
+ *
+ * @description
+ * Build `match.weekdays`, `match.months` and `match.timesOfDay` properties for the locale used by `parse` function.
+ * If no `type` is supplied to the options of the resulting function, `defaultType` will be used (see example).
+ * The result of the match function will be passed into corresponding parser function
+ * (`match.weekday`, `match.month` or `match.timeOfDay` respectively. See `buildParseFn`).
+ *
+ * @param {Object} values - the object with RegExps
+ * @param {String} defaultType - the default type for the match function
+ * @returns {Function} the resulting function
+ *
+ * @example
+ * var matchWeekdaysPatterns = {
+ *   narrow: /^(su|mo|tu|we|th|fr|sa)/i,
+ *   short: /^(sun|mon|tue|wed|thu|fri|sat)/i,
+ *   long: /^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i
+ * }
+ * locale.match.weekdays = buildMatchFn(matchWeekdaysPatterns, 'long')
+ * locale.match.weekdays('Sunday', {type: 'narrow'}) //=> ['Su', 'Su', ...]
+ * locale.match.weekdays('Sunday') //=> ['Sunday', 'Sunday', ...]
+ */
+function buildMatchFn(patterns, defaultType) {
+  return function (dirtyString, dirtyOptions) {
+    var options = dirtyOptions || {};
+    var type = options.type ? String(options.type) : defaultType;
+    var pattern = patterns[type] || patterns[defaultType];
+    var string = String(dirtyString);
+    return string.match(pattern);
+  };
+}
+module.exports = exports["default"];
+},{}],36:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = buildMatchPatternFn;
+/**
+ * @name buildMatchPatternFn
+ * @category Locale Helpers
+ * @summary Build match function from a single RegExp.
+ *
+ * @description
+ * Build match function from a single RegExp.
+ * Usually used for building `match.ordinalNumbers` property of the locale.
+ *
+ * @param {Object} pattern - the RegExp
+ * @returns {Function} the resulting function
+ *
+ * @example
+ * locale.match.ordinalNumbers = buildMatchPatternFn(/^(\d+)(th|st|nd|rd)?/i)
+ * locale.match.ordinalNumbers('3rd') //=> ['3rd', '3', 'rd', ...]
+ */
+function buildMatchPatternFn(pattern) {
+  return function (dirtyString) {
+    var string = String(dirtyString);
+    return string.match(pattern);
+  };
+}
+module.exports = exports["default"];
+},{}],37:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = buildParseFn;
+/**
+ * @name buildParseFn
+ * @category Locale Helpers
+ * @summary Build `match.weekday`, `match.month` and `match.timeOfDay` properties for the locale.
+ *
+ * @description
+ * Build `match.weekday`, `match.month` and `match.timeOfDay` properties for the locale used by `parse` function.
+ * The argument of the resulting function is the result of the corresponding match function
+ * (`match.weekdays`, `match.months` or `match.timesOfDay` respectively. See `buildMatchFn`).
+ *
+ * @param {Object} values - the object with arrays of RegExps
+ * @param {String} defaultType - the default type for the parser function
+ * @returns {Function} the resulting function
+ *
+ * @example
+ * var parseWeekdayPatterns = {
+ *   any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
+ * }
+ * locale.match.weekday = buildParseFn(matchWeekdaysPatterns, 'long')
+ * var matchResult = locale.match.weekdays('Friday')
+ * locale.match.weekday(matchResult) //=> 5
+ */
+function buildParseFn(patterns, defaultType) {
+  return function (matchResult, dirtyOptions) {
+    var options = dirtyOptions || {};
+    var type = options.type ? String(options.type) : defaultType;
+    var patternsArray = patterns[type] || patterns[defaultType];
+    var string = matchResult[1];
+
+    return patternsArray.findIndex(function (pattern) {
+      return pattern.test(string);
+    });
+  };
+}
+module.exports = exports["default"];
+},{}],38:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = parseDecimal;
+/**
+ * @name parseDecimal
+ * @category Locale Helpers
+ * @summary Parses the match result into decimal number.
+ *
+ * @description
+ * Parses the match result into decimal number.
+ * Uses the string matched with the first set of parentheses of match RegExp.
+ *
+ * @param {Array} matchResult - the object returned by matching function
+ * @returns {Number} the parsed value
+ *
+ * @example
+ * locale.match = {
+ *   ordinalNumbers: (dirtyString) {
+ *     return String(dirtyString).match(/^(\d+)(th|st|nd|rd)?/i)
+ *   },
+ *   ordinalNumber: parseDecimal
+ * }
+ */
+function parseDecimal(matchResult) {
+  return parseInt(matchResult[1], 10);
+}
+module.exports = exports["default"];
+},{}],39:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = formatDistance;
+var formatDistanceLocale = {
+  lessThanXSeconds: {
+    one: 'less than a second',
+    other: 'less than {{count}} seconds'
+  },
+
+  xSeconds: {
+    one: '1 second',
+    other: '{{count}} seconds'
+  },
+
+  halfAMinute: 'half a minute',
+
+  lessThanXMinutes: {
+    one: 'less than a minute',
+    other: 'less than {{count}} minutes'
+  },
+
+  xMinutes: {
+    one: '1 minute',
+    other: '{{count}} minutes'
+  },
+
+  aboutXHours: {
+    one: 'about 1 hour',
+    other: 'about {{count}} hours'
+  },
+
+  xHours: {
+    one: '1 hour',
+    other: '{{count}} hours'
+  },
+
+  xDays: {
+    one: '1 day',
+    other: '{{count}} days'
+  },
+
+  aboutXMonths: {
+    one: 'about 1 month',
+    other: 'about {{count}} months'
+  },
+
+  xMonths: {
+    one: '1 month',
+    other: '{{count}} months'
+  },
+
+  aboutXYears: {
+    one: 'about 1 year',
+    other: 'about {{count}} years'
+  },
+
+  xYears: {
+    one: '1 year',
+    other: '{{count}} years'
+  },
+
+  overXYears: {
+    one: 'over 1 year',
+    other: 'over {{count}} years'
+  },
+
+  almostXYears: {
+    one: 'almost 1 year',
+    other: 'almost {{count}} years'
+  }
+};
+
+function formatDistance(token, count, options) {
+  options = options || {};
+
+  var result;
+  if (typeof formatDistanceLocale[token] === 'string') {
+    result = formatDistanceLocale[token];
+  } else if (count === 1) {
+    result = formatDistanceLocale[token].one;
+  } else {
+    result = formatDistanceLocale[token].other.replace('{{count}}', count);
+  }
+
+  if (options.addSuffix) {
+    if (options.comparison > 0) {
+      return 'in ' + result;
+    } else {
+      return result + ' ago';
+    }
+  }
+
+  return result;
+}
+module.exports = exports['default'];
+},{}],40:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = require('../../../_lib/buildFormatLongFn/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var formatLong = (0, _index2.default)({
+  LT: 'h:mm aa',
+  LTS: 'h:mm:ss aa',
+  L: 'MM/DD/YYYY',
+  LL: 'MMMM D YYYY',
+  LLL: 'MMMM D YYYY h:mm aa',
+  LLLL: 'dddd, MMMM D YYYY h:mm aa'
+});
+
+exports.default = formatLong;
+module.exports = exports['default'];
+},{"../../../_lib/buildFormatLongFn/index.js":32}],41:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = formatRelative;
+var formatRelativeLocale = {
+  lastWeek: '[last] dddd [at] LT',
+  yesterday: '[yesterday at] LT',
+  today: '[today at] LT',
+  tomorrow: '[tomorrow at] LT',
+  nextWeek: 'dddd [at] LT',
+  other: 'L'
+};
+
+function formatRelative(token, date, baseDate, options) {
+  return formatRelativeLocale[token];
+}
+module.exports = exports['default'];
+},{}],42:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = require('../../../_lib/buildLocalizeFn/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = require('../../../_lib/buildLocalizeArrayFn/index.js');
+
+var _index4 = _interopRequireDefault(_index3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Note: in English, the names of days of the week and months are capitalized.
+// If you are making a new locale based on this one, check if the same is true for the language you're working on.
+// Generally, formatted dates should look like they are in the middle of a sentence,
+// e.g. in Spanish language the weekdays and months should be in the lowercase.
+var weekdayValues = {
+  narrow: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+  short: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  long: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+};
+
+var monthValues = {
+  short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  long: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+};
+
+// `timeOfDay` is used to designate which part of the day it is, when used with 12-hour clock.
+// Use the system which is used the most commonly in the locale.
+// For example, if the country doesn't use a.m./p.m., you can use `night`/`morning`/`afternoon`/`evening`:
+//
+//   var timeOfDayValues = {
+//     any: ['in the night', 'in the morning', 'in the afternoon', 'in the evening']
+//   }
+//
+// And later:
+//
+//   var localize = {
+//     // The callback takes the hours as the argument and returns the array index
+//     timeOfDay: buildLocalizeFn(timeOfDayValues, 'any', function (hours) {
+//       if (hours >= 17) {
+//         return 3
+//       } else if (hours >= 12) {
+//         return 2
+//       } else if (hours >= 4) {
+//         return 1
+//       } else {
+//         return 0
+//       }
+//     }),
+//     timesOfDay: buildLocalizeArrayFn(timeOfDayValues, 'any')
+//   }
+var timeOfDayValues = {
+  uppercase: ['AM', 'PM'],
+  lowercase: ['am', 'pm'],
+  long: ['a.m.', 'p.m.']
+};
+
+function ordinalNumber(dirtyNumber, dirtyOptions) {
+  var number = Number(dirtyNumber);
+
+  // If ordinal numbers depend on context, for example,
+  // if they are different for different grammatical genders,
+  // use `options.unit`:
+  //
+  //   var options = dirtyOptions || {}
+  //   var unit = String(options.unit)
+  //
+  // where `unit` can be 'month', 'quarter', 'week', 'isoWeek', 'dayOfYear',
+  // 'dayOfMonth' or 'dayOfWeek'
+
+  var rem100 = number % 100;
+  if (rem100 > 20 || rem100 < 10) {
+    switch (rem100 % 10) {
+      case 1:
+        return number + 'st';
+      case 2:
+        return number + 'nd';
+      case 3:
+        return number + 'rd';
+    }
+  }
+  return number + 'th';
+}
+
+var localize = {
+  ordinalNumber: ordinalNumber,
+  weekday: (0, _index2.default)(weekdayValues, 'long'),
+  weekdays: (0, _index4.default)(weekdayValues, 'long'),
+  month: (0, _index2.default)(monthValues, 'long'),
+  months: (0, _index4.default)(monthValues, 'long'),
+  timeOfDay: (0, _index2.default)(timeOfDayValues, 'long', function (hours) {
+    return hours / 12 >= 1 ? 1 : 0;
+  }),
+  timesOfDay: (0, _index4.default)(timeOfDayValues, 'long')
+};
+
+exports.default = localize;
+module.exports = exports['default'];
+},{"../../../_lib/buildLocalizeArrayFn/index.js":33,"../../../_lib/buildLocalizeFn/index.js":34}],43:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = require('../../../_lib/buildMatchFn/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = require('../../../_lib/buildParseFn/index.js');
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _index5 = require('../../../_lib/buildMatchPatternFn/index.js');
+
+var _index6 = _interopRequireDefault(_index5);
+
+var _index7 = require('../../../_lib/parseDecimal/index.js');
+
+var _index8 = _interopRequireDefault(_index7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var matchOrdinalNumbersPattern = /^(\d+)(th|st|nd|rd)?/i;
+
+var matchWeekdaysPatterns = {
+  narrow: /^(su|mo|tu|we|th|fr|sa)/i,
+  short: /^(sun|mon|tue|wed|thu|fri|sat)/i,
+  long: /^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i
+};
+
+var parseWeekdayPatterns = {
+  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
+};
+
+var matchMonthsPatterns = {
+  short: /^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i,
+  long: /^(january|february|march|april|may|june|july|august|september|october|november|december)/i
+};
+
+var parseMonthPatterns = {
+  any: [/^ja/i, /^f/i, /^mar/i, /^ap/i, /^may/i, /^jun/i, /^jul/i, /^au/i, /^s/i, /^o/i, /^n/i, /^d/i]
+};
+
+// `timeOfDay` is used to designate which part of the day it is, when used with 12-hour clock.
+// Use the system which is used the most commonly in the locale.
+// For example, if the country doesn't use a.m./p.m., you can use `night`/`morning`/`afternoon`/`evening`:
+//
+//   var matchTimesOfDayPatterns = {
+//     long: /^((in the)? (night|morning|afternoon|evening?))/i
+//   }
+//
+//   var parseTimeOfDayPatterns = {
+//     any: [/(night|morning)/i, /(afternoon|evening)/i]
+//   }
+var matchTimesOfDayPatterns = {
+  short: /^(am|pm)/i,
+  long: /^([ap]\.?\s?m\.?)/i
+};
+
+var parseTimeOfDayPatterns = {
+  any: [/^a/i, /^p/i]
+};
+
+var match = {
+  ordinalNumbers: (0, _index6.default)(matchOrdinalNumbersPattern),
+  ordinalNumber: _index8.default,
+  weekdays: (0, _index2.default)(matchWeekdaysPatterns, 'long'),
+  weekday: (0, _index4.default)(parseWeekdayPatterns, 'any'),
+  months: (0, _index2.default)(matchMonthsPatterns, 'long'),
+  month: (0, _index4.default)(parseMonthPatterns, 'any'),
+  timesOfDay: (0, _index2.default)(matchTimesOfDayPatterns, 'long'),
+  timeOfDay: (0, _index4.default)(parseTimeOfDayPatterns, 'any')
+};
+
+exports.default = match;
+module.exports = exports['default'];
+},{"../../../_lib/buildMatchFn/index.js":35,"../../../_lib/buildMatchPatternFn/index.js":36,"../../../_lib/buildParseFn/index.js":37,"../../../_lib/parseDecimal/index.js":38}],44:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = require('./_lib/formatDistance/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = require('./_lib/formatLong/index.js');
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _index5 = require('./_lib/formatRelative/index.js');
+
+var _index6 = _interopRequireDefault(_index5);
+
+var _index7 = require('./_lib/localize/index.js');
+
+var _index8 = _interopRequireDefault(_index7);
+
+var _index9 = require('./_lib/match/index.js');
+
+var _index10 = _interopRequireDefault(_index9);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @type {Locale}
+ * @category Locales
+ * @summary English locale (United States).
+ * @language English
+ * @iso-639-2 eng
+ */
+var locale = {
+  formatDistance: _index2.default,
+  formatLong: _index4.default,
+  formatRelative: _index6.default,
+  localize: _index8.default,
+  match: _index10.default,
+  options: {
+    weekStartsOn: 0 /* Sunday */
+    , firstWeekContainsDate: 1
+  }
+};
+
+exports.default = locale;
+module.exports = exports['default'];
+},{"./_lib/formatDistance/index.js":39,"./_lib/formatLong/index.js":40,"./_lib/formatRelative/index.js":41,"./_lib/localize/index.js":42,"./_lib/match/index.js":43}],45:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = max;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name max
+ * @category Common Helpers
+ * @summary Return the latest of the given dates.
+ *
+ * @description
+ * Return the latest of the given dates.
+ *
+ * @param {Date[]|String[]|Number[]} datesArray - the dates to compare
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the latest of the dates
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Which of these dates is the latest?
+ * var result = max(
+ *  [
+ *    new Date(1989, 6, 10),
+ *    new Date(1987, 1, 11),
+ *    new Date(1995, 6, 2),
+ *    new Date(1990, 0, 1)
+ *  ]
+ * )
+ * //=> Sun Jul 02 1995 00:00:00
+ */
+function max(dirtyDatesArray, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var datesArray;
+  // `dirtyDatesArray` is undefined or null
+  if (dirtyDatesArray == null) {
+    datesArray = [];
+
+    // `dirtyDatesArray` is Array, Set or Map, or object with custom `forEach` method
+  } else if (typeof dirtyDatesArray.forEach === 'function') {
+    datesArray = dirtyDatesArray;
+
+    // If `dirtyDatesArray` is Array-like Object, convert to Array. Otherwise, make it empty Array
+  } else {
+    datesArray = Array.prototype.slice.call(dirtyDatesArray);
+  }
+
+  var result;
+  datesArray.forEach(function (dirtyDate) {
+    var currentDate = (0, _index2.default)(dirtyDate, dirtyOptions);
+
+    if (result === undefined || result < currentDate || isNaN(currentDate)) {
+      result = currentDate;
+    }
+  });
+
+  return result;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],46:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = min;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name min
+ * @category Common Helpers
+ * @summary Return the earliest of the given dates.
+ *
+ * @description
+ * Return the earliest of the given dates.
+ *
+ * @param {Date[]|String[]|Number[]} datesArray - the dates to compare
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the earliest of the dates
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Which of these dates is the earliest?
+ * var result = min(
+ *  [
+ *    new Date(1989, 6, 10),
+ *    new Date(1987, 1, 11),
+ *    new Date(1995, 6, 2),
+ *    new Date(1990, 0, 1)
+ *  ]
+ * )
+ * //=> Wed Feb 11 1987 00:00:00
+ */
+function min(dirtyDatesArray, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var datesArray;
+  // `dirtyDatesArray` is undefined or null
+  if (dirtyDatesArray == null) {
+    datesArray = [];
+
+    // `dirtyDatesArray` is Array, Set or Map, or object with custom `forEach` method
+  } else if (typeof dirtyDatesArray.forEach === 'function') {
+    datesArray = dirtyDatesArray;
+
+    // If `dirtyDatesArray` is Array-like Object, convert to Array. Otherwise, make it empty Array
+  } else {
+    datesArray = Array.prototype.slice.call(dirtyDatesArray);
+  }
+
+  var result;
+  datesArray.forEach(function (dirtyDate) {
+    var currentDate = (0, _index2.default)(dirtyDate, dirtyOptions);
+
+    if (result === undefined || result > currentDate || isNaN(currentDate)) {
+      result = currentDate;
+    }
+  });
+
+  return result;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],47:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = setMonth;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = require('../getDaysInMonth/index.js');
+
+var _index4 = _interopRequireDefault(_index3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name setMonth
+ * @category Month Helpers
+ * @summary Set the month to the given date.
+ *
+ * @description
+ * Set the month to the given date.
+ *
+ * @param {Date|String|Number} date - the date to be changed
+ * @param {Number} month - the month of the new date
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the new date with the month setted
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Set February to 1 September 2014:
+ * var result = setMonth(new Date(2014, 8, 1), 1)
+ * //=> Sat Feb 01 2014 00:00:00
+ */
+function setMonth(dirtyDate, dirtyMonth, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var month = Number(dirtyMonth);
+  var year = date.getFullYear();
+  var day = date.getDate();
+
+  var dateWithDesiredMonth = new Date(0);
+  dateWithDesiredMonth.setFullYear(year, month, 15);
+  dateWithDesiredMonth.setHours(0, 0, 0, 0);
+  var daysInMonth = (0, _index4.default)(dateWithDesiredMonth, dirtyOptions);
+  // Set the last day of the new month
+  // if the original date was the last day of the longer month
+  date.setMonth(month, Math.min(day, daysInMonth));
+  return date;
+}
+module.exports = exports['default'];
+},{"../getDaysInMonth/index.js":24,"../toDate/index.js":52}],48:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = setYear;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name setYear
+ * @category Year Helpers
+ * @summary Set the year to the given date.
+ *
+ * @description
+ * Set the year to the given date.
+ *
+ * @param {Date|String|Number} date - the date to be changed
+ * @param {Number} year - the year of the new date
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the new date with the year setted
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Set year 2013 to 1 September 2014:
+ * var result = setYear(new Date(2014, 8, 1), 2013)
+ * //=> Sun Sep 01 2013 00:00:00
+ */
+function setYear(dirtyDate, dirtyYear, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  var year = Number(dirtyYear);
+
+  // Check if date is Invalid Date because Date.prototype.setFullYear ignores the value of Invalid Date
+  if (isNaN(date)) {
+    return new Date(NaN);
+  }
+
+  date.setFullYear(year);
+  return date;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],49:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = startOfDay;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name startOfDay
+ * @category Day Helpers
+ * @summary Return the start of a day for the given date.
+ *
+ * @description
+ * Return the start of a day for the given date.
+ * The result will be in the local timezone.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the start of a day
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // The start of a day for 2 September 2014 11:55:00:
+ * var result = startOfDay(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Tue Sep 02 2014 00:00:00
+ */
+function startOfDay(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],50:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = startOfMonth;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name startOfMonth
+ * @category Month Helpers
+ * @summary Return the start of a month for the given date.
+ *
+ * @description
+ * Return the start of a month for the given date.
+ * The result will be in the local timezone.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the start of a month
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // The start of a month for 2 September 2014 11:55:00:
+ * var result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function startOfMonth(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+  date.setDate(1);
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],51:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = startOfWeek;
+
+var _index = require('../toDate/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @name startOfWeek
+ * @category Week Helpers
+ * @summary Return the start of a week for the given date.
+ *
+ * @description
+ * Return the start of a week for the given date.
+ * The result will be in the local timezone.
+ *
+ * @param {Date|String|Number} date - the original date
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+ * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+ * @returns {Date} the start of a week
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ *
+ * @example
+ * // The start of a week for 2 September 2014 11:55:00:
+ * var result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Sun Aug 31 2014 00:00:00
+ *
+ * @example
+ * // If the week starts on Monday, the start of the week for 2 September 2014 11:55:00:
+ * var result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), {weekStartsOn: 1})
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function startOfWeek(dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  var options = dirtyOptions || {};
+  var locale = options.locale;
+  var localeWeekStartsOn = locale && locale.options && locale.options.weekStartsOn;
+  var defaultWeekStartsOn = localeWeekStartsOn === undefined ? 0 : Number(localeWeekStartsOn);
+  var weekStartsOn = options.weekStartsOn === undefined ? defaultWeekStartsOn : Number(options.weekStartsOn);
+
+  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
+  }
+
+  var date = (0, _index2.default)(dirtyDate, options);
+  var day = date.getDay();
+  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+
+  date.setDate(date.getDate() - diff);
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+module.exports = exports['default'];
+},{"../toDate/index.js":52}],52:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = toDate;
+var MILLISECONDS_IN_HOUR = 3600000;
+var MILLISECONDS_IN_MINUTE = 60000;
+var DEFAULT_ADDITIONAL_DIGITS = 2;
+
+var patterns = {
+  dateTimeDelimeter: /[T ]/,
+  plainTime: /:/,
+
+  // year tokens
+  YY: /^(\d{2})$/,
+  YYY: [/^([+-]\d{2})$/, // 0 additional digits
+  /^([+-]\d{3})$/, // 1 additional digit
+  /^([+-]\d{4})$/ // 2 additional digits
+  ],
+  YYYY: /^(\d{4})/,
+  YYYYY: [/^([+-]\d{4})/, // 0 additional digits
+  /^([+-]\d{5})/, // 1 additional digit
+  /^([+-]\d{6})/ // 2 additional digits
+  ],
+
+  // date tokens
+  MM: /^-(\d{2})$/,
+  DDD: /^-?(\d{3})$/,
+  MMDD: /^-?(\d{2})-?(\d{2})$/,
+  Www: /^-?W(\d{2})$/,
+  WwwD: /^-?W(\d{2})-?(\d{1})$/,
+
+  HH: /^(\d{2}([.,]\d*)?)$/,
+  HHMM: /^(\d{2}):?(\d{2}([.,]\d*)?)$/,
+  HHMMSS: /^(\d{2}):?(\d{2}):?(\d{2}([.,]\d*)?)$/,
+
+  // timezone tokens
+  timezone: /([Z+-].*)$/,
+  timezoneZ: /^(Z)$/,
+  timezoneHH: /^([+-])(\d{2})$/,
+  timezoneHHMM: /^([+-])(\d{2}):?(\d{2})$/
+};
+
+/**
+ * @name toDate
+ * @category Common Helpers
+ * @summary Convert the given argument to an instance of Date.
+ *
+ * @description
+ * Convert the given argument to an instance of Date.
+ *
+ * If the argument is an instance of Date, the function returns its clone.
+ *
+ * If the argument is a number, it is treated as a timestamp.
+ *
+ * If an argument is a string, the function tries to parse it.
+ * Function accepts complete ISO 8601 formats as well as partial implementations.
+ * ISO 8601: http://en.wikipedia.org/wiki/ISO_8601
+ *
+ * If the argument is null, it is treated as an invalid date.
+ *
+ * If all above fails, the function passes the given argument to Date constructor.
+ *
+ * **Note**: *all* Date arguments passed to any *date-fns* function is processed by `toDate`.
+ * All *date-fns* functions will throw `RangeError` if `options.additionalDigits` is not 0, 1, 2 or undefined.
+ *
+ * @param {*} argument - the value to convert
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - the additional number of digits in the extended year format
+ * @returns {Date} the parsed date in the local time zone
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Convert string '2014-02-11T11:30:30' to date:
+ * var result = toDate('2014-02-11T11:30:30')
+ * //=> Tue Feb 11 2014 11:30:30
+ *
+ * @example
+ * // Convert string '+02014101' to date,
+ * // if the additional number of digits in the extended year format is 1:
+ * var result = toDate('+02014101', {additionalDigits: 1})
+ * //=> Fri Apr 11 2014 00:00:00
+ */
+function toDate(argument, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present');
+  }
+
+  if (argument === null) {
+    return new Date(NaN);
+  }
+
+  var options = dirtyOptions || {};
+
+  var additionalDigits = options.additionalDigits === undefined ? DEFAULT_ADDITIONAL_DIGITS : Number(options.additionalDigits);
+  if (additionalDigits !== 2 && additionalDigits !== 1 && additionalDigits !== 0) {
+    throw new RangeError('additionalDigits must be 0, 1 or 2');
+  }
+
+  // Clone the date
+  if (argument instanceof Date) {
+    // Prevent the date to lose the milliseconds when passed to new Date() in IE10
+    return new Date(argument.getTime());
+  } else if (typeof argument !== 'string') {
+    return new Date(argument);
+  }
+
+  var dateStrings = splitDateString(argument);
+
+  var parseYearResult = parseYear(dateStrings.date, additionalDigits);
+  var year = parseYearResult.year;
+  var restDateString = parseYearResult.restDateString;
+
+  var date = parseDate(restDateString, year);
+
+  if (date) {
+    var timestamp = date.getTime();
+    var time = 0;
+    var offset;
+
+    if (dateStrings.time) {
+      time = parseTime(dateStrings.time);
+    }
+
+    if (dateStrings.timezone) {
+      offset = parseTimezone(dateStrings.timezone);
+    } else {
+      // get offset accurate to hour in timezones that change offset
+      offset = new Date(timestamp + time).getTimezoneOffset();
+      offset = new Date(timestamp + time + offset * MILLISECONDS_IN_MINUTE).getTimezoneOffset();
+    }
+
+    return new Date(timestamp + time + offset * MILLISECONDS_IN_MINUTE);
+  } else {
+    return new Date(argument);
+  }
+}
+
+function splitDateString(dateString) {
+  var dateStrings = {};
+  var array = dateString.split(patterns.dateTimeDelimeter);
+  var timeString;
+
+  if (patterns.plainTime.test(array[0])) {
+    dateStrings.date = null;
+    timeString = array[0];
+  } else {
+    dateStrings.date = array[0];
+    timeString = array[1];
+  }
+
+  if (timeString) {
+    var token = patterns.timezone.exec(timeString);
+    if (token) {
+      dateStrings.time = timeString.replace(token[1], '');
+      dateStrings.timezone = token[1];
+    } else {
+      dateStrings.time = timeString;
+    }
+  }
+
+  return dateStrings;
+}
+
+function parseYear(dateString, additionalDigits) {
+  var patternYYY = patterns.YYY[additionalDigits];
+  var patternYYYYY = patterns.YYYYY[additionalDigits];
+
+  var token;
+
+  // YYYY or ±YYYYY
+  token = patterns.YYYY.exec(dateString) || patternYYYYY.exec(dateString);
+  if (token) {
+    var yearString = token[1];
+    return {
+      year: parseInt(yearString, 10),
+      restDateString: dateString.slice(yearString.length)
+    };
+  }
+
+  // YY or ±YYY
+  token = patterns.YY.exec(dateString) || patternYYY.exec(dateString);
+  if (token) {
+    var centuryString = token[1];
+    return {
+      year: parseInt(centuryString, 10) * 100,
+      restDateString: dateString.slice(centuryString.length)
+    };
+  }
+
+  // Invalid ISO-formatted year
+  return {
+    year: null
+  };
+}
+
+function parseDate(dateString, year) {
+  // Invalid ISO-formatted year
+  if (year === null) {
+    return null;
+  }
+
+  var token;
+  var date;
+  var month;
+  var week;
+
+  // YYYY
+  if (dateString.length === 0) {
+    date = new Date(0);
+    date.setUTCFullYear(year);
+    return date;
+  }
+
+  // YYYY-MM
+  token = patterns.MM.exec(dateString);
+  if (token) {
+    date = new Date(0);
+    month = parseInt(token[1], 10) - 1;
+    date.setUTCFullYear(year, month);
+    return date;
+  }
+
+  // YYYY-DDD or YYYYDDD
+  token = patterns.DDD.exec(dateString);
+  if (token) {
+    date = new Date(0);
+    var dayOfYear = parseInt(token[1], 10);
+    date.setUTCFullYear(year, 0, dayOfYear);
+    return date;
+  }
+
+  // YYYY-MM-DD or YYYYMMDD
+  token = patterns.MMDD.exec(dateString);
+  if (token) {
+    date = new Date(0);
+    month = parseInt(token[1], 10) - 1;
+    var day = parseInt(token[2], 10);
+    date.setUTCFullYear(year, month, day);
+    return date;
+  }
+
+  // YYYY-Www or YYYYWww
+  token = patterns.Www.exec(dateString);
+  if (token) {
+    week = parseInt(token[1], 10) - 1;
+    return dayOfISOYear(year, week);
+  }
+
+  // YYYY-Www-D or YYYYWwwD
+  token = patterns.WwwD.exec(dateString);
+  if (token) {
+    week = parseInt(token[1], 10) - 1;
+    var dayOfWeek = parseInt(token[2], 10) - 1;
+    return dayOfISOYear(year, week, dayOfWeek);
+  }
+
+  // Invalid ISO-formatted date
+  return null;
+}
+
+function parseTime(timeString) {
+  var token;
+  var hours;
+  var minutes;
+
+  // hh
+  token = patterns.HH.exec(timeString);
+  if (token) {
+    hours = parseFloat(token[1].replace(',', '.'));
+    return hours % 24 * MILLISECONDS_IN_HOUR;
+  }
+
+  // hh:mm or hhmm
+  token = patterns.HHMM.exec(timeString);
+  if (token) {
+    hours = parseInt(token[1], 10);
+    minutes = parseFloat(token[2].replace(',', '.'));
+    return hours % 24 * MILLISECONDS_IN_HOUR + minutes * MILLISECONDS_IN_MINUTE;
+  }
+
+  // hh:mm:ss or hhmmss
+  token = patterns.HHMMSS.exec(timeString);
+  if (token) {
+    hours = parseInt(token[1], 10);
+    minutes = parseInt(token[2], 10);
+    var seconds = parseFloat(token[3].replace(',', '.'));
+    return hours % 24 * MILLISECONDS_IN_HOUR + minutes * MILLISECONDS_IN_MINUTE + seconds * 1000;
+  }
+
+  // Invalid ISO-formatted time
+  return null;
+}
+
+function parseTimezone(timezoneString) {
+  var token;
+  var absoluteOffset;
+
+  // Z
+  token = patterns.timezoneZ.exec(timezoneString);
+  if (token) {
+    return 0;
+  }
+
+  // ±hh
+  token = patterns.timezoneHH.exec(timezoneString);
+  if (token) {
+    absoluteOffset = parseInt(token[2], 10) * 60;
+    return token[1] === '+' ? -absoluteOffset : absoluteOffset;
+  }
+
+  // ±hh:mm or ±hhmm
+  token = patterns.timezoneHHMM.exec(timezoneString);
+  if (token) {
+    absoluteOffset = parseInt(token[2], 10) * 60 + parseInt(token[3], 10);
+    return token[1] === '+' ? -absoluteOffset : absoluteOffset;
+  }
+
+  return 0;
+}
+
+function dayOfISOYear(isoYear, week, day) {
+  week = week || 0;
+  day = day || 0;
+  var date = new Date(0);
+  date.setUTCFullYear(isoYear, 0, 4);
+  var fourthOfJanuaryDay = date.getUTCDay() || 7;
+  var diff = week * 7 + day + 1 - fourthOfJanuaryDay;
+  date.setUTCDate(date.getUTCDate() + diff);
+  return date;
+}
+module.exports = exports['default'];
+},{}],53:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21,7 +3297,7 @@ function addClass(element, className) {
 }
 
 module.exports = exports["default"];
-},{"./hasClass":3,"@babel/runtime/helpers/interopRequireDefault":1}],3:[function(require,module,exports){
+},{"./hasClass":54,"@babel/runtime/helpers/interopRequireDefault":1}],54:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -32,7 +3308,7 @@ function hasClass(element, className) {
 }
 
 module.exports = exports["default"];
-},{}],4:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 'use strict';
 
 function replaceClassName(origClass, classToRemove) {
@@ -42,7 +3318,7 @@ function replaceClassName(origClass, classToRemove) {
 module.exports = function removeClass(element, className) {
   if (element.classList) element.classList.remove(className);else if (typeof element.className === 'string') element.className = replaceClassName(element.className, className);else element.setAttribute('class', replaceClassName(element.className && element.className.baseVal || '', className));
 };
-},{}],5:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -98,7 +3374,7 @@ var supportsGoWithoutReloadUsingHash = exports.supportsGoWithoutReloadUsingHash 
 var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
   return event.state === undefined && navigator.userAgent.indexOf('CriOS') === -1;
 };
-},{}],6:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -177,7 +3453,7 @@ var createLocation = exports.createLocation = function createLocation(path, stat
 var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a, b) {
   return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && (0, _valueEqual2.default)(a.state, b.state);
 };
-},{"./PathUtils":7,"resolve-pathname":64,"value-equal":71}],7:[function(require,module,exports){
+},{"./PathUtils":58,"resolve-pathname":126,"value-equal":133}],58:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -239,7 +3515,7 @@ var createPath = exports.createPath = function createPath(location) {
 
   return path;
 };
-},{}],8:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -547,7 +3823,7 @@ var createBrowserHistory = function createBrowserHistory() {
 };
 
 exports.default = createBrowserHistory;
-},{"./DOMUtils":5,"./LocationUtils":6,"./PathUtils":7,"./createTransitionManager":11,"invariant":15,"warning":13}],9:[function(require,module,exports){
+},{"./DOMUtils":56,"./LocationUtils":57,"./PathUtils":58,"./createTransitionManager":62,"invariant":66,"warning":64}],60:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -872,7 +4148,7 @@ var createHashHistory = function createHashHistory() {
 };
 
 exports.default = createHashHistory;
-},{"./DOMUtils":5,"./LocationUtils":6,"./PathUtils":7,"./createTransitionManager":11,"invariant":15,"warning":13}],10:[function(require,module,exports){
+},{"./DOMUtils":56,"./LocationUtils":57,"./PathUtils":58,"./createTransitionManager":62,"invariant":66,"warning":64}],61:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1043,7 +4319,7 @@ var createMemoryHistory = function createMemoryHistory() {
 };
 
 exports.default = createMemoryHistory;
-},{"./LocationUtils":6,"./PathUtils":7,"./createTransitionManager":11,"warning":13}],11:[function(require,module,exports){
+},{"./LocationUtils":57,"./PathUtils":58,"./createTransitionManager":62,"warning":64}],62:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1129,7 +4405,7 @@ var createTransitionManager = function createTransitionManager() {
 };
 
 exports.default = createTransitionManager;
-},{"warning":13}],12:[function(require,module,exports){
+},{"warning":64}],63:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1182,7 +4458,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.createBrowserHistory = _createBrowserHistory3.default;
 exports.createHashHistory = _createHashHistory3.default;
 exports.createMemoryHistory = _createMemoryHistory3.default;
-},{"./LocationUtils":6,"./PathUtils":7,"./createBrowserHistory":8,"./createHashHistory":9,"./createMemoryHistory":10}],13:[function(require,module,exports){
+},{"./LocationUtils":57,"./PathUtils":58,"./createBrowserHistory":59,"./createHashHistory":60,"./createMemoryHistory":61}],64:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -1246,7 +4522,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":19}],14:[function(require,module,exports){
+},{"_process":70}],65:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1316,7 +4592,7 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
 
 module.exports = hoistNonReactStatics;
 
-},{}],15:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -1369,7 +4645,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":19}],16:[function(require,module,exports){
+},{"_process":70}],67:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -1461,7 +4737,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],17:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 var isarray = require('isarray')
 
 /**
@@ -1889,12 +5165,12 @@ function pathToRegexp (path, keys, options) {
   return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
 
-},{"isarray":18}],18:[function(require,module,exports){
+},{"isarray":69}],69:[function(require,module,exports){
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],19:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -2080,7 +5356,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],20:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2175,7 +5451,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":24,"_process":19}],21:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":75,"_process":70}],72:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2236,7 +5512,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":24}],22:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":75}],73:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2795,7 +6071,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":20,"./lib/ReactPropTypesSecret":24,"_process":19,"object-assign":16}],23:[function(require,module,exports){
+},{"./checkPropTypes":71,"./lib/ReactPropTypesSecret":75,"_process":70,"object-assign":67}],74:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2827,7 +6103,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":21,"./factoryWithTypeCheckers":22,"_process":19}],24:[function(require,module,exports){
+},{"./factoryWithThrowingShims":72,"./factoryWithTypeCheckers":73,"_process":70}],75:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2841,7 +6117,2191 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],25:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _DayCell = require('./DayCell.js');
+
+var _Month = require('./Month.js');
+
+var _Month2 = _interopRequireDefault(_Month);
+
+var _utils = require('../utils');
+
+var _classnames3 = require('classnames');
+
+var _classnames4 = _interopRequireDefault(_classnames3);
+
+var _reactList = require('react-list');
+
+var _reactList2 = _interopRequireDefault(_reactList);
+
+var _max = require('date-fns/max');
+
+var _max2 = _interopRequireDefault(_max);
+
+var _min = require('date-fns/min');
+
+var _min2 = _interopRequireDefault(_min);
+
+var _differenceInDays = require('date-fns/differenceInDays');
+
+var _differenceInDays2 = _interopRequireDefault(_differenceInDays);
+
+var _isSameMonth = require('date-fns/isSameMonth');
+
+var _isSameMonth2 = _interopRequireDefault(_isSameMonth);
+
+var _addDays = require('date-fns/addDays');
+
+var _addDays2 = _interopRequireDefault(_addDays);
+
+var _endOfMonth = require('date-fns/endOfMonth');
+
+var _endOfMonth2 = _interopRequireDefault(_endOfMonth);
+
+var _startOfMonth = require('date-fns/startOfMonth');
+
+var _startOfMonth2 = _interopRequireDefault(_startOfMonth);
+
+var _differenceInCalendarMonths = require('date-fns/differenceInCalendarMonths');
+
+var _differenceInCalendarMonths2 = _interopRequireDefault(_differenceInCalendarMonths);
+
+var _setMonth2 = require('date-fns/setMonth');
+
+var _setMonth3 = _interopRequireDefault(_setMonth2);
+
+var _setYear2 = require('date-fns/setYear');
+
+var _setYear3 = _interopRequireDefault(_setYear2);
+
+var _addYears = require('date-fns/addYears');
+
+var _addYears2 = _interopRequireDefault(_addYears);
+
+var _isSameDay = require('date-fns/isSameDay');
+
+var _isSameDay2 = _interopRequireDefault(_isSameDay);
+
+var _endOfWeek = require('date-fns/endOfWeek');
+
+var _endOfWeek2 = _interopRequireDefault(_endOfWeek);
+
+var _startOfWeek = require('date-fns/startOfWeek');
+
+var _startOfWeek2 = _interopRequireDefault(_startOfWeek);
+
+var _eachDayOfInterval = require('date-fns/eachDayOfInterval');
+
+var _eachDayOfInterval2 = _interopRequireDefault(_eachDayOfInterval);
+
+var _format = require('date-fns/format');
+
+var _format2 = _interopRequireDefault(_format);
+
+var _addMonths = require('date-fns/addMonths');
+
+var _addMonths2 = _interopRequireDefault(_addMonths);
+
+var _enUS = require('date-fns/locale/en-US');
+
+var _enUS2 = _interopRequireDefault(_enUS);
+
+var _styles = require('../styles');
+
+var _styles2 = _interopRequireDefault(_styles);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Calendar = function (_PureComponent) {
+  _inherits(Calendar, _PureComponent);
+
+  function Calendar(props, context) {
+    _classCallCheck(this, Calendar);
+
+    var _this = _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props, context));
+
+    _this.changeShownDate = _this.changeShownDate.bind(_this);
+    _this.focusToDate = _this.focusToDate.bind(_this);
+    _this.updateShownDate = _this.updateShownDate.bind(_this);
+    _this.handleRangeFocusChange = _this.handleRangeFocusChange.bind(_this);
+    _this.renderDateDisplay = _this.renderDateDisplay.bind(_this);
+    _this.onDragSelectionStart = _this.onDragSelectionStart.bind(_this);
+    _this.onDragSelectionEnd = _this.onDragSelectionEnd.bind(_this);
+    _this.onDragSelectionMove = _this.onDragSelectionMove.bind(_this);
+    _this.renderMonthAndYear = _this.renderMonthAndYear.bind(_this);
+    _this.updatePreview = _this.updatePreview.bind(_this);
+    _this.estimateMonthSize = _this.estimateMonthSize.bind(_this);
+    _this.handleScroll = _this.handleScroll.bind(_this);
+    _this.dateOptions = { locale: props.locale };
+    _this.styles = (0, _utils.generateStyles)([_styles2.default, props.classNames]);
+    _this.listSizeCache = {};
+    _this.state = {
+      focusedDate: (0, _utils.calcFocusDate)(null, props),
+      drag: {
+        status: false,
+        range: { startDate: null, endDate: null },
+        disablePreview: false
+      },
+      scrollArea: _this.calcScrollArea(props)
+    };
+    return _this;
+  }
+
+  _createClass(Calendar, [{
+    key: 'calcScrollArea',
+    value: function calcScrollArea(props) {
+      var direction = props.direction,
+          months = props.months,
+          scroll = props.scroll;
+
+      if (!scroll.enabled) return { enabled: false };
+
+      var longMonthHeight = scroll.longMonthHeight || scroll.monthHeight;
+      if (direction === 'vertical') {
+        return {
+          enabled: true,
+          monthHeight: scroll.monthHeight || 220,
+          longMonthHeight: longMonthHeight || 260,
+          calendarWidth: 'auto',
+          calendarHeight: (scroll.calendarHeight || longMonthHeight || 240) * months
+        };
+      }
+      return {
+        enabled: true,
+        monthWidth: scroll.monthWidth || 332,
+        calendarWidth: (scroll.calendarWidth || scroll.monthWidth || 332) * months,
+        monthHeight: longMonthHeight || 300,
+        calendarHeight: longMonthHeight || 300
+      };
+    }
+  }, {
+    key: 'focusToDate',
+    value: function focusToDate(date) {
+      var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props;
+      var preventUnnecessary = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+      if (!props.scroll.enabled) {
+        this.setState({ focusedDate: date });
+        return;
+      }
+      var targetMonthIndex = (0, _differenceInCalendarMonths2.default)(date, props.minDate, this.dateOptions);
+      var visibleMonths = this.list.getVisibleRange();
+      if (preventUnnecessary && visibleMonths.includes(targetMonthIndex)) return;
+      this.list.scrollTo(targetMonthIndex);
+      this.setState({ focusedDate: date });
+    }
+  }, {
+    key: 'updateShownDate',
+    value: function updateShownDate() {
+      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+
+      var newProps = props.scroll.enabled ? _extends({}, props, {
+        months: this.list.getVisibleRange().length
+      }) : props;
+      var newFocus = (0, _utils.calcFocusDate)(this.state.focusedDate, newProps);
+      this.focusToDate(newFocus, newProps);
+    }
+  }, {
+    key: 'updatePreview',
+    value: function updatePreview(val) {
+      if (!val) {
+        this.setState({ preview: null });
+        return;
+      }
+      var preview = {
+        startDate: val,
+        endDate: val,
+        color: this.props.color
+      };
+      this.setState({ preview: preview });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      if (this.props.scroll.enabled) {
+        // prevent react-list's initial render focus problem
+        setTimeout(function () {
+          return _this2.focusToDate(_this2.state.focusedDate);
+        }, 1);
+      }
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var propMapper = {
+        dateRange: 'ranges',
+        date: 'date'
+      };
+      var targetProp = propMapper[nextProps.displayMode];
+      if (this.props.locale !== nextProps.locale) {
+        this.dateOptions = { locale: nextProps.locale };
+      }
+      if (JSON.stringify(this.props.scroll) !== JSON.stringify(nextProps.scroll)) {
+        this.setState({ scrollArea: this.calcScrollArea(nextProps) });
+      }
+      if (nextProps[targetProp] !== this.props[targetProp]) {
+        this.updateShownDate(nextProps);
+      }
+    }
+  }, {
+    key: 'changeShownDate',
+    value: function changeShownDate(value) {
+      var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'set';
+      var focusedDate = this.state.focusedDate;
+      var _props = this.props,
+          onShownDateChange = _props.onShownDateChange,
+          minDate = _props.minDate,
+          maxDate = _props.maxDate;
+
+      var modeMapper = {
+        monthOffset: function monthOffset() {
+          return (0, _addMonths2.default)(focusedDate, value);
+        },
+        setMonth: function setMonth() {
+          return (0, _setMonth3.default)(focusedDate, value);
+        },
+        setYear: function setYear() {
+          return (0, _setYear3.default)(focusedDate, value);
+        },
+        set: function set() {
+          return value;
+        }
+      };
+      var newDate = (0, _min2.default)([(0, _max2.default)([modeMapper[mode](), minDate]), maxDate]);
+      this.focusToDate(newDate, this.props, false);
+      onShownDateChange && onShownDateChange(newDate);
+    }
+  }, {
+    key: 'handleRangeFocusChange',
+    value: function handleRangeFocusChange(rangesIndex, rangeItemIndex) {
+      this.props.onRangeFocusChange && this.props.onRangeFocusChange([rangesIndex, rangeItemIndex]);
+    }
+  }, {
+    key: 'handleScroll',
+    value: function handleScroll() {
+      var _props2 = this.props,
+          onShownDateChange = _props2.onShownDateChange,
+          minDate = _props2.minDate;
+
+      var visibleMonths = this.list.getVisibleRange();
+      // prevent scroll jump with wrong visible value
+      if (visibleMonths[0] === undefined) return;
+      var visibleMonth = (0, _addMonths2.default)(minDate, visibleMonths[0] || 0);
+      var isFocusedToDifferent = !(0, _isSameMonth2.default)(visibleMonth, this.state.focusedDate);
+      if (isFocusedToDifferent) {
+        this.setState({ focusedDate: visibleMonth });
+        onShownDateChange && onShownDateChange(visibleMonth);
+      }
+    }
+  }, {
+    key: 'renderMonthAndYear',
+    value: function renderMonthAndYear(focusedDate, changeShownDate, props) {
+      var showMonthArrow = props.showMonthArrow,
+          locale = props.locale,
+          minDate = props.minDate,
+          maxDate = props.maxDate,
+          showMonthAndYearPickers = props.showMonthAndYearPickers;
+
+      var upperYearLimit = (maxDate || Calendar.defaultProps.maxDate).getFullYear();
+      var lowerYearLimit = (minDate || Calendar.defaultProps.minDate).getFullYear();
+      var styles = this.styles;
+      return _react2.default.createElement(
+        'div',
+        { onMouseUp: function onMouseUp(e) {
+            return e.stopPropagation();
+          }, className: styles.monthAndYearWrapper },
+        showMonthArrow ? _react2.default.createElement(
+          'button',
+          {
+            type: 'button',
+            className: (0, _classnames4.default)(styles.nextPrevButton, styles.prevButton),
+            onClick: function onClick() {
+              return changeShownDate(-1, 'monthOffset');
+            } },
+          _react2.default.createElement('i', null)
+        ) : null,
+        showMonthAndYearPickers ? _react2.default.createElement(
+          'span',
+          { className: styles.monthAndYearPickers },
+          _react2.default.createElement(
+            'span',
+            { className: styles.monthPicker },
+            _react2.default.createElement(
+              'select',
+              {
+                value: focusedDate.getMonth(),
+                onChange: function onChange(e) {
+                  return changeShownDate(e.target.value, 'setMonth');
+                } },
+              locale.localize.months().map(function (month, i) {
+                return _react2.default.createElement(
+                  'option',
+                  { key: i, value: i },
+                  month
+                );
+              })
+            )
+          ),
+          _react2.default.createElement('span', { className: styles.monthAndYearDivider }),
+          _react2.default.createElement(
+            'span',
+            { className: styles.yearPicker },
+            _react2.default.createElement(
+              'select',
+              {
+                value: focusedDate.getFullYear(),
+                onChange: function onChange(e) {
+                  return changeShownDate(e.target.value, 'setYear');
+                } },
+              new Array(upperYearLimit - lowerYearLimit + 1).fill(upperYearLimit).map(function (val, i) {
+                var year = val - i;
+                return _react2.default.createElement(
+                  'option',
+                  { key: year, value: year },
+                  year
+                );
+              })
+            )
+          )
+        ) : _react2.default.createElement(
+          'span',
+          { className: styles.monthAndYearPickers },
+          locale.localize.months()[focusedDate.getMonth()],
+          ' ',
+          focusedDate.getFullYear()
+        ),
+        showMonthArrow ? _react2.default.createElement(
+          'button',
+          {
+            type: 'button',
+            className: (0, _classnames4.default)(styles.nextPrevButton, styles.nextButton),
+            onClick: function onClick() {
+              return changeShownDate(+1, 'monthOffset');
+            } },
+          _react2.default.createElement('i', null)
+        ) : null
+      );
+    }
+  }, {
+    key: 'renderWeekdays',
+    value: function renderWeekdays() {
+      var _this3 = this;
+
+      var now = new Date();
+      return _react2.default.createElement(
+        'div',
+        { className: this.styles.weekDays },
+        (0, _eachDayOfInterval2.default)({
+          start: (0, _startOfWeek2.default)(now, this.dateOptions),
+          end: (0, _endOfWeek2.default)(now, this.dateOptions)
+        }).map(function (day, i) {
+          return _react2.default.createElement(
+            'span',
+            { className: _this3.styles.weekDay, key: i },
+            (0, _format2.default)(day, 'ddd', _this3.dateOptions)
+          );
+        })
+      );
+    }
+  }, {
+    key: 'renderDateDisplay',
+    value: function renderDateDisplay() {
+      var _this4 = this;
+
+      var _props3 = this.props,
+          focusedRange = _props3.focusedRange,
+          color = _props3.color,
+          ranges = _props3.ranges,
+          rangeColors = _props3.rangeColors;
+
+      var defaultColor = rangeColors[focusedRange[0]] || color;
+      var styles = this.styles;
+      return _react2.default.createElement(
+        'div',
+        { className: styles.dateDisplayWrapper },
+        ranges.map(function (range, i) {
+          if (range.showDateDisplay === false || range.disabled && !range.showDateDisplay) return null;
+          return _react2.default.createElement(
+            'div',
+            {
+              className: styles.dateDisplay,
+              key: i,
+              style: { color: range.color || defaultColor } },
+            _react2.default.createElement(
+              'span',
+              {
+                className: (0, _classnames4.default)(styles.dateDisplayItem, _defineProperty({}, styles.dateDisplayItemActive, focusedRange[0] === i && focusedRange[1] === 0)),
+                onFocus: function onFocus() {
+                  return _this4.handleRangeFocusChange(i, 0);
+                } },
+              _react2.default.createElement('input', {
+                disabled: range.disabled,
+                readOnly: true,
+                value: _this4.formatDateDisplay(range.startDate, 'Early')
+              })
+            ),
+            _react2.default.createElement(
+              'span',
+              {
+                className: (0, _classnames4.default)(styles.dateDisplayItem, _defineProperty({}, styles.dateDisplayItemActive, focusedRange[0] === i && focusedRange[1] === 1)),
+                onFocus: function onFocus() {
+                  return _this4.handleRangeFocusChange(i, 1);
+                } },
+              _react2.default.createElement('input', {
+                disabled: range.disabled,
+                readOnly: true,
+                value: _this4.formatDateDisplay(range.endDate, 'Continuous')
+              })
+            )
+          );
+        })
+      );
+    }
+  }, {
+    key: 'onDragSelectionStart',
+    value: function onDragSelectionStart(date) {
+      var _props4 = this.props,
+          onChange = _props4.onChange,
+          dragSelectionEnabled = _props4.dragSelectionEnabled;
+
+
+      if (dragSelectionEnabled) {
+        this.setState({
+          drag: {
+            status: true,
+            range: { startDate: date, endDate: date },
+            disablePreview: true
+          }
+        });
+      } else {
+        onChange && onChange(date);
+      }
+    }
+  }, {
+    key: 'onDragSelectionEnd',
+    value: function onDragSelectionEnd(date) {
+      var _props5 = this.props,
+          updateRange = _props5.updateRange,
+          displayMode = _props5.displayMode,
+          onChange = _props5.onChange,
+          dragSelectionEnabled = _props5.dragSelectionEnabled;
+
+
+      if (!dragSelectionEnabled) return;
+
+      if (displayMode === 'date' || !this.state.drag.status) {
+        onChange && onChange(date);
+        return;
+      }
+      var newRange = {
+        startDate: this.state.drag.range.startDate,
+        endDate: date
+      };
+      if (displayMode !== 'dateRange' || (0, _isSameDay2.default)(newRange.startDate, date)) {
+        this.setState({ drag: { status: false, range: {} } }, function () {
+          return onChange && onChange(date);
+        });
+      } else {
+        this.setState({ drag: { status: false, range: {} } }, function () {
+          updateRange && updateRange(newRange);
+        });
+      }
+    }
+  }, {
+    key: 'onDragSelectionMove',
+    value: function onDragSelectionMove(date) {
+      var drag = this.state.drag;
+
+      if (!drag.status || !this.props.dragSelectionEnabled) return;
+      this.setState({
+        drag: {
+          status: drag.status,
+          range: { startDate: drag.range.startDate, endDate: date },
+          disablePreview: true
+        }
+      });
+    }
+  }, {
+    key: 'estimateMonthSize',
+    value: function estimateMonthSize(index, cache) {
+      var _props6 = this.props,
+          direction = _props6.direction,
+          minDate = _props6.minDate;
+      var scrollArea = this.state.scrollArea;
+
+      if (cache) {
+        this.listSizeCache = cache;
+        if (cache[index]) return cache[index];
+      }
+      if (direction === 'horizontal') return scrollArea.monthWidth;
+      var monthStep = (0, _addMonths2.default)(minDate, index);
+
+      var _getMonthDisplayRange = (0, _utils.getMonthDisplayRange)(monthStep, this.dateOptions),
+          start = _getMonthDisplayRange.start,
+          end = _getMonthDisplayRange.end;
+
+      var isLongMonth = (0, _differenceInDays2.default)(end, start, this.dateOptions) + 1 > 7 * 5;
+      return isLongMonth ? scrollArea.longMonthHeight : scrollArea.monthHeight;
+    }
+  }, {
+    key: 'formatDateDisplay',
+    value: function formatDateDisplay(date, defaultText) {
+      if (!date) return defaultText;
+      return (0, _format2.default)(date, this.props.dateDisplayFormat, this.dateOptions);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this5 = this;
+
+      var _props7 = this.props,
+          showDateDisplay = _props7.showDateDisplay,
+          onPreviewChange = _props7.onPreviewChange,
+          scroll = _props7.scroll,
+          direction = _props7.direction,
+          maxDate = _props7.maxDate,
+          minDate = _props7.minDate,
+          rangeColors = _props7.rangeColors,
+          color = _props7.color;
+      var _state = this.state,
+          scrollArea = _state.scrollArea,
+          focusedDate = _state.focusedDate;
+
+      var isVertical = direction === 'vertical';
+      var navigatorRenderer = this.props.navigatorRenderer || this.renderMonthAndYear;
+
+      var ranges = this.props.ranges.map(function (range, i) {
+        return _extends({}, range, {
+          color: range.color || rangeColors[i] || color
+        });
+      });
+      return _react2.default.createElement(
+        'div',
+        {
+          className: (0, _classnames4.default)(this.styles.calendarWrapper, this.props.className),
+          onMouseUp: function onMouseUp() {
+            return _this5.setState({ drag: { status: false, range: {} } });
+          },
+          onMouseLeave: function onMouseLeave() {
+            _this5.setState({ drag: { status: false, range: {} } });
+          } },
+        showDateDisplay && this.renderDateDisplay(),
+        navigatorRenderer(focusedDate, this.changeShownDate, this.props),
+        scroll.enabled ? _react2.default.createElement(
+          'div',
+          null,
+          isVertical && this.renderWeekdays(this.dateOptions),
+          _react2.default.createElement(
+            'div',
+            {
+              className: (0, _classnames4.default)(this.styles.infiniteMonths, isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal),
+              onMouseLeave: function onMouseLeave() {
+                return onPreviewChange && onPreviewChange();
+              },
+              style: {
+                width: scrollArea.calendarWidth + 11,
+                height: scrollArea.calendarHeight + 11
+              },
+              onScroll: this.handleScroll },
+            _react2.default.createElement(_reactList2.default, {
+              length: (0, _differenceInCalendarMonths2.default)((0, _endOfMonth2.default)(maxDate), (0, _addDays2.default)((0, _startOfMonth2.default)(minDate), -1), this.dateOptions),
+              treshold: 500,
+              type: 'variable',
+              ref: function ref(target) {
+                return _this5.list = target;
+              },
+              itemSizeEstimator: this.estimateMonthSize,
+              axis: isVertical ? 'y' : 'x',
+              itemRenderer: function itemRenderer(index, key) {
+                var monthStep = (0, _addMonths2.default)(minDate, index);
+                return _react2.default.createElement(_Month2.default, _extends({}, _this5.props, {
+                  onPreviewChange: _this5.props.onPreviewChange || _this5.updatePreview,
+                  preview: _this5.props.preview || _this5.state.preview,
+                  ranges: ranges,
+                  key: key,
+                  drag: _this5.state.drag,
+                  dateOptions: _this5.dateOptions,
+                  month: monthStep,
+                  onDragSelectionStart: _this5.onDragSelectionStart,
+                  onDragSelectionEnd: _this5.onDragSelectionEnd,
+                  onDragSelectionMove: _this5.onDragSelectionMove,
+                  onMouseLeave: function onMouseLeave() {
+                    return onPreviewChange && onPreviewChange();
+                  },
+                  styles: _this5.styles,
+                  style: isVertical ? { height: _this5.estimateMonthSize(index) } : { height: scrollArea.monthHeight, width: _this5.estimateMonthSize(index) },
+                  showMonthName: true,
+                  showWeekDays: !isVertical
+                }));
+              }
+            })
+          )
+        ) : _react2.default.createElement(
+          'div',
+          {
+            className: (0, _classnames4.default)(this.styles.months, isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal) },
+          new Array(this.props.months).fill(null).map(function (_, i) {
+            var monthStep = (0, _addMonths2.default)(_this5.state.focusedDate, i);
+            return _react2.default.createElement(_Month2.default, _extends({}, _this5.props, {
+              onPreviewChange: _this5.props.onPreviewChange || _this5.updatePreview,
+              preview: _this5.props.preview || _this5.state.preview,
+              ranges: ranges,
+              key: i,
+              drag: _this5.state.drag,
+              dateOptions: _this5.dateOptions,
+              month: monthStep,
+              onDragSelectionStart: _this5.onDragSelectionStart,
+              onDragSelectionEnd: _this5.onDragSelectionEnd,
+              onDragSelectionMove: _this5.onDragSelectionMove,
+              onMouseLeave: function onMouseLeave() {
+                return onPreviewChange && onPreviewChange();
+              },
+              styles: _this5.styles,
+              showWeekDays: !isVertical || i === 0,
+              showMonthName: !isVertical || i > 0
+            }));
+          })
+        )
+      );
+    }
+  }]);
+
+  return Calendar;
+}(_react.PureComponent);
+
+Calendar.defaultProps = {
+  showMonthArrow: true,
+  showMonthAndYearPickers: true,
+  classNames: {},
+  locale: _enUS2.default,
+  ranges: [],
+  focusedRange: [0, 0],
+  dateDisplayFormat: 'MMM D, YYYY',
+  monthDisplayFormat: 'MMM YYYY',
+  showDateDisplay: true,
+  showPreview: true,
+  displayMode: 'date',
+  months: 1,
+  color: '#3d91ff',
+  scroll: {
+    enabled: false
+  },
+  direction: 'vertical',
+  maxDate: (0, _addYears2.default)(new Date(), 20),
+  minDate: (0, _addYears2.default)(new Date(), -100),
+  rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
+  dragSelectionEnabled: true
+};
+
+Calendar.propTypes = {
+  showMonthArrow: _propTypes2.default.bool,
+  showMonthAndYearPickers: _propTypes2.default.bool,
+  minDate: _propTypes2.default.object,
+  maxDate: _propTypes2.default.object,
+  date: _propTypes2.default.object,
+  onChange: _propTypes2.default.func,
+  onPreviewChange: _propTypes2.default.func,
+  onRangeFocusChange: _propTypes2.default.func,
+  classNames: _propTypes2.default.object,
+  locale: _propTypes2.default.object,
+  shownDate: _propTypes2.default.object,
+  onShownDateChange: _propTypes2.default.func,
+  ranges: _propTypes2.default.arrayOf(_DayCell.rangeShape),
+  preview: _propTypes2.default.shape({
+    startDate: _propTypes2.default.object,
+    endDate: _propTypes2.default.object,
+    color: _propTypes2.default.string
+  }),
+  dateDisplayFormat: _propTypes2.default.string,
+  monthDisplayFormat: _propTypes2.default.string,
+  focusedRange: _propTypes2.default.arrayOf(_propTypes2.default.number),
+  initialFocusedRange: _propTypes2.default.arrayOf(_propTypes2.default.number),
+  months: _propTypes2.default.number,
+  className: _propTypes2.default.string,
+  showDateDisplay: _propTypes2.default.bool,
+  showPreview: _propTypes2.default.bool,
+  displayMode: _propTypes2.default.oneOf(['dateRange', 'date']),
+  color: _propTypes2.default.string,
+  updateRange: _propTypes2.default.func,
+  scroll: _propTypes2.default.shape({
+    enabled: _propTypes2.default.bool,
+    monthHeight: _propTypes2.default.number,
+    longMonthHeight: _propTypes2.default.number,
+    monthWidth: _propTypes2.default.number,
+    calendarWidth: _propTypes2.default.number,
+    calendarHeight: _propTypes2.default.number
+  }),
+  direction: _propTypes2.default.oneOf(['vertical', 'horizontal']),
+  navigatorRenderer: _propTypes2.default.func,
+  rangeColors: _propTypes2.default.arrayOf(_propTypes2.default.string),
+  dragSelectionEnabled: _propTypes2.default.bool
+};
+
+exports.default = Calendar;
+},{"../styles":84,"../utils":85,"./DayCell.js":79,"./Month.js":81,"classnames":2,"date-fns/addDays":10,"date-fns/addMonths":11,"date-fns/addYears":12,"date-fns/differenceInCalendarMonths":16,"date-fns/differenceInDays":17,"date-fns/eachDayOfInterval":18,"date-fns/endOfMonth":20,"date-fns/endOfWeek":21,"date-fns/format":23,"date-fns/isSameDay":27,"date-fns/isSameMonth":28,"date-fns/locale/en-US":44,"date-fns/max":45,"date-fns/min":46,"date-fns/setMonth":47,"date-fns/setYear":48,"date-fns/startOfMonth":50,"date-fns/startOfWeek":51,"prop-types":74,"react":125,"react-list":90}],77:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _Calendar = require('./Calendar.js');
+
+var _Calendar2 = _interopRequireDefault(_Calendar);
+
+var _DayCell = require('./DayCell');
+
+var _utils = require('../utils.js');
+
+var _min = require('date-fns/min');
+
+var _min2 = _interopRequireDefault(_min);
+
+var _addDays = require('date-fns/addDays');
+
+var _addDays2 = _interopRequireDefault(_addDays);
+
+var _differenceInCalendarDays = require('date-fns/differenceInCalendarDays');
+
+var _differenceInCalendarDays2 = _interopRequireDefault(_differenceInCalendarDays);
+
+var _isBefore = require('date-fns/isBefore');
+
+var _isBefore2 = _interopRequireDefault(_isBefore);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _styles = require('../styles');
+
+var _styles2 = _interopRequireDefault(_styles);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DateRange = function (_Component) {
+  _inherits(DateRange, _Component);
+
+  function DateRange(props, context) {
+    _classCallCheck(this, DateRange);
+
+    var _this = _possibleConstructorReturn(this, (DateRange.__proto__ || Object.getPrototypeOf(DateRange)).call(this, props, context));
+
+    _this.setSelection = _this.setSelection.bind(_this);
+    _this.handleRangeFocusChange = _this.handleRangeFocusChange.bind(_this);
+    _this.updatePreview = _this.updatePreview.bind(_this);
+    _this.calcNewSelection = _this.calcNewSelection.bind(_this);
+    _this.state = {
+      focusedRange: props.initialFocusedRange || [(0, _utils.findNextRangeIndex)(props.ranges), 0],
+      preview: null
+    };
+    _this.styles = (0, _utils.generateStyles)([_styles2.default, props.classNames]);
+    return _this;
+  }
+
+  _createClass(DateRange, [{
+    key: 'calcNewSelection',
+    value: function calcNewSelection(value) {
+      var isSingleValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+      var focusedRange = this.props.focusedRange || this.state.focusedRange;
+      var _props = this.props,
+          ranges = _props.ranges,
+          onChange = _props.onChange,
+          maxDate = _props.maxDate,
+          moveRangeOnFirstSelection = _props.moveRangeOnFirstSelection;
+
+      var focusedRangeIndex = focusedRange[0];
+      var selectedRange = ranges[focusedRangeIndex];
+      if (!selectedRange || !onChange) return {};
+
+      var startDate = selectedRange.startDate,
+          endDate = selectedRange.endDate;
+
+      if (!endDate) endDate = new Date(startDate);
+      var nextFocusRange = void 0;
+      if (!isSingleValue) {
+        startDate = value.startDate;
+        endDate = value.endDate;
+      } else if (focusedRange[1] === 0) {
+        // startDate selection
+        var dayOffset = (0, _differenceInCalendarDays2.default)(endDate, startDate);
+        startDate = value;
+        endDate = moveRangeOnFirstSelection ? (0, _addDays2.default)(value, dayOffset) : value;
+        if (maxDate) endDate = (0, _min2.default)([endDate, maxDate]);
+        nextFocusRange = [focusedRange[0], 1];
+      } else {
+        endDate = value;
+      }
+      // reverse dates if startDate before endDate
+      if ((0, _isBefore2.default)(endDate, startDate)) {
+        var _ref = [endDate, startDate];
+        startDate = _ref[0];
+        endDate = _ref[1];
+      }
+
+      if (!nextFocusRange) {
+        var nextFocusRangeIndex = (0, _utils.findNextRangeIndex)(this.props.ranges, focusedRange[0]);
+        nextFocusRange = [nextFocusRangeIndex, 0];
+      }
+      return {
+        range: { startDate: startDate, endDate: endDate },
+        nextFocusRange: nextFocusRange
+      };
+    }
+  }, {
+    key: 'setSelection',
+    value: function setSelection(value, isSingleValue) {
+      var _props2 = this.props,
+          onChange = _props2.onChange,
+          ranges = _props2.ranges,
+          onRangeFocusChange = _props2.onRangeFocusChange;
+
+      var focusedRange = this.props.focusedRange || this.state.focusedRange;
+      var focusedRangeIndex = focusedRange[0];
+      var selectedRange = ranges[focusedRangeIndex];
+      if (!selectedRange) return;
+      var newSelection = this.calcNewSelection(value, isSingleValue);
+      onChange(_defineProperty({}, selectedRange.key || 'range' + (focusedRangeIndex + 1), _extends({}, selectedRange, newSelection.range)));
+      this.setState({
+        focusedRange: newSelection.nextFocusRange,
+        preview: null
+      });
+      onRangeFocusChange && onRangeFocusChange(newSelection.nextFocusRange);
+    }
+  }, {
+    key: 'handleRangeFocusChange',
+    value: function handleRangeFocusChange(focusedRange) {
+      this.setState({ focusedRange: focusedRange });
+      this.props.onRangeFocusChange && this.props.onRangeFocusChange(focusedRange);
+    }
+  }, {
+    key: 'updatePreview',
+    value: function updatePreview(val) {
+      if (!val) {
+        this.setState({ preview: null });
+        return;
+      }
+      var _props3 = this.props,
+          rangeColors = _props3.rangeColors,
+          ranges = _props3.ranges;
+
+      var focusedRange = this.props.focusedRange || this.state.focusedRange;
+      var color = ranges[focusedRange[0]].color || rangeColors[focusedRange[0]] || color;
+      this.setState({ preview: _extends({}, val, { color: color }) });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(_Calendar2.default, _extends({
+        focusedRange: this.state.focusedRange,
+        onRangeFocusChange: this.handleRangeFocusChange,
+        preview: this.state.preview,
+        onPreviewChange: function onPreviewChange(value) {
+          _this2.updatePreview(value ? _this2.calcNewSelection(value).range : null);
+        }
+      }, this.props, {
+        displayMode: 'dateRange',
+        className: (0, _classnames2.default)(this.styles.dateRangeWrapper, this.props.className),
+        onChange: this.setSelection,
+        updateRange: function updateRange(val) {
+          return _this2.setSelection(val, false);
+        },
+        ref: function ref(target) {
+          _this2.calendar = target;
+        }
+      }));
+    }
+  }]);
+
+  return DateRange;
+}(_react.Component);
+
+DateRange.defaultProps = {
+  classNames: {},
+  ranges: [],
+  moveRangeOnFirstSelection: false,
+  rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c']
+};
+
+DateRange.propTypes = _extends({}, _Calendar2.default.propTypes, {
+  onChange: _propTypes2.default.func,
+  onRangeFocusChange: _propTypes2.default.func,
+  className: _propTypes2.default.string,
+  ranges: _propTypes2.default.arrayOf(_DayCell.rangeShape),
+  moveRangeOnFirstSelection: _propTypes2.default.bool
+});
+
+exports.default = DateRange;
+},{"../styles":84,"../utils.js":85,"./Calendar.js":76,"./DayCell":79,"classnames":2,"date-fns/addDays":10,"date-fns/differenceInCalendarDays":15,"date-fns/isBefore":26,"date-fns/min":46,"prop-types":74,"react":125}],78:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _DateRange = require('./DateRange');
+
+var _DateRange2 = _interopRequireDefault(_DateRange);
+
+var _DefinedRange = require('./DefinedRange');
+
+var _DefinedRange2 = _interopRequireDefault(_DefinedRange);
+
+var _utils = require('../utils.js');
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _styles = require('../styles');
+
+var _styles2 = _interopRequireDefault(_styles);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DateRangePicker = function (_Component) {
+  _inherits(DateRangePicker, _Component);
+
+  function DateRangePicker(props) {
+    _classCallCheck(this, DateRangePicker);
+
+    var _this = _possibleConstructorReturn(this, (DateRangePicker.__proto__ || Object.getPrototypeOf(DateRangePicker)).call(this, props));
+
+    _this.state = {
+      focusedRange: [(0, _utils.findNextRangeIndex)(props.ranges), 0]
+    };
+    _this.styles = (0, _utils.generateStyles)([_styles2.default, props.classNames]);
+    return _this;
+  }
+
+  _createClass(DateRangePicker, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var focusedRange = this.state.focusedRange;
+
+      return _react2.default.createElement(
+        'div',
+        { className: (0, _classnames2.default)(this.styles.dateRangePickerWrapper, this.props.className) },
+        _react2.default.createElement(_DefinedRange2.default, _extends({
+          focusedRange: focusedRange,
+          onPreviewChange: function onPreviewChange(value) {
+            return _this2.dateRange.updatePreview(value);
+          }
+        }, this.props, {
+          range: this.props.ranges[focusedRange[0]],
+          className: undefined
+        })),
+        _react2.default.createElement(_DateRange2.default, _extends({
+          onRangeFocusChange: function onRangeFocusChange(focusedRange) {
+            return _this2.setState({ focusedRange: focusedRange });
+          },
+          focusedRange: focusedRange
+        }, this.props, {
+          ref: function ref(t) {
+            return _this2.dateRange = t;
+          },
+          className: undefined
+        }))
+      );
+    }
+  }]);
+
+  return DateRangePicker;
+}(_react.Component);
+
+DateRangePicker.defaultProps = {};
+
+DateRangePicker.propTypes = _extends({}, _DateRange2.default.propTypes, _DefinedRange2.default.propTypes, {
+  className: _propTypes2.default.string
+});
+
+exports.default = DateRangePicker;
+},{"../styles":84,"../utils.js":85,"./DateRange":77,"./DefinedRange":80,"classnames":2,"prop-types":74,"react":125}],79:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.rangeShape = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _classnames4 = require('classnames');
+
+var _classnames5 = _interopRequireDefault(_classnames4);
+
+var _endOfDay = require('date-fns/endOfDay');
+
+var _endOfDay2 = _interopRequireDefault(_endOfDay);
+
+var _isBefore = require('date-fns/isBefore');
+
+var _isBefore2 = _interopRequireDefault(_isBefore);
+
+var _isAfter = require('date-fns/isAfter');
+
+var _isAfter2 = _interopRequireDefault(_isAfter);
+
+var _isSameDay = require('date-fns/isSameDay');
+
+var _isSameDay2 = _interopRequireDefault(_isSameDay);
+
+var _format = require('date-fns/format');
+
+var _format2 = _interopRequireDefault(_format);
+
+var _startOfDay = require('date-fns/startOfDay');
+
+var _startOfDay2 = _interopRequireDefault(_startOfDay);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint-disable no-fallthrough */
+
+
+var DayCell = function (_Component) {
+  _inherits(DayCell, _Component);
+
+  function DayCell(props, context) {
+    _classCallCheck(this, DayCell);
+
+    var _this = _possibleConstructorReturn(this, (DayCell.__proto__ || Object.getPrototypeOf(DayCell)).call(this, props, context));
+
+    _this.state = {
+      hover: false,
+      active: false
+    };
+    _this.getClassNames = _this.getClassNames.bind(_this);
+    _this.handleMouseEvent = _this.handleMouseEvent.bind(_this);
+    _this.handleKeyEvent = _this.handleKeyEvent.bind(_this);
+    _this.renderSelectionPlaceholders = _this.renderSelectionPlaceholders.bind(_this);
+    _this.renderPreviewPlaceholder = _this.renderPreviewPlaceholder.bind(_this);
+    return _this;
+  }
+
+  _createClass(DayCell, [{
+    key: 'handleKeyEvent',
+    value: function handleKeyEvent(event) {
+      var day = this.props.day;
+
+      switch (event.keyCode) {
+        case 13: //space
+        case 32:
+          //enter
+          if (event.type === 'keydown') {
+            this.props.onMouseDown(day);
+          } else {
+            this.props.onMouseUp(day);
+          }
+          break;
+      }
+    }
+  }, {
+    key: 'handleMouseEvent',
+    value: function handleMouseEvent(event) {
+      var _props = this.props,
+          day = _props.day,
+          disabled = _props.disabled,
+          onPreviewChange = _props.onPreviewChange;
+
+      var stateChanges = {};
+      if (disabled) {
+        onPreviewChange();
+        return;
+      }
+
+      switch (event.type) {
+        case 'mouseenter':
+          this.props.onMouseEnter(day);
+          onPreviewChange(day);
+          stateChanges.hover = true;
+          break;
+        case 'blur':
+        case 'mouseleave':
+          stateChanges.hover = false;
+          break;
+        case 'mousedown':
+          stateChanges.active = true;
+          this.props.onMouseDown(day);
+          break;
+        case 'mouseup':
+          event.stopPropagation();
+          stateChanges.active = false;
+          this.props.onMouseUp(day);
+          break;
+        case 'focus':
+          onPreviewChange(day);
+          break;
+      }
+      if (Object.keys(stateChanges).length) {
+        this.setState(stateChanges);
+      }
+    }
+  }, {
+    key: 'getClassNames',
+    value: function getClassNames() {
+      var _classnames;
+
+      var _props2 = this.props,
+          isPassive = _props2.isPassive,
+          isToday = _props2.isToday,
+          isWeekend = _props2.isWeekend,
+          isStartOfWeek = _props2.isStartOfWeek,
+          isEndOfWeek = _props2.isEndOfWeek,
+          isStartOfMonth = _props2.isStartOfMonth,
+          isEndOfMonth = _props2.isEndOfMonth,
+          disabled = _props2.disabled,
+          styles = _props2.styles;
+
+
+      return (0, _classnames5.default)(styles.day, (_classnames = {}, _defineProperty(_classnames, styles.dayPassive, isPassive), _defineProperty(_classnames, styles.dayDisabled, disabled), _defineProperty(_classnames, styles.dayToday, isToday), _defineProperty(_classnames, styles.dayWeekend, isWeekend), _defineProperty(_classnames, styles.dayStartOfWeek, isStartOfWeek), _defineProperty(_classnames, styles.dayEndOfWeek, isEndOfWeek), _defineProperty(_classnames, styles.dayStartOfMonth, isStartOfMonth), _defineProperty(_classnames, styles.dayEndOfMonth, isEndOfMonth), _defineProperty(_classnames, styles.dayHovered, this.state.hover), _defineProperty(_classnames, styles.dayActive, this.state.active), _classnames));
+    }
+  }, {
+    key: 'renderPreviewPlaceholder',
+    value: function renderPreviewPlaceholder() {
+      var _classnames2;
+
+      var _props3 = this.props,
+          preview = _props3.preview,
+          day = _props3.day,
+          styles = _props3.styles;
+
+      if (!preview) return null;
+      var startDate = preview.startDate ? (0, _endOfDay2.default)(preview.startDate) : null;
+      var endDate = preview.endDate ? (0, _startOfDay2.default)(preview.endDate) : null;
+      var isInRange = (!startDate || (0, _isAfter2.default)(day, startDate)) && (!endDate || (0, _isBefore2.default)(day, endDate));
+      var isStartEdge = !isInRange && (0, _isSameDay2.default)(day, startDate);
+      var isEndEdge = !isInRange && (0, _isSameDay2.default)(day, endDate);
+      return _react2.default.createElement('span', {
+        className: (0, _classnames5.default)((_classnames2 = {}, _defineProperty(_classnames2, styles.dayStartPreview, isStartEdge), _defineProperty(_classnames2, styles.dayInPreview, isInRange), _defineProperty(_classnames2, styles.dayEndPreview, isEndEdge), _classnames2)),
+        style: { color: preview.color }
+      });
+    }
+  }, {
+    key: 'renderSelectionPlaceholders',
+    value: function renderSelectionPlaceholders() {
+      var _this2 = this;
+
+      var _props4 = this.props,
+          styles = _props4.styles,
+          ranges = _props4.ranges,
+          day = _props4.day;
+
+      if (this.props.displayMode === 'date') {
+        var isSelected = (0, _isSameDay2.default)(this.props.day, this.props.date);
+        return isSelected ? _react2.default.createElement('span', { className: styles.selected, style: { color: this.props.color } }) : null;
+      }
+
+      var inRanges = ranges.reduce(function (result, range) {
+        var startDate = range.startDate;
+        var endDate = range.endDate;
+        if (startDate && endDate && (0, _isBefore2.default)(endDate, startDate)) {
+          var _ref = [endDate, startDate];
+          startDate = _ref[0];
+          endDate = _ref[1];
+        }
+        startDate = startDate ? (0, _endOfDay2.default)(startDate) : null;
+        endDate = endDate ? (0, _startOfDay2.default)(endDate) : null;
+        var isInRange = (!startDate || (0, _isAfter2.default)(day, startDate)) && (!endDate || (0, _isBefore2.default)(day, endDate));
+        var isStartEdge = !isInRange && (0, _isSameDay2.default)(day, startDate);
+        var isEndEdge = !isInRange && (0, _isSameDay2.default)(day, endDate);
+        if (isInRange || isStartEdge || isEndEdge) {
+          return [].concat(_toConsumableArray(result), [_extends({
+            isStartEdge: isStartEdge,
+            isEndEdge: isEndEdge,
+            isInRange: isInRange
+          }, range)]);
+        }
+        return result;
+      }, []);
+
+      return inRanges.map(function (range, i) {
+        var _classnames3;
+
+        return _react2.default.createElement('span', {
+          key: i,
+          className: (0, _classnames5.default)((_classnames3 = {}, _defineProperty(_classnames3, styles.startEdge, range.isStartEdge), _defineProperty(_classnames3, styles.endEdge, range.isEndEdge), _defineProperty(_classnames3, styles.inRange, range.isInRange), _classnames3)),
+          style: { color: range.color || _this2.props.color }
+        });
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var styles = this.props.styles;
+
+      return _react2.default.createElement(
+        'button',
+        _extends({
+          type: 'button',
+          onMouseEnter: this.handleMouseEvent,
+          onMouseLeave: this.handleMouseEvent,
+          onFocus: this.handleMouseEvent,
+          onMouseDown: this.handleMouseEvent,
+          onMouseUp: this.handleMouseEvent,
+          onBlur: this.handleMouseEvent,
+          onPauseCapture: this.handleMouseEvent,
+          onKeyDown: this.handleKeyEvent,
+          onKeyUp: this.handleKeyEvent,
+          className: this.getClassNames(styles)
+        }, this.props.disabled || this.props.isPassive ? { tabIndex: -1 } : {}, {
+          style: { color: this.props.color } }),
+        this.renderSelectionPlaceholders(),
+        this.renderPreviewPlaceholder(),
+        _react2.default.createElement(
+          'span',
+          { className: styles.dayNumber },
+          _react2.default.createElement(
+            'span',
+            null,
+            (0, _format2.default)(this.props.day, 'D')
+          )
+        )
+      );
+    }
+  }]);
+
+  return DayCell;
+}(_react.Component);
+
+DayCell.defaultProps = {};
+
+var rangeShape = exports.rangeShape = _propTypes2.default.shape({
+  startDate: _propTypes2.default.object,
+  endDate: _propTypes2.default.object,
+  color: _propTypes2.default.string,
+  key: _propTypes2.default.string,
+  autoFocus: _propTypes2.default.bool,
+  disabled: _propTypes2.default.bool,
+  showDateDisplay: _propTypes2.default.bool
+});
+
+DayCell.propTypes = {
+  day: _propTypes2.default.object.isRequired,
+  date: _propTypes2.default.object,
+  ranges: _propTypes2.default.arrayOf(rangeShape),
+  preview: _propTypes2.default.shape({
+    startDate: _propTypes2.default.object,
+    endDate: _propTypes2.default.object
+  }),
+  onPreviewChange: _propTypes2.default.func,
+  previewColor: _propTypes2.default.string,
+  disabled: _propTypes2.default.bool,
+  isPassive: _propTypes2.default.bool,
+  isToday: _propTypes2.default.bool,
+  isWeekend: _propTypes2.default.bool,
+  isStartOfWeek: _propTypes2.default.bool,
+  isEndOfWeek: _propTypes2.default.bool,
+  isStartOfMonth: _propTypes2.default.bool,
+  isEndOfMonth: _propTypes2.default.bool,
+  color: _propTypes2.default.string,
+  displayMode: _propTypes2.default.oneOf(['dateRange', 'date']),
+  styles: _propTypes2.default.object,
+  onMouseDown: _propTypes2.default.func,
+  onMouseUp: _propTypes2.default.func,
+  onMouseEnter: _propTypes2.default.func
+};
+
+exports.default = DayCell;
+},{"classnames":2,"date-fns/endOfDay":19,"date-fns/format":23,"date-fns/isAfter":25,"date-fns/isBefore":26,"date-fns/isSameDay":27,"date-fns/startOfDay":49,"prop-types":74,"react":125}],80:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _styles = require('../styles');
+
+var _styles2 = _interopRequireDefault(_styles);
+
+var _defaultRanges = require('../defaultRanges');
+
+var _DayCell = require('./DayCell');
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DefinedRanges = function (_Component) {
+  _inherits(DefinedRanges, _Component);
+
+  function DefinedRanges(props) {
+    _classCallCheck(this, DefinedRanges);
+
+    var _this = _possibleConstructorReturn(this, (DefinedRanges.__proto__ || Object.getPrototypeOf(DefinedRanges)).call(this, props));
+
+    _this.state = {
+      rangeOffset: 0,
+      focusedInput: -1
+    };
+    _this.handleRangeChange = _this.handleRangeChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(DefinedRanges, [{
+    key: 'handleRangeChange',
+    value: function handleRangeChange(range) {
+      var _props = this.props,
+          onChange = _props.onChange,
+          ranges = _props.ranges,
+          focusedRange = _props.focusedRange;
+
+      var selectedRange = ranges[focusedRange[0]];
+      if (!onChange || !selectedRange) return;
+      onChange(_defineProperty({}, selectedRange.key || 'range' + (focusedRange[0] + 1), _extends({}, selectedRange, range)));
+    }
+  }, {
+    key: 'getSelectedRange',
+    value: function getSelectedRange(ranges, staticRange) {
+      var focusedRangeIndex = ranges.findIndex(function (range) {
+        if (!range.startDate || !range.endDate || range.disabled) return false;
+        return staticRange.isSelected(range);
+      });
+      var selectedRange = ranges[focusedRangeIndex];
+      return { selectedRange: selectedRange, focusedRangeIndex: focusedRangeIndex };
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var _props2 = this.props,
+          onPreviewChange = _props2.onPreviewChange,
+          ranges = _props2.ranges,
+          rangeColors = _props2.rangeColors,
+          className = _props2.className;
+
+      return _react2.default.createElement(
+        'div',
+        { className: (0, _classnames2.default)(_styles2.default.definedRangesWrapper, className) },
+        this.props.headerContent,
+        _react2.default.createElement(
+          'div',
+          { className: _styles2.default.staticRanges },
+          this.props.staticRanges.map(function (staticRange, i) {
+            var _getSelectedRange = _this2.getSelectedRange(ranges, staticRange),
+                selectedRange = _getSelectedRange.selectedRange,
+                focusedRangeIndex = _getSelectedRange.focusedRangeIndex;
+
+            return _react2.default.createElement(
+              'button',
+              {
+                type: 'button',
+                className: (0, _classnames2.default)(_styles2.default.staticRange, _defineProperty({}, _styles2.default.staticRangeSelected, Boolean(selectedRange))),
+                style: {
+                  color: selectedRange ? selectedRange.color || rangeColors[focusedRangeIndex] : null
+                },
+                key: i,
+                onClick: function onClick() {
+                  return _this2.handleRangeChange(staticRange.range(_this2.props));
+                },
+                onFocus: function onFocus() {
+                  return onPreviewChange && onPreviewChange(staticRange.range(_this2.props));
+                },
+                onMouseOver: function onMouseOver() {
+                  return onPreviewChange && onPreviewChange(staticRange.range(_this2.props));
+                },
+                onMouseLeave: function onMouseLeave() {
+                  _this2.props.onPreviewChange && _this2.props.onPreviewChange();
+                } },
+              _react2.default.createElement(
+                'span',
+                { tabIndex: -1, className: _styles2.default.staticRangeLabel },
+                staticRange.label
+              )
+            );
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: _styles2.default.inputRanges },
+          this.props.inputRanges.map(function (rangeOption, i) {
+            return _react2.default.createElement(
+              'div',
+              { className: _styles2.default.inputRange, key: i },
+              _react2.default.createElement('input', {
+                className: _styles2.default.inputRangeInput,
+                onFocus: function onFocus() {
+                  return _this2.setState({ focusedInput: i, rangeOffset: 0 });
+                },
+                onBlur: function onBlur() {
+                  return _this2.setState({ rangeOffset: 0 });
+                },
+                onChange: function onChange(e) {
+                  var value = parseInt(e.target.value, 10);
+                  value = isNaN(value) ? 0 : Math.max(Math.min(99999, value), 0);
+                  _this2.handleRangeChange(rangeOption.range(value, _this2.props));
+                },
+                min: 0,
+                max: 99999,
+                value: rangeOption.getCurrentValue ? rangeOption.getCurrentValue(ranges[_this2.props.focusedRange[0]] || {}) : '-'
+              }),
+              _react2.default.createElement(
+                'span',
+                { className: _styles2.default.inputRangeLabel },
+                rangeOption.label
+              )
+            );
+          })
+        ),
+        this.props.footerContent
+      );
+    }
+  }]);
+
+  return DefinedRanges;
+}(_react.Component);
+
+DefinedRanges.propTypes = {
+  inputRanges: _propTypes2.default.array,
+  staticRanges: _propTypes2.default.array,
+  ranges: _propTypes2.default.arrayOf(_DayCell.rangeShape),
+  focusedRange: _propTypes2.default.arrayOf(_propTypes2.default.number),
+  onPreviewChange: _propTypes2.default.func,
+  onChange: _propTypes2.default.func,
+  footerContent: _propTypes2.default.any,
+  headerContent: _propTypes2.default.any,
+  rangeColors: _propTypes2.default.arrayOf(_propTypes2.default.string),
+  className: _propTypes2.default.string
+};
+
+DefinedRanges.defaultProps = {
+  inputRanges: _defaultRanges.defaultInputRanges,
+  staticRanges: _defaultRanges.defaultStaticRanges,
+  ranges: [],
+  rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
+  focusedRange: [0, 0]
+};
+
+exports.default = DefinedRanges;
+},{"../defaultRanges":82,"../styles":84,"./DayCell":79,"classnames":2,"prop-types":74,"react":125}],81:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _DayCell = require('./DayCell.js');
+
+var _DayCell2 = _interopRequireDefault(_DayCell);
+
+var _eachDayOfInterval = require('date-fns/eachDayOfInterval');
+
+var _eachDayOfInterval2 = _interopRequireDefault(_eachDayOfInterval);
+
+var _isWithinInterval = require('date-fns/isWithinInterval');
+
+var _isWithinInterval2 = _interopRequireDefault(_isWithinInterval);
+
+var _isWeekend = require('date-fns/isWeekend');
+
+var _isWeekend2 = _interopRequireDefault(_isWeekend);
+
+var _isAfter = require('date-fns/isAfter');
+
+var _isAfter2 = _interopRequireDefault(_isAfter);
+
+var _isSameDay = require('date-fns/isSameDay');
+
+var _isSameDay2 = _interopRequireDefault(_isSameDay);
+
+var _isBefore = require('date-fns/isBefore');
+
+var _isBefore2 = _interopRequireDefault(_isBefore);
+
+var _endOfWeek = require('date-fns/endOfWeek');
+
+var _endOfWeek2 = _interopRequireDefault(_endOfWeek);
+
+var _startOfWeek = require('date-fns/startOfWeek');
+
+var _startOfWeek2 = _interopRequireDefault(_startOfWeek);
+
+var _endOfDay = require('date-fns/endOfDay');
+
+var _endOfDay2 = _interopRequireDefault(_endOfDay);
+
+var _startOfDay = require('date-fns/startOfDay');
+
+var _startOfDay2 = _interopRequireDefault(_startOfDay);
+
+var _format = require('date-fns/format');
+
+var _format2 = _interopRequireDefault(_format);
+
+var _utils = require('../utils');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint-disable no-fallthrough */
+
+
+function renderWeekdays(styles, dateOptions) {
+  var now = new Date();
+  return _react2.default.createElement(
+    'div',
+    { className: styles.weekDays },
+    (0, _eachDayOfInterval2.default)({
+      start: (0, _startOfWeek2.default)(now, dateOptions),
+      end: (0, _endOfWeek2.default)(now, dateOptions)
+    }).map(function (day, i) {
+      return _react2.default.createElement(
+        'span',
+        { className: styles.weekDay, key: i },
+        (0, _format2.default)(day, 'ddd', dateOptions)
+      );
+    })
+  );
+}
+
+var Month = function (_PureComponent) {
+  _inherits(Month, _PureComponent);
+
+  function Month() {
+    _classCallCheck(this, Month);
+
+    return _possibleConstructorReturn(this, (Month.__proto__ || Object.getPrototypeOf(Month)).apply(this, arguments));
+  }
+
+  _createClass(Month, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var now = new Date();
+      var _props = this.props,
+          displayMode = _props.displayMode,
+          focusedRange = _props.focusedRange,
+          drag = _props.drag,
+          styles = _props.styles;
+
+      var minDate = this.props.minDate && (0, _startOfDay2.default)(this.props.minDate);
+      var maxDate = this.props.maxDate && (0, _endOfDay2.default)(this.props.maxDate);
+      var monthDisplay = (0, _utils.getMonthDisplayRange)(this.props.month, this.props.dateOptions);
+      var ranges = this.props.ranges;
+      if (displayMode === 'dateRange' && drag.status) {
+        var _drag$range = drag.range,
+            startDate = _drag$range.startDate,
+            endDate = _drag$range.endDate;
+
+        ranges = ranges.map(function (range, i) {
+          if (i !== focusedRange[0]) return range;
+          return _extends({}, range, {
+            startDate: startDate,
+            endDate: endDate
+          });
+        });
+      }
+      var showPreview = this.props.showPreview && !drag.disablePreview;
+      return _react2.default.createElement(
+        'div',
+        { className: styles.month, style: this.props.style },
+        this.props.showMonthName ? _react2.default.createElement(
+          'div',
+          { className: styles.monthName },
+          (0, _format2.default)(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)
+        ) : null,
+        this.props.showWeekDays && renderWeekdays(styles, this.props.dateOptions),
+        _react2.default.createElement(
+          'div',
+          { className: styles.days, onMouseLeave: this.props.onMouseLeave },
+          (0, _eachDayOfInterval2.default)({ start: monthDisplay.start, end: monthDisplay.end }).map(function (day, index) {
+            var isStartOfMonth = (0, _isSameDay2.default)(day, monthDisplay.startDateOfMonth);
+            var isEndOfMonth = (0, _isSameDay2.default)(day, monthDisplay.endDateOfMonth);
+            var isOutsideMinMax = minDate && (0, _isBefore2.default)(day, minDate) || maxDate && (0, _isAfter2.default)(day, maxDate);
+            return _react2.default.createElement(_DayCell2.default, _extends({}, _this2.props, {
+              ranges: ranges,
+              day: day,
+              preview: showPreview ? _this2.props.preview : null,
+              isWeekend: (0, _isWeekend2.default)(day, _this2.props.dateOptions),
+              isToday: (0, _isSameDay2.default)(day, now),
+              isStartOfWeek: (0, _isSameDay2.default)(day, (0, _startOfWeek2.default)(day, _this2.props.dateOptions)),
+              isEndOfWeek: (0, _isSameDay2.default)(day, (0, _endOfWeek2.default)(day, _this2.props.dateOptions)),
+              isStartOfMonth: isStartOfMonth,
+              isEndOfMonth: isEndOfMonth,
+              key: index,
+              disabled: isOutsideMinMax,
+              isPassive: !(0, _isWithinInterval2.default)(day, {
+                start: monthDisplay.startDateOfMonth,
+                end: monthDisplay.endDateOfMonth
+              }),
+              styles: styles,
+              onMouseDown: _this2.props.onDragSelectionStart,
+              onMouseUp: _this2.props.onDragSelectionEnd,
+              onMouseEnter: _this2.props.onDragSelectionMove,
+              dragRange: drag.range,
+              drag: drag.status
+            }));
+          })
+        )
+      );
+    }
+  }]);
+
+  return Month;
+}(_react.PureComponent);
+
+Month.defaultProps = {};
+
+Month.propTypes = {
+  style: _propTypes2.default.object,
+  styles: _propTypes2.default.object,
+  month: _propTypes2.default.object,
+  drag: _propTypes2.default.object,
+  dateOptions: _propTypes2.default.object,
+  preview: _propTypes2.default.shape({
+    startDate: _propTypes2.default.object,
+    endDate: _propTypes2.default.object
+  }),
+  showPreview: _propTypes2.default.bool,
+  displayMode: _propTypes2.default.oneOf(['dateRange', 'date']),
+  minDate: _propTypes2.default.object,
+  maxDate: _propTypes2.default.object,
+  ranges: _propTypes2.default.arrayOf(_DayCell.rangeShape),
+  focusedRange: _propTypes2.default.arrayOf(_propTypes2.default.number),
+  onDragSelectionStart: _propTypes2.default.func,
+  onDragSelectionEnd: _propTypes2.default.func,
+  onDragSelectionMove: _propTypes2.default.func,
+  onMouseLeave: _propTypes2.default.func,
+  monthDisplayFormat: _propTypes2.default.string,
+  showWeekDays: _propTypes2.default.bool,
+  showMonthName: _propTypes2.default.bool
+};
+
+exports.default = Month;
+},{"../utils":85,"./DayCell.js":79,"date-fns/eachDayOfInterval":18,"date-fns/endOfDay":19,"date-fns/endOfWeek":21,"date-fns/format":23,"date-fns/isAfter":25,"date-fns/isBefore":26,"date-fns/isSameDay":27,"date-fns/isWeekend":30,"date-fns/isWithinInterval":31,"date-fns/startOfDay":49,"date-fns/startOfWeek":51,"prop-types":74,"react":125}],82:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.defaultInputRanges = exports.defaultStaticRanges = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.createStaticRanges = createStaticRanges;
+
+var _differenceInCalendarDays = require('date-fns/differenceInCalendarDays');
+
+var _differenceInCalendarDays2 = _interopRequireDefault(_differenceInCalendarDays);
+
+var _isSameDay = require('date-fns/isSameDay');
+
+var _isSameDay2 = _interopRequireDefault(_isSameDay);
+
+var _endOfWeek = require('date-fns/endOfWeek');
+
+var _endOfWeek2 = _interopRequireDefault(_endOfWeek);
+
+var _startOfWeek = require('date-fns/startOfWeek');
+
+var _startOfWeek2 = _interopRequireDefault(_startOfWeek);
+
+var _addMonths = require('date-fns/addMonths');
+
+var _addMonths2 = _interopRequireDefault(_addMonths);
+
+var _endOfMonth = require('date-fns/endOfMonth');
+
+var _endOfMonth2 = _interopRequireDefault(_endOfMonth);
+
+var _startOfMonth = require('date-fns/startOfMonth');
+
+var _startOfMonth2 = _interopRequireDefault(_startOfMonth);
+
+var _startOfDay = require('date-fns/startOfDay');
+
+var _startOfDay2 = _interopRequireDefault(_startOfDay);
+
+var _endOfDay = require('date-fns/endOfDay');
+
+var _endOfDay2 = _interopRequireDefault(_endOfDay);
+
+var _addDays = require('date-fns/addDays');
+
+var _addDays2 = _interopRequireDefault(_addDays);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var defineds = {
+  startOfWeek: (0, _startOfWeek2.default)(new Date()),
+  endOfWeek: (0, _endOfWeek2.default)(new Date()),
+  startOfLastWeek: (0, _startOfWeek2.default)((0, _addDays2.default)(new Date(), -7)),
+  endOfLastWeek: (0, _endOfWeek2.default)((0, _addDays2.default)(new Date(), -7)),
+  startOfToday: (0, _startOfDay2.default)(new Date()),
+  endOfToday: (0, _endOfDay2.default)(new Date()),
+  startOfYesterday: (0, _startOfDay2.default)((0, _addDays2.default)(new Date(), -1)),
+  endOfYesterday: (0, _endOfDay2.default)((0, _addDays2.default)(new Date(), -1)),
+  startOfMonth: (0, _startOfMonth2.default)(new Date()),
+  endOfMonth: (0, _endOfMonth2.default)(new Date()),
+  startOfLastMonth: (0, _startOfMonth2.default)((0, _addMonths2.default)(new Date(), -1)),
+  endOfLastMonth: (0, _endOfMonth2.default)((0, _addMonths2.default)(new Date(), -1))
+};
+
+var staticRangeHandler = {
+  range: {},
+  isSelected: function isSelected(range) {
+    var definedRange = this.range();
+    return (0, _isSameDay2.default)(range.startDate, definedRange.startDate) && (0, _isSameDay2.default)(range.endDate, definedRange.endDate);
+  }
+};
+
+function createStaticRanges(ranges) {
+  return ranges.map(function (range) {
+    return _extends({}, staticRangeHandler, range);
+  });
+}
+
+var defaultStaticRanges = exports.defaultStaticRanges = createStaticRanges([{
+  label: 'Today',
+  range: function range() {
+    return {
+      startDate: defineds.startOfToday,
+      endDate: defineds.endOfToday
+    };
+  }
+}, {
+  label: 'Yesterday',
+  range: function range() {
+    return {
+      startDate: defineds.startOfYesterday,
+      endDate: defineds.endOfYesterday
+    };
+  }
+}, {
+  label: 'This Week',
+  range: function range() {
+    return {
+      startDate: defineds.startOfWeek,
+      endDate: defineds.endOfWeek
+    };
+  }
+}, {
+  label: 'Last Week',
+  range: function range() {
+    return {
+      startDate: defineds.startOfLastWeek,
+      endDate: defineds.endOfLastWeek
+    };
+  }
+}, {
+  label: 'This Month',
+  range: function range() {
+    return {
+      startDate: defineds.startOfMonth,
+      endDate: defineds.endOfMonth
+    };
+  }
+}, {
+  label: 'Last Month',
+  range: function range() {
+    return {
+      startDate: defineds.startOfLastMonth,
+      endDate: defineds.endOfLastMonth
+    };
+  }
+}]);
+
+var defaultInputRanges = exports.defaultInputRanges = [{
+  label: 'days up to today',
+  range: function range(value) {
+    return {
+      startDate: (0, _addDays2.default)(defineds.startOfToday, (Math.max(Number(value), 1) - 1) * -1),
+      endDate: defineds.endOfToday
+    };
+  },
+  getCurrentValue: function getCurrentValue(range) {
+    if (!(0, _isSameDay2.default)(range.endDate, defineds.endOfToday)) return '-';
+    if (!range.startDate) return '∞';
+    return (0, _differenceInCalendarDays2.default)(defineds.endOfToday, range.startDate) + 1;
+  }
+}, {
+  label: 'days starting today',
+  range: function range(value) {
+    var today = new Date();
+    return {
+      startDate: today,
+      endDate: (0, _addDays2.default)(today, Math.max(Number(value), 1) - 1)
+    };
+  },
+  getCurrentValue: function getCurrentValue(range) {
+    if (!(0, _isSameDay2.default)(range.startDate, defineds.startOfToday)) return '-';
+    if (!range.endDate) return '∞';
+    return (0, _differenceInCalendarDays2.default)(range.endDate, defineds.startOfToday) + 1;
+  }
+}];
+},{"date-fns/addDays":10,"date-fns/addMonths":11,"date-fns/differenceInCalendarDays":15,"date-fns/endOfDay":19,"date-fns/endOfMonth":20,"date-fns/endOfWeek":21,"date-fns/isSameDay":27,"date-fns/startOfDay":49,"date-fns/startOfMonth":50,"date-fns/startOfWeek":51}],83:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _DateRange = require('./components/DateRange');
+
+Object.defineProperty(exports, 'DateRange', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_DateRange).default;
+  }
+});
+
+var _Calendar = require('./components/Calendar');
+
+Object.defineProperty(exports, 'Calendar', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Calendar).default;
+  }
+});
+
+var _DateRangePicker = require('./components/DateRangePicker');
+
+Object.defineProperty(exports, 'DateRangePicker', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_DateRangePicker).default;
+  }
+});
+
+var _DefinedRange = require('./components/DefinedRange');
+
+Object.defineProperty(exports, 'DefinedRange', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_DefinedRange).default;
+  }
+});
+
+var _defaultRanges = require('./defaultRanges');
+
+Object.defineProperty(exports, 'defaultInputRanges', {
+  enumerable: true,
+  get: function get() {
+    return _defaultRanges.defaultInputRanges;
+  }
+});
+Object.defineProperty(exports, 'defaultStaticRanges', {
+  enumerable: true,
+  get: function get() {
+    return _defaultRanges.defaultStaticRanges;
+  }
+});
+Object.defineProperty(exports, 'createStaticRanges', {
+  enumerable: true,
+  get: function get() {
+    return _defaultRanges.createStaticRanges;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./components/Calendar":76,"./components/DateRange":77,"./components/DateRangePicker":78,"./components/DefinedRange":80,"./defaultRanges":82}],84:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  dateRangeWrapper: 'rdrDateRangeWrapper',
+  calendarWrapper: 'rdrCalendarWrapper',
+  dateDisplay: 'rdrDateDisplay',
+  dateDisplayItem: 'rdrDateDisplayItem',
+  dateDisplayItemActive: 'rdrDateDisplayItemActive',
+  monthAndYearWrapper: 'rdrMonthAndYearWrapper',
+  monthAndYearPickers: 'rdrMonthAndYearPickers',
+  nextPrevButton: 'rdrNextPrevButton',
+  month: 'rdrMonth',
+  weekDays: 'rdrWeekDays',
+  weekDay: 'rdrWeekDay',
+  days: 'rdrDays',
+  day: 'rdrDay',
+  dayNumber: 'rdrDayNumber',
+  dayPassive: 'rdrDayPassive',
+  dayToday: 'rdrDayToday',
+  dayStartOfWeek: 'rdrDayStartOfWeek',
+  dayEndOfWeek: 'rdrDayEndOfWeek',
+  daySelected: 'rdrDaySelected',
+  dayDisabled: 'rdrDayDisabled',
+  dayStartOfMonth: 'rdrDayStartOfMonth',
+  dayEndOfMonth: 'rdrDayEndOfMonth',
+  dayWeekend: 'rdrDayWeekend',
+  dayStartPreview: 'rdrDayStartPreview',
+  dayInPreview: 'rdrDayInPreview',
+  dayEndPreview: 'rdrDayEndPreview',
+  dayHovered: 'rdrDayHovered',
+  dayActive: 'rdrDayActive',
+  inRange: 'rdrInRange',
+  endEdge: 'rdrEndEdge',
+  startEdge: 'rdrStartEdge',
+  prevButton: 'rdrPprevButton',
+  nextButton: 'rdrNextButton',
+  selected: 'rdrSelected',
+  months: 'rdrMonths',
+  monthPicker: 'rdrMonthPicker',
+  yearPicker: 'rdrYearPicker',
+  dateDisplayWrapper: 'rdrDateDisplayWrapper',
+  definedRangesWrapper: 'rdrDefinedRangesWrapper',
+  staticRanges: 'rdrStaticRanges',
+  staticRange: 'rdrStaticRange',
+  inputRanges: 'rdrInputRanges',
+  inputRange: 'rdrInputRange',
+  inputRangeInput: 'rdrInputRangeInput',
+  dateRangePickerWrapper: 'rdrDateRangePickerWrapper',
+  staticRangeLabel: 'rdrStaticRangeLabel',
+  staticRangeSelected: 'rdrStaticRangeSelected',
+  monthName: 'rdrMonthName',
+  infiniteMonths: 'rdrInfiniteMonths',
+  monthsVertical: 'rdrMonthsVertical',
+  monthsHorizontal: 'rdrMonthsHorizontal'
+};
+},{}],85:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.calcFocusDate = calcFocusDate;
+exports.findNextRangeIndex = findNextRangeIndex;
+exports.getMonthDisplayRange = getMonthDisplayRange;
+exports.generateStyles = generateStyles;
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _endOfWeek = require('date-fns/endOfWeek');
+
+var _endOfWeek2 = _interopRequireDefault(_endOfWeek);
+
+var _startOfWeek = require('date-fns/startOfWeek');
+
+var _startOfWeek2 = _interopRequireDefault(_startOfWeek);
+
+var _endOfMonth = require('date-fns/endOfMonth');
+
+var _endOfMonth2 = _interopRequireDefault(_endOfMonth);
+
+var _startOfMonth = require('date-fns/startOfMonth');
+
+var _startOfMonth2 = _interopRequireDefault(_startOfMonth);
+
+var _areIntervalsOverlapping = require('date-fns/areIntervalsOverlapping');
+
+var _areIntervalsOverlapping2 = _interopRequireDefault(_areIntervalsOverlapping);
+
+var _addMonths = require('date-fns/addMonths');
+
+var _addMonths2 = _interopRequireDefault(_addMonths);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function calcFocusDate(currentFocusedDate, props) {
+  var shownDate = props.shownDate,
+      date = props.date,
+      months = props.months,
+      ranges = props.ranges,
+      focusedRange = props.focusedRange,
+      displayMode = props.displayMode;
+  // find primary date according the props
+
+  var targetInterval = void 0;
+  if (displayMode === 'dateRange') {
+    var range = ranges[focusedRange[0]] || {};
+    targetInterval = {
+      start: range.startDate,
+      end: range.endDate
+    };
+  } else {
+    targetInterval = {
+      start: date,
+      end: date
+    };
+  }
+  targetInterval.start = (0, _startOfMonth2.default)(targetInterval.start || new Date());
+  targetInterval.end = (0, _endOfMonth2.default)(targetInterval.end || targetInterval.start);
+  var targetDate = targetInterval.start || targetInterval.end || shownDate || new Date();
+
+  // initial focus
+  if (!currentFocusedDate) return shownDate || targetDate;
+
+  // // just return targetDate for native scrolled calendars
+  // if (props.scroll.enabled) return targetDate;
+  var currentFocusInterval = {
+    start: (0, _startOfMonth2.default)(currentFocusedDate),
+    end: (0, _endOfMonth2.default)((0, _addMonths2.default)(currentFocusedDate, months - 1))
+  };
+  if ((0, _areIntervalsOverlapping2.default)(targetInterval, currentFocusInterval)) {
+    // don't change focused if new selection in view area
+    return currentFocusedDate;
+  }
+  return targetDate;
+}
+
+function findNextRangeIndex(ranges) {
+  var currentRangeIndex = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
+
+  var nextIndex = ranges.findIndex(function (range, i) {
+    return i > currentRangeIndex && range.autoFocus !== false && !range.disabled;
+  });
+  if (nextIndex !== -1) return nextIndex;
+  return ranges.findIndex(function (range) {
+    return range.autoFocus !== false && !range.disabled;
+  });
+}
+
+function getMonthDisplayRange(date, dateOptions) {
+  var startDateOfMonth = (0, _startOfMonth2.default)(date, dateOptions);
+  var endDateOfMonth = (0, _endOfMonth2.default)(date, dateOptions);
+  var startDateOfCalendar = (0, _startOfWeek2.default)(startDateOfMonth, dateOptions);
+  var endDateOfCalendar = (0, _endOfWeek2.default)(endDateOfMonth, dateOptions);
+  return {
+    start: startDateOfCalendar,
+    end: endDateOfCalendar,
+    startDateOfMonth: startDateOfMonth,
+    endDateOfMonth: endDateOfMonth
+  };
+}
+
+function generateStyles(sources) {
+  if (!sources.length) return {};
+  var generatedStyles = sources.filter(function (source) {
+    return Boolean(source);
+  }).reduce(function (styles, styleSource) {
+    Object.keys(styleSource).forEach(function (key) {
+      styles[key] = (0, _classnames2.default)(styles[key], styleSource[key]);
+    });
+    return styles;
+  }, {});
+  return generatedStyles;
+}
+},{"classnames":2,"date-fns/addMonths":11,"date-fns/areIntervalsOverlapping":13,"date-fns/endOfMonth":20,"date-fns/endOfWeek":21,"date-fns/startOfMonth":50,"date-fns/startOfWeek":51}],86:[function(require,module,exports){
 (function (process){
 /** @license React v16.5.2
  * react-dom.development.js
@@ -21104,7 +26564,7 @@ module.exports = reactDom;
 }
 
 }).call(this,require('_process'))
-},{"_process":19,"object-assign":16,"prop-types/checkPropTypes":20,"react":63,"schedule":69,"schedule/tracing":70}],26:[function(require,module,exports){
+},{"_process":70,"object-assign":67,"prop-types/checkPropTypes":71,"react":125,"schedule":131,"schedule/tracing":132}],87:[function(require,module,exports){
 /** @license React v16.5.2
  * react-dom.production.min.js
  *
@@ -21341,7 +26801,7 @@ void 0:t("40");return a._reactRootContainer?(th(function(){Gh(null,null,a,!1,fun
 Ma,Na,Ea.injectEventPluginsByName,qa,Ua,function(a){za(a,Ta)},Jb,Kb,Id,Ga]},unstable_createRoot:function(a,b){Eh(a)?void 0:t("278");return new Dh(a,!0,null!=b&&!0===b.hydrate)}};(function(a){var b=a.findFiberByHostInstance;return Re(n({},a,{findHostInstanceByFiber:function(a){a=md(a);return null===a?null:a.stateNode},findFiberByHostInstance:function(a){return b?b(a):null}}))})({findFiberByHostInstance:Ka,bundleType:0,version:"16.5.2",rendererPackageName:"react-dom"});
 var Nh={default:Mh},Oh=Nh&&Mh||Nh;module.exports=Oh.default||Oh;
 
-},{"object-assign":16,"react":63,"schedule":69}],27:[function(require,module,exports){
+},{"object-assign":67,"react":125,"schedule":131}],88:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -21383,7 +26843,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":25,"./cjs/react-dom.production.min.js":26,"_process":19}],28:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":86,"./cjs/react-dom.production.min.js":87,"_process":70}],89:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -21547,7 +27007,716 @@ function polyfill(Component) {
 
 exports.polyfill = polyfill;
 
-},{}],29:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(['module', 'prop-types', 'react'], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(module, require('prop-types'), require('react'));
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod, global.PropTypes, global.React);
+    global.ReactList = mod.exports;
+  }
+})(this, function (_module2, _propTypes, _react) {
+  'use strict';
+
+  var _module3 = _interopRequireDefault(_module2);
+
+  var _propTypes2 = _interopRequireDefault(_propTypes);
+
+  var _react2 = _interopRequireDefault(_react);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  var _class, _temp;
+
+  var CLIENT_SIZE_KEYS = { x: 'clientWidth', y: 'clientHeight' };
+  var CLIENT_START_KEYS = { x: 'clientTop', y: 'clientLeft' };
+  var INNER_SIZE_KEYS = { x: 'innerWidth', y: 'innerHeight' };
+  var OFFSET_SIZE_KEYS = { x: 'offsetWidth', y: 'offsetHeight' };
+  var OFFSET_START_KEYS = { x: 'offsetLeft', y: 'offsetTop' };
+  var OVERFLOW_KEYS = { x: 'overflowX', y: 'overflowY' };
+  var SCROLL_SIZE_KEYS = { x: 'scrollWidth', y: 'scrollHeight' };
+  var SCROLL_START_KEYS = { x: 'scrollLeft', y: 'scrollTop' };
+  var SIZE_KEYS = { x: 'width', y: 'height' };
+
+  var NOOP = function NOOP() {};
+
+  // If a browser doesn't support the `options` argument to
+  // add/removeEventListener, we need to check, otherwise we will
+  // accidentally set `capture` with a truthy value.
+  var PASSIVE = function () {
+    if (typeof window === 'undefined') return false;
+    var hasSupport = false;
+    try {
+      document.createElement('div').addEventListener('test', NOOP, {
+        get passive() {
+          hasSupport = true;
+          return false;
+        }
+      });
+    } catch (e) {}
+    return hasSupport;
+  }() ? { passive: true } : false;
+
+  var UNSTABLE_MESSAGE = 'ReactList failed to reach a stable state.';
+  var MAX_SYNC_UPDATES = 50;
+
+  var isEqualSubset = function isEqualSubset(a, b) {
+    for (var key in b) {
+      if (a[key] !== b[key]) return false;
+    }return true;
+  };
+
+  var defaultScrollParentGetter = function defaultScrollParentGetter(component) {
+    var axis = component.props.axis;
+
+    var el = component.getEl();
+    var overflowKey = OVERFLOW_KEYS[axis];
+    while (el = el.parentElement) {
+      switch (window.getComputedStyle(el)[overflowKey]) {
+        case 'auto':case 'scroll':case 'overlay':
+          return el;
+      }
+    }
+    return window;
+  };
+
+  var defaultScrollParentViewportSizeGetter = function defaultScrollParentViewportSizeGetter(component) {
+    var axis = component.props.axis;
+    var scrollParent = component.scrollParent;
+
+    return scrollParent === window ? window[INNER_SIZE_KEYS[axis]] : scrollParent[CLIENT_SIZE_KEYS[axis]];
+  };
+
+  _module3.default.exports = (_temp = _class = function (_Component) {
+    _inherits(ReactList, _Component);
+
+    function ReactList(props) {
+      _classCallCheck(this, ReactList);
+
+      var _this = _possibleConstructorReturn(this, (ReactList.__proto__ || Object.getPrototypeOf(ReactList)).call(this, props));
+
+      var initialIndex = props.initialIndex;
+
+      var itemsPerRow = 1;
+
+      var _this$constrain = _this.constrain(initialIndex, 0, itemsPerRow, props),
+          from = _this$constrain.from,
+          size = _this$constrain.size;
+
+      _this.state = { from: from, size: size, itemsPerRow: itemsPerRow };
+      _this.cache = {};
+      _this.cachedScrollPosition = null;
+      _this.prevPrevState = {};
+      _this.unstable = false;
+      _this.updateCounter = 0;
+      return _this;
+    }
+
+    _createClass(ReactList, [{
+      key: 'componentWillReceiveProps',
+      value: function componentWillReceiveProps(next) {
+        // Viewport scroll is no longer useful if axis changes
+        if (this.props.axis !== next.axis) this.clearSizeCache();
+        var _state = this.state,
+            from = _state.from,
+            size = _state.size,
+            itemsPerRow = _state.itemsPerRow;
+
+        this.maybeSetState(this.constrain(from, size, itemsPerRow, next), NOOP);
+      }
+    }, {
+      key: 'componentDidMount',
+      value: function componentDidMount() {
+        this.updateFrameAndClearCache = this.updateFrameAndClearCache.bind(this);
+        window.addEventListener('resize', this.updateFrameAndClearCache);
+        this.updateFrame(this.scrollTo.bind(this, this.props.initialIndex));
+      }
+    }, {
+      key: 'componentDidUpdate',
+      value: function componentDidUpdate() {
+        var _this2 = this;
+
+        // If the list has reached an unstable state, prevent an infinite loop.
+        if (this.unstable) return;
+
+        if (++this.updateCounter > MAX_SYNC_UPDATES) {
+          this.unstable = true;
+          return console.error(UNSTABLE_MESSAGE);
+        }
+
+        if (!this.updateCounterTimeoutId) {
+          this.updateCounterTimeoutId = setTimeout(function () {
+            _this2.updateCounter = 0;
+            delete _this2.updateCounterTimeoutId;
+          }, 0);
+        }
+
+        this.updateFrame();
+      }
+    }, {
+      key: 'maybeSetState',
+      value: function maybeSetState(b, cb) {
+        if (isEqualSubset(this.state, b)) return cb();
+
+        this.setState(b, cb);
+      }
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        window.removeEventListener('resize', this.updateFrameAndClearCache);
+        this.scrollParent.removeEventListener('scroll', this.updateFrameAndClearCache, PASSIVE);
+        this.scrollParent.removeEventListener('mousewheel', NOOP, PASSIVE);
+      }
+    }, {
+      key: 'getOffset',
+      value: function getOffset(el) {
+        var axis = this.props.axis;
+
+        var offset = el[CLIENT_START_KEYS[axis]] || 0;
+        var offsetKey = OFFSET_START_KEYS[axis];
+        do {
+          offset += el[offsetKey] || 0;
+        } while (el = el.offsetParent);
+        return offset;
+      }
+    }, {
+      key: 'getEl',
+      value: function getEl() {
+        return this.el || this.items;
+      }
+    }, {
+      key: 'getScrollPosition',
+      value: function getScrollPosition() {
+        // Cache scroll position as this causes a forced synchronous layout.
+        if (typeof this.cachedScrollPosition === 'number') return this.cachedScrollPosition;
+        var scrollParent = this.scrollParent;
+        var axis = this.props.axis;
+
+        var scrollKey = SCROLL_START_KEYS[axis];
+        var actual = scrollParent === window ?
+        // Firefox always returns document.body[scrollKey] as 0 and Chrome/Safari
+        // always return document.documentElement[scrollKey] as 0, so take
+        // whichever has a value.
+        document.body[scrollKey] || document.documentElement[scrollKey] : scrollParent[scrollKey];
+        var max = this.getScrollSize() - this.props.scrollParentViewportSizeGetter(this);
+        var scroll = Math.max(0, Math.min(actual, max));
+        var el = this.getEl();
+        this.cachedScrollPosition = this.getOffset(scrollParent) + scroll - this.getOffset(el);
+        return this.cachedScrollPosition;
+      }
+    }, {
+      key: 'setScroll',
+      value: function setScroll(offset) {
+        var scrollParent = this.scrollParent;
+        var axis = this.props.axis;
+
+        offset += this.getOffset(this.getEl());
+        if (scrollParent === window) return window.scrollTo(0, offset);
+
+        offset -= this.getOffset(this.scrollParent);
+        scrollParent[SCROLL_START_KEYS[axis]] = offset;
+      }
+    }, {
+      key: 'getScrollSize',
+      value: function getScrollSize() {
+        var scrollParent = this.scrollParent;
+        var _document = document,
+            body = _document.body,
+            documentElement = _document.documentElement;
+
+        var key = SCROLL_SIZE_KEYS[this.props.axis];
+        return scrollParent === window ? Math.max(body[key], documentElement[key]) : scrollParent[key];
+      }
+    }, {
+      key: 'hasDeterminateSize',
+      value: function hasDeterminateSize() {
+        var _props = this.props,
+            itemSizeGetter = _props.itemSizeGetter,
+            type = _props.type;
+
+        return type === 'uniform' || itemSizeGetter;
+      }
+    }, {
+      key: 'getStartAndEnd',
+      value: function getStartAndEnd() {
+        var threshold = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props.threshold;
+
+        var scroll = this.getScrollPosition();
+        var start = Math.max(0, scroll - threshold);
+        var end = scroll + this.props.scrollParentViewportSizeGetter(this) + threshold;
+        if (this.hasDeterminateSize()) {
+          end = Math.min(end, this.getSpaceBefore(this.props.length));
+        }
+        return { start: start, end: end };
+      }
+    }, {
+      key: 'getItemSizeAndItemsPerRow',
+      value: function getItemSizeAndItemsPerRow() {
+        var _props2 = this.props,
+            axis = _props2.axis,
+            useStaticSize = _props2.useStaticSize;
+        var _state2 = this.state,
+            itemSize = _state2.itemSize,
+            itemsPerRow = _state2.itemsPerRow;
+
+        if (useStaticSize && itemSize && itemsPerRow) {
+          return { itemSize: itemSize, itemsPerRow: itemsPerRow };
+        }
+
+        var itemEls = this.items.children;
+        if (!itemEls.length) return {};
+
+        var firstEl = itemEls[0];
+
+        // Firefox has a problem where it will return a *slightly* (less than
+        // thousandths of a pixel) different size for the same element between
+        // renders. This can cause an infinite render loop, so only change the
+        // itemSize when it is significantly different.
+        var firstElSize = firstEl[OFFSET_SIZE_KEYS[axis]];
+        var delta = Math.abs(firstElSize - itemSize);
+        if (isNaN(delta) || delta >= 1) itemSize = firstElSize;
+
+        if (!itemSize) return {};
+
+        var startKey = OFFSET_START_KEYS[axis];
+        var firstStart = firstEl[startKey];
+        itemsPerRow = 1;
+        for (var item = itemEls[itemsPerRow]; item && item[startKey] === firstStart; item = itemEls[itemsPerRow]) {
+          ++itemsPerRow;
+        }return { itemSize: itemSize, itemsPerRow: itemsPerRow };
+      }
+    }, {
+      key: 'clearSizeCache',
+      value: function clearSizeCache() {
+        this.cachedScrollPosition = null;
+      }
+    }, {
+      key: 'updateFrameAndClearCache',
+      value: function updateFrameAndClearCache(cb) {
+        this.clearSizeCache();
+        return this.updateFrame(cb);
+      }
+    }, {
+      key: 'updateFrame',
+      value: function updateFrame(cb) {
+        this.updateScrollParent();
+        if (typeof cb != 'function') cb = NOOP;
+        switch (this.props.type) {
+          case 'simple':
+            return this.updateSimpleFrame(cb);
+          case 'variable':
+            return this.updateVariableFrame(cb);
+          case 'uniform':
+            return this.updateUniformFrame(cb);
+        }
+      }
+    }, {
+      key: 'updateScrollParent',
+      value: function updateScrollParent() {
+        var prev = this.scrollParent;
+        this.scrollParent = this.props.scrollParentGetter(this);
+        if (prev === this.scrollParent) return;
+        if (prev) {
+          prev.removeEventListener('scroll', this.updateFrameAndClearCache);
+          prev.removeEventListener('mousewheel', NOOP);
+        }
+        // If we have a new parent, cached parent dimensions are no longer useful.
+        this.clearSizeCache();
+        this.scrollParent.addEventListener('scroll', this.updateFrameAndClearCache, PASSIVE);
+        // You have to attach mousewheel listener to the scrollable element.
+        // Just an empty listener. After that onscroll events will be fired synchronously.
+        this.scrollParent.addEventListener('mousewheel', NOOP, PASSIVE);
+      }
+    }, {
+      key: 'updateSimpleFrame',
+      value: function updateSimpleFrame(cb) {
+        var _getStartAndEnd = this.getStartAndEnd(),
+            end = _getStartAndEnd.end;
+
+        var itemEls = this.items.children;
+        var elEnd = 0;
+
+        if (itemEls.length) {
+          var axis = this.props.axis;
+
+          var firstItemEl = itemEls[0];
+          var lastItemEl = itemEls[itemEls.length - 1];
+          elEnd = this.getOffset(lastItemEl) + lastItemEl[OFFSET_SIZE_KEYS[axis]] - this.getOffset(firstItemEl);
+        }
+
+        if (elEnd > end) return cb();
+
+        var _props3 = this.props,
+            pageSize = _props3.pageSize,
+            length = _props3.length;
+
+        var size = Math.min(this.state.size + pageSize, length);
+        this.maybeSetState({ size: size }, cb);
+      }
+    }, {
+      key: 'updateVariableFrame',
+      value: function updateVariableFrame(cb) {
+        if (!this.props.itemSizeGetter) this.cacheSizes();
+
+        var _getStartAndEnd2 = this.getStartAndEnd(),
+            start = _getStartAndEnd2.start,
+            end = _getStartAndEnd2.end;
+
+        var _props4 = this.props,
+            length = _props4.length,
+            pageSize = _props4.pageSize;
+
+        var space = 0;
+        var from = 0;
+        var size = 0;
+        var maxFrom = length - 1;
+
+        while (from < maxFrom) {
+          var itemSize = this.getSizeOfItem(from);
+          if (itemSize == null || space + itemSize > start) break;
+          space += itemSize;
+          ++from;
+        }
+
+        var maxSize = length - from;
+
+        while (size < maxSize && space < end) {
+          var _itemSize = this.getSizeOfItem(from + size);
+          if (_itemSize == null) {
+            size = Math.min(size + pageSize, maxSize);
+            break;
+          }
+          space += _itemSize;
+          ++size;
+        }
+
+        this.maybeSetState({ from: from, size: size }, cb);
+      }
+    }, {
+      key: 'updateUniformFrame',
+      value: function updateUniformFrame(cb) {
+        var _getItemSizeAndItemsP = this.getItemSizeAndItemsPerRow(),
+            itemSize = _getItemSizeAndItemsP.itemSize,
+            itemsPerRow = _getItemSizeAndItemsP.itemsPerRow;
+
+        if (!itemSize || !itemsPerRow) return cb();
+
+        var _getStartAndEnd3 = this.getStartAndEnd(),
+            start = _getStartAndEnd3.start,
+            end = _getStartAndEnd3.end;
+
+        var _constrain = this.constrain(Math.floor(start / itemSize) * itemsPerRow, (Math.ceil((end - start) / itemSize) + 1) * itemsPerRow, itemsPerRow, this.props),
+            from = _constrain.from,
+            size = _constrain.size;
+
+        return this.maybeSetState({ itemsPerRow: itemsPerRow, from: from, itemSize: itemSize, size: size }, cb);
+      }
+    }, {
+      key: 'getSpaceBefore',
+      value: function getSpaceBefore(index) {
+        var cache = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+        if (cache[index] != null) return cache[index];
+
+        // Try the static itemSize.
+        var _state3 = this.state,
+            itemSize = _state3.itemSize,
+            itemsPerRow = _state3.itemsPerRow;
+
+        if (itemSize) {
+          return cache[index] = Math.floor(index / itemsPerRow) * itemSize;
+        }
+
+        // Find the closest space to index there is a cached value for.
+        var from = index;
+        while (from > 0 && cache[--from] == null) {}
+
+        // Finally, accumulate sizes of items from - index.
+        var space = cache[from] || 0;
+        for (var i = from; i < index; ++i) {
+          cache[i] = space;
+          var _itemSize2 = this.getSizeOfItem(i);
+          if (_itemSize2 == null) break;
+          space += _itemSize2;
+        }
+
+        return cache[index] = space;
+      }
+    }, {
+      key: 'cacheSizes',
+      value: function cacheSizes() {
+        var cache = this.cache;
+        var from = this.state.from;
+
+        var itemEls = this.items.children;
+        var sizeKey = OFFSET_SIZE_KEYS[this.props.axis];
+        for (var i = 0, l = itemEls.length; i < l; ++i) {
+          cache[from + i] = itemEls[i][sizeKey];
+        }
+      }
+    }, {
+      key: 'getSizeOfItem',
+      value: function getSizeOfItem(index) {
+        var cache = this.cache,
+            items = this.items;
+        var _props5 = this.props,
+            axis = _props5.axis,
+            itemSizeGetter = _props5.itemSizeGetter,
+            itemSizeEstimator = _props5.itemSizeEstimator,
+            type = _props5.type;
+        var _state4 = this.state,
+            from = _state4.from,
+            itemSize = _state4.itemSize,
+            size = _state4.size;
+
+
+        // Try the static itemSize.
+        if (itemSize) return itemSize;
+
+        // Try the itemSizeGetter.
+        if (itemSizeGetter) return itemSizeGetter(index);
+
+        // Try the cache.
+        if (index in cache) return cache[index];
+
+        // Try the DOM.
+        if (type === 'simple' && index >= from && index < from + size && items) {
+          var itemEl = items.children[index - from];
+          if (itemEl) return itemEl[OFFSET_SIZE_KEYS[axis]];
+        }
+
+        // Try the itemSizeEstimator.
+        if (itemSizeEstimator) return itemSizeEstimator(index, cache);
+      }
+    }, {
+      key: 'constrain',
+      value: function constrain(from, size, itemsPerRow, _ref) {
+        var length = _ref.length,
+            minSize = _ref.minSize,
+            type = _ref.type;
+
+        size = Math.max(size, minSize);
+        var mod = size % itemsPerRow;
+        if (mod) size += itemsPerRow - mod;
+        if (size > length) size = length;
+        from = type === 'simple' || !from ? 0 : Math.max(Math.min(from, length - size), 0);
+
+        if (mod = from % itemsPerRow) {
+          from -= mod;
+          size += mod;
+        }
+
+        return { from: from, size: size };
+      }
+    }, {
+      key: 'scrollTo',
+      value: function scrollTo(index) {
+        if (index != null) this.setScroll(this.getSpaceBefore(index));
+      }
+    }, {
+      key: 'scrollAround',
+      value: function scrollAround(index) {
+        var current = this.getScrollPosition();
+        var bottom = this.getSpaceBefore(index);
+        var top = bottom - this.props.scrollParentViewportSizeGetter(this) + this.getSizeOfItem(index);
+        var min = Math.min(top, bottom);
+        var max = Math.max(top, bottom);
+        if (current <= min) return this.setScroll(min);
+        if (current > max) return this.setScroll(max);
+      }
+    }, {
+      key: 'getVisibleRange',
+      value: function getVisibleRange() {
+        var _state5 = this.state,
+            from = _state5.from,
+            size = _state5.size;
+
+        var _getStartAndEnd4 = this.getStartAndEnd(0),
+            start = _getStartAndEnd4.start,
+            end = _getStartAndEnd4.end;
+
+        var cache = {};
+        var first = void 0,
+            last = void 0;
+        for (var i = from; i < from + size; ++i) {
+          var itemStart = this.getSpaceBefore(i, cache);
+          var itemEnd = itemStart + this.getSizeOfItem(i);
+          if (first == null && itemEnd > start) first = i;
+          if (first != null && itemStart < end) last = i;
+        }
+        return [first, last];
+      }
+    }, {
+      key: 'renderItems',
+      value: function renderItems() {
+        var _this3 = this;
+
+        var _props6 = this.props,
+            itemRenderer = _props6.itemRenderer,
+            itemsRenderer = _props6.itemsRenderer;
+        var _state6 = this.state,
+            from = _state6.from,
+            size = _state6.size;
+
+        var items = [];
+        for (var i = 0; i < size; ++i) {
+          items.push(itemRenderer(from + i, i));
+        }return itemsRenderer(items, function (c) {
+          return _this3.items = c;
+        });
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        var _this4 = this;
+
+        var _props7 = this.props,
+            axis = _props7.axis,
+            length = _props7.length,
+            type = _props7.type,
+            useTranslate3d = _props7.useTranslate3d;
+        var _state7 = this.state,
+            from = _state7.from,
+            itemsPerRow = _state7.itemsPerRow;
+
+
+        var items = this.renderItems();
+        if (type === 'simple') return items;
+
+        var style = { position: 'relative' };
+        var cache = {};
+        var bottom = Math.ceil(length / itemsPerRow) * itemsPerRow;
+        var size = this.getSpaceBefore(bottom, cache);
+        if (size) {
+          style[SIZE_KEYS[axis]] = size;
+          if (axis === 'x') style.overflowX = 'hidden';
+        }
+        var offset = this.getSpaceBefore(from, cache);
+        var x = axis === 'x' ? offset : 0;
+        var y = axis === 'y' ? offset : 0;
+        var transform = useTranslate3d ? 'translate3d(' + x + 'px, ' + y + 'px, 0)' : 'translate(' + x + 'px, ' + y + 'px)';
+        var listStyle = {
+          msTransform: transform,
+          WebkitTransform: transform,
+          transform: transform
+        };
+        return _react2.default.createElement(
+          'div',
+          { style: style, ref: function ref(c) {
+              return _this4.el = c;
+            } },
+          _react2.default.createElement(
+            'div',
+            { style: listStyle },
+            items
+          )
+        );
+      }
+    }]);
+
+    return ReactList;
+  }(_react.Component), _class.displayName = 'ReactList', _class.propTypes = {
+    axis: _propTypes2.default.oneOf(['x', 'y']),
+    initialIndex: _propTypes2.default.number,
+    itemRenderer: _propTypes2.default.func,
+    itemSizeEstimator: _propTypes2.default.func,
+    itemSizeGetter: _propTypes2.default.func,
+    itemsRenderer: _propTypes2.default.func,
+    length: _propTypes2.default.number,
+    minSize: _propTypes2.default.number,
+    pageSize: _propTypes2.default.number,
+    scrollParentGetter: _propTypes2.default.func,
+    scrollParentViewportSizeGetter: _propTypes2.default.func,
+    threshold: _propTypes2.default.number,
+    type: _propTypes2.default.oneOf(['simple', 'variable', 'uniform']),
+    useStaticSize: _propTypes2.default.bool,
+    useTranslate3d: _propTypes2.default.bool
+  }, _class.defaultProps = {
+    axis: 'y',
+    itemRenderer: function itemRenderer(index, key) {
+      return _react2.default.createElement(
+        'div',
+        { key: key },
+        index
+      );
+    },
+    itemsRenderer: function itemsRenderer(items, ref) {
+      return _react2.default.createElement(
+        'div',
+        { ref: ref },
+        items
+      );
+    },
+    length: 0,
+    minSize: 1,
+    pageSize: 10,
+    scrollParentGetter: defaultScrollParentGetter,
+    scrollParentViewportSizeGetter: defaultScrollParentViewportSizeGetter,
+    threshold: 100,
+    type: 'simple',
+    useStaticSize: false,
+    useTranslate3d: false
+  }, _temp);
+});
+
+},{"prop-types":74,"react":125}],91:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -21615,7 +27784,7 @@ BrowserRouter.propTypes = {
   children: _propTypes2.default.node
 };
 exports.default = BrowserRouter;
-},{"./Router":37,"history":12,"prop-types":23,"react":63,"warning":72}],30:[function(require,module,exports){
+},{"./Router":99,"history":63,"prop-types":74,"react":125,"warning":134}],92:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -21682,7 +27851,7 @@ HashRouter.propTypes = {
   children: _propTypes2.default.node
 };
 exports.default = HashRouter;
-},{"./Router":37,"history":12,"prop-types":23,"react":63,"warning":72}],31:[function(require,module,exports){
+},{"./Router":99,"history":63,"prop-types":74,"react":125,"warning":134}],93:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -21800,7 +27969,7 @@ Link.contextTypes = {
   }).isRequired
 };
 exports.default = Link;
-},{"history":12,"invariant":15,"prop-types":23,"react":63}],32:[function(require,module,exports){
+},{"history":63,"invariant":66,"prop-types":74,"react":125}],94:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -21812,7 +27981,7 @@ var _MemoryRouter2 = _interopRequireDefault(_MemoryRouter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _MemoryRouter2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/MemoryRouter":44}],33:[function(require,module,exports){
+},{"react-router/MemoryRouter":106}],95:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -21904,7 +28073,7 @@ NavLink.defaultProps = {
 };
 
 exports.default = NavLink;
-},{"./Link":31,"./Route":36,"prop-types":23,"react":63}],34:[function(require,module,exports){
+},{"./Link":93,"./Route":98,"prop-types":74,"react":125}],96:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -21916,7 +28085,7 @@ var _Prompt2 = _interopRequireDefault(_Prompt);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Prompt2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/Prompt":45}],35:[function(require,module,exports){
+},{"react-router/Prompt":107}],97:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -21928,7 +28097,7 @@ var _Redirect2 = _interopRequireDefault(_Redirect);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Redirect2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/Redirect":46}],36:[function(require,module,exports){
+},{"react-router/Redirect":108}],98:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -21940,7 +28109,7 @@ var _Route2 = _interopRequireDefault(_Route);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Route2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/Route":47}],37:[function(require,module,exports){
+},{"react-router/Route":109}],99:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -21952,7 +28121,7 @@ var _Router2 = _interopRequireDefault(_Router);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Router2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/Router":48}],38:[function(require,module,exports){
+},{"react-router/Router":110}],100:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -21964,7 +28133,7 @@ var _StaticRouter2 = _interopRequireDefault(_StaticRouter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _StaticRouter2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/StaticRouter":49}],39:[function(require,module,exports){
+},{"react-router/StaticRouter":111}],101:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -21976,7 +28145,7 @@ var _Switch2 = _interopRequireDefault(_Switch);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Switch2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/Switch":50}],40:[function(require,module,exports){
+},{"react-router/Switch":112}],102:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -21988,7 +28157,7 @@ var _generatePath2 = _interopRequireDefault(_generatePath);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _generatePath2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/generatePath":51}],41:[function(require,module,exports){
+},{"react-router/generatePath":113}],103:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22066,7 +28235,7 @@ exports.Switch = _Switch3.default;
 exports.generatePath = _generatePath3.default;
 exports.matchPath = _matchPath3.default;
 exports.withRouter = _withRouter3.default;
-},{"./BrowserRouter":29,"./HashRouter":30,"./Link":31,"./MemoryRouter":32,"./NavLink":33,"./Prompt":34,"./Redirect":35,"./Route":36,"./Router":37,"./StaticRouter":38,"./Switch":39,"./generatePath":40,"./matchPath":42,"./withRouter":43}],42:[function(require,module,exports){
+},{"./BrowserRouter":91,"./HashRouter":92,"./Link":93,"./MemoryRouter":94,"./NavLink":95,"./Prompt":96,"./Redirect":97,"./Route":98,"./Router":99,"./StaticRouter":100,"./Switch":101,"./generatePath":102,"./matchPath":104,"./withRouter":105}],104:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22078,7 +28247,7 @@ var _matchPath2 = _interopRequireDefault(_matchPath);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _matchPath2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/matchPath":52}],43:[function(require,module,exports){
+},{"react-router/matchPath":114}],105:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22090,7 +28259,7 @@ var _withRouter2 = _interopRequireDefault(_withRouter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _withRouter2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/withRouter":53}],44:[function(require,module,exports){
+},{"react-router/withRouter":115}],106:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22158,7 +28327,7 @@ MemoryRouter.propTypes = {
   children: _propTypes2.default.node
 };
 exports.default = MemoryRouter;
-},{"./Router":48,"history":12,"prop-types":23,"react":63,"warning":72}],45:[function(require,module,exports){
+},{"./Router":110,"history":63,"prop-types":74,"react":125,"warning":134}],107:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22249,7 +28418,7 @@ Prompt.contextTypes = {
   }).isRequired
 };
 exports.default = Prompt;
-},{"invariant":15,"prop-types":23,"react":63}],46:[function(require,module,exports){
+},{"invariant":66,"prop-types":74,"react":125}],108:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22381,7 +28550,7 @@ Redirect.contextTypes = {
   }).isRequired
 };
 exports.default = Redirect;
-},{"./generatePath":51,"history":12,"invariant":15,"prop-types":23,"react":63,"warning":72}],47:[function(require,module,exports){
+},{"./generatePath":113,"history":63,"invariant":66,"prop-types":74,"react":125,"warning":134}],109:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22539,7 +28708,7 @@ Route.childContextTypes = {
   router: _propTypes2.default.object.isRequired
 };
 exports.default = Route;
-},{"./matchPath":52,"invariant":15,"prop-types":23,"react":63,"warning":72}],48:[function(require,module,exports){
+},{"./matchPath":114,"invariant":66,"prop-types":74,"react":125,"warning":134}],110:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22659,7 +28828,7 @@ Router.childContextTypes = {
   router: _propTypes2.default.object.isRequired
 };
 exports.default = Router;
-},{"invariant":15,"prop-types":23,"react":63,"warning":72}],49:[function(require,module,exports){
+},{"invariant":66,"prop-types":74,"react":125,"warning":134}],111:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22829,7 +28998,7 @@ StaticRouter.childContextTypes = {
   router: _propTypes2.default.object.isRequired
 };
 exports.default = StaticRouter;
-},{"./Router":48,"history":12,"invariant":15,"prop-types":23,"react":63,"warning":72}],50:[function(require,module,exports){
+},{"./Router":110,"history":63,"invariant":66,"prop-types":74,"react":125,"warning":134}],112:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22924,7 +29093,7 @@ Switch.propTypes = {
   location: _propTypes2.default.object
 };
 exports.default = Switch;
-},{"./matchPath":52,"invariant":15,"prop-types":23,"react":63,"warning":72}],51:[function(require,module,exports){
+},{"./matchPath":114,"invariant":66,"prop-types":74,"react":125,"warning":134}],113:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -22970,7 +29139,7 @@ var generatePath = function generatePath() {
 };
 
 exports.default = generatePath;
-},{"path-to-regexp":17}],52:[function(require,module,exports){
+},{"path-to-regexp":68}],114:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -23051,7 +29220,7 @@ var matchPath = function matchPath(pathname) {
 };
 
 exports.default = matchPath;
-},{"path-to-regexp":17}],53:[function(require,module,exports){
+},{"path-to-regexp":68}],115:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -23105,7 +29274,7 @@ var withRouter = function withRouter(Component) {
 };
 
 exports.default = withRouter;
-},{"./Route":47,"hoist-non-react-statics":14,"prop-types":23,"react":63}],54:[function(require,module,exports){
+},{"./Route":109,"hoist-non-react-statics":65,"prop-types":74,"react":125}],116:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -23405,7 +29574,7 @@ var _default = CSSTransition;
 exports.default = _default;
 module.exports = exports["default"];
 }).call(this,require('_process'))
-},{"./Transition":56,"./utils/PropTypes":60,"_process":19,"dom-helpers/class/addClass":2,"dom-helpers/class/removeClass":4,"prop-types":23,"react":63}],55:[function(require,module,exports){
+},{"./Transition":118,"./utils/PropTypes":122,"_process":70,"dom-helpers/class/addClass":53,"dom-helpers/class/removeClass":55,"prop-types":74,"react":125}],117:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -23560,7 +29729,7 @@ var _default = ReplaceTransition;
 exports.default = _default;
 module.exports = exports["default"];
 }).call(this,require('_process'))
-},{"./TransitionGroup":57,"_process":19,"prop-types":23,"react":63,"react-dom":27}],56:[function(require,module,exports){
+},{"./TransitionGroup":119,"_process":70,"prop-types":74,"react":125,"react-dom":88}],118:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -24165,7 +30334,7 @@ var _default = (0, _reactLifecyclesCompat.polyfill)(Transition);
 
 exports.default = _default;
 }).call(this,require('_process'))
-},{"./utils/PropTypes":60,"_process":19,"prop-types":23,"react":63,"react-dom":27,"react-lifecycles-compat":28}],57:[function(require,module,exports){
+},{"./utils/PropTypes":122,"_process":70,"prop-types":74,"react":125,"react-dom":88,"react-lifecycles-compat":89}],119:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -24363,7 +30532,7 @@ var _default = (0, _reactLifecyclesCompat.polyfill)(TransitionGroup);
 exports.default = _default;
 module.exports = exports["default"];
 }).call(this,require('_process'))
-},{"./utils/ChildMapping":59,"_process":19,"prop-types":23,"react":63,"react-lifecycles-compat":28}],58:[function(require,module,exports){
+},{"./utils/ChildMapping":121,"_process":70,"prop-types":74,"react":125,"react-lifecycles-compat":89}],120:[function(require,module,exports){
 "use strict";
 
 var _CSSTransition = _interopRequireDefault(require("./CSSTransition"));
@@ -24382,7 +30551,7 @@ module.exports = {
   ReplaceTransition: _ReplaceTransition.default,
   CSSTransition: _CSSTransition.default
 };
-},{"./CSSTransition":54,"./ReplaceTransition":55,"./Transition":56,"./TransitionGroup":57}],59:[function(require,module,exports){
+},{"./CSSTransition":116,"./ReplaceTransition":117,"./Transition":118,"./TransitionGroup":119}],121:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -24533,7 +30702,7 @@ function getNextChildMapping(nextProps, prevChildMapping, onExited) {
   });
   return children;
 }
-},{"react":63}],60:[function(require,module,exports){
+},{"react":125}],122:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -24583,7 +30752,7 @@ var classNamesShape = _propTypes.default.oneOfType([_propTypes.default.string, _
 })]);
 
 exports.classNamesShape = classNamesShape;
-},{"prop-types":23}],61:[function(require,module,exports){
+},{"prop-types":74}],123:[function(require,module,exports){
 (function (process){
 /** @license React v16.5.2
  * react.development.js
@@ -26313,7 +32482,7 @@ module.exports = react;
 }
 
 }).call(this,require('_process'))
-},{"_process":19,"object-assign":16,"prop-types/checkPropTypes":20}],62:[function(require,module,exports){
+},{"_process":70,"object-assign":67,"prop-types/checkPropTypes":71}],124:[function(require,module,exports){
 /** @license React v16.5.2
  * react.production.min.js
  *
@@ -26339,7 +32508,7 @@ _currentValue:a,_currentValue2:a,Provider:null,Consumer:null,unstable_read:null}
 var k=void 0;a.type&&a.type.defaultProps&&(k=a.type.defaultProps);for(c in b)J.call(b,c)&&!K.hasOwnProperty(c)&&(e[c]=void 0===b[c]&&void 0!==k?k[c]:b[c])}c=arguments.length-2;if(1===c)e.children=d;else if(1<c){k=Array(c);for(var l=0;l<c;l++)k[l]=arguments[l+2];e.children=k}return{$$typeof:p,type:a.type,key:g,ref:h,props:e,_owner:f}},createFactory:function(a){var b=L.bind(null,a);b.type=a;return b},isValidElement:N,version:"16.5.2",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:I,
 assign:m}},Y={default:X},Z=Y&&X||Y;module.exports=Z.default||Z;
 
-},{"object-assign":16}],63:[function(require,module,exports){
+},{"object-assign":67}],125:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -26350,7 +32519,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react.development.js":61,"./cjs/react.production.min.js":62,"_process":19}],64:[function(require,module,exports){
+},{"./cjs/react.development.js":123,"./cjs/react.production.min.js":124,"_process":70}],126:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -26425,7 +32594,7 @@ function resolvePathname(to) {
 
 exports.default = resolvePathname;
 module.exports = exports['default'];
-},{}],65:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 (function (process){
 /** @license React v16.5.2
  * schedule-tracing.development.js
@@ -26856,7 +33025,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 }
 
 }).call(this,require('_process'))
-},{"_process":19}],66:[function(require,module,exports){
+},{"_process":70}],128:[function(require,module,exports){
 /** @license React v16.5.2
  * schedule-tracing.production.min.js
  *
@@ -26868,7 +33037,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 
 'use strict';Object.defineProperty(exports,"__esModule",{value:!0});var b=0;exports.__interactionsRef=null;exports.__subscriberRef=null;exports.unstable_clear=function(a){return a()};exports.unstable_getCurrent=function(){return null};exports.unstable_getThreadID=function(){return++b};exports.unstable_trace=function(a,d,c){return c()};exports.unstable_wrap=function(a){return a};exports.unstable_subscribe=function(){};exports.unstable_unsubscribe=function(){};
 
-},{}],67:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 (function (process){
 /** @license React v16.5.2
  * schedule.development.js
@@ -27294,7 +33463,7 @@ exports.unstable_cancelScheduledWork = unstable_cancelScheduledWork;
 }
 
 }).call(this,require('_process'))
-},{"_process":19}],68:[function(require,module,exports){
+},{"_process":70}],130:[function(require,module,exports){
 /** @license React v16.5.2
  * schedule.production.min.js
  *
@@ -27312,7 +33481,7 @@ var E=null,F=!1,G=-1,H=!1,I=!1,J=0,K=33,L=33;h=function(){return J};var M="__rea
 b){E=a;G=b;I?window.postMessage(M,"*"):H||(H=!0,A(N))};n=function(){E=null;F=!1;G=-1}}exports.unstable_scheduleWork=function(a,b){var d=exports.unstable_now();b=void 0!==b&&null!==b&&null!==b.timeout&&void 0!==b.timeout?d+b.timeout:d+5E3;a={callback:a,timesOutAt:b,next:null,previous:null};if(null===c)c=a.next=a.previous=a,m(c);else{d=null;var k=c;do{if(k.timesOutAt>b){d=k;break}k=k.next}while(k!==c);null===d?d=c:d===c&&(c=a,m(c));b=d.previous;b.next=d.previous=a;a.next=d;a.previous=b}return a};
 exports.unstable_cancelScheduledWork=function(a){var b=a.next;if(null!==b){if(b===a)c=null;else{a===c&&(c=b);var d=a.previous;d.next=b;b.previous=d}a.next=a.previous=null}};
 
-},{}],69:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -27323,7 +33492,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/schedule.development.js":67,"./cjs/schedule.production.min.js":68,"_process":19}],70:[function(require,module,exports){
+},{"./cjs/schedule.development.js":129,"./cjs/schedule.production.min.js":130,"_process":70}],132:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -27334,7 +33503,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/schedule-tracing.development.js":65,"./cjs/schedule-tracing.production.min.js":66,"_process":19}],71:[function(require,module,exports){
+},{"./cjs/schedule-tracing.development.js":127,"./cjs/schedule-tracing.production.min.js":128,"_process":70}],133:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -27378,7 +33547,7 @@ function valueEqual(a, b) {
 
 exports.default = valueEqual;
 module.exports = exports['default'];
-},{}],72:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -27444,7 +33613,7 @@ if (__DEV__) {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":19}],73:[function(require,module,exports){
+},{"_process":70}],135:[function(require,module,exports){
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -27509,7 +33678,7 @@ function run() {
 
 run();
 
-},{"./components/App":74,"./components/LoginForm":75,"./components/NotFound":76,"./components/ProjectsListing":77,"./components/TasksListing":78,"react":63,"react-dom":27,"react-router-dom":41,"react-transition-group":58}],74:[function(require,module,exports){
+},{"./components/App":136,"./components/LoginForm":137,"./components/NotFound":138,"./components/ProjectsListing":139,"./components/TasksListing":140,"react":125,"react-dom":88,"react-router-dom":103,"react-transition-group":120}],136:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27579,7 +33748,7 @@ function (_React$Component) {
 var _default = App;
 exports.default = _default;
 
-},{"react":63}],75:[function(require,module,exports){
+},{"react":125}],137:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27686,7 +33855,7 @@ LoginForm.propTypes = {
 var _default = LoginForm;
 exports.default = _default;
 
-},{"prop-types":23,"react":63}],76:[function(require,module,exports){
+},{"prop-types":74,"react":125}],138:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27717,7 +33886,7 @@ var NotFound = function NotFound() {
 var _default = NotFound;
 exports.default = _default;
 
-},{"react":63,"react-transition-group":58}],77:[function(require,module,exports){
+},{"react":125,"react-transition-group":120}],139:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27945,7 +34114,7 @@ var ProjectsListing = function ProjectsListing() {
 var _default = ProjectsListing;
 exports.default = _default;
 
-},{"react":63,"react-transition-group":58}],78:[function(require,module,exports){
+},{"react":125,"react-transition-group":120}],140:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27957,110 +34126,323 @@ var _react = _interopRequireDefault(require("react"));
 
 var _reactTransitionGroup = require("react-transition-group");
 
+var _reactDateRange = require("react-date-range");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TasksListing = function TasksListing() {
-  return _react.default.createElement(_reactTransitionGroup.CSSTransition, {
-    timeout: 11000,
-    classNames: "post"
-  }, _react.default.createElement("div", {
-    className: "container full-height",
-    id: "login-page-container"
-  }, _react.default.createElement("div", {
-    className: "row align-items-center ",
-    id: "nav-bar"
-  }, _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("img", {
-    className: "logo",
-    src: "/images/logo.png",
-    alt: "Lixpi Lists"
-  })), _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("span", {
-    className: "mr-4"
-  }, "Feed")), _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("span", null, "Projscts")), _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("span", null, "Tasks")), _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("div", {
-    className: "create-new-wrapper"
-  }, _react.default.createElement("button", {
-    className: "create-new mr-1"
-  }, "Create"), _react.default.createElement("ul", null, _react.default.createElement("li", null, "Task"), _react.default.createElement("li", null, "List"), _react.default.createElement("li", null, "Project")))), _react.default.createElement("div", {
-    className: "col"
-  }, _react.default.createElement("div", {
-    className: "navbar-search-wrapper"
-  }, _react.default.createElement("input", {
-    type: "text",
-    className: "navbar-search",
-    placeholder: "Search"
-  }))), _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("div", {
-    className: "switch"
-  }, _react.default.createElement("span", {
-    className: "switch-icon-container"
-  }, _react.default.createElement("span", {
-    className: "icon-tasks"
-  })))), _react.default.createElement("div", {
-    className: "col col-lg-2 d-flex justify-content-end"
-  }, _react.default.createElement("div", {
-    className: "user-menu"
-  }, _react.default.createElement("img", {
-    className: "avatar",
-    src: "/images/avatar.jpg",
-    alt: "Kate"
-  })))), _react.default.createElement("div", {
-    className: "taksk-listing mt-4"
-  }, _react.default.createElement("div", {
-    className: "color-coded-row code-red task-row"
-  }, _react.default.createElement("div", {
-    className: "row no-gutters align-items-center"
-  }, _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("span", {
-    className: "icon-info-circled"
-  })), _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("span", {
-    className: "icon-hash"
-  })), _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("span", {
-    className: "task-key"
-  }, "ICC-215")), _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("span", {
-    className: "vertical-divider"
-  })), _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("span", {
-    className: "task-title"
-  }, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam dignissimos minus id")), _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("span", {
-    className: "task-due"
-  }, "Apr/01/19")), _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("div", {
-    className: "row no-gutters align-items-center task-assignee"
-  }, _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("img", {
-    className: "avatar",
-    src: "/images/avatar.jpg",
-    alt: "Kate"
-  })), _react.default.createElement("div", {
-    className: "col-md-auto"
-  }, _react.default.createElement("span", {
-    className: ""
-  }, "Kate Wilson")))))))));
-};
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var TasksListing =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(TasksListing, _React$Component);
+
+  function TasksListing() {
+    var _getPrototypeOf2;
+
+    var _temp, _this;
+
+    _classCallCheck(this, TasksListing);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(TasksListing)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+      dates: null
+    }, _this.onSelect = function (dates) {
+      return _this.setState({
+        dates: dates
+      });
+    }, _temp));
+  }
+
+  _createClass(TasksListing, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement(_reactTransitionGroup.CSSTransition, {
+        timeout: 11000,
+        classNames: "post"
+      }, _react.default.createElement("div", {
+        className: "container full-height",
+        id: "login-page-container"
+      }, _react.default.createElement(_reactDateRange.Calendar, {
+        date: new Date(),
+        onChange: this.handleSelect
+      }), _react.default.createElement("div", {
+        className: "row align-items-center ",
+        id: "nav-bar"
+      }, _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("img", {
+        className: "logo",
+        src: "/images/logo.png",
+        alt: "Lixpi Lists"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "mr-4"
+      }, "Feed")), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", null, "Projscts")), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", null, "Tasks")), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("div", {
+        className: "create-new-wrapper"
+      }, _react.default.createElement("button", {
+        className: "create-new mr-1"
+      }, "Create"), _react.default.createElement("ul", null, _react.default.createElement("li", null, "Task"), _react.default.createElement("li", null, "List"), _react.default.createElement("li", null, "Project")))), _react.default.createElement("div", {
+        className: "col"
+      }, _react.default.createElement("div", {
+        className: "navbar-search-wrapper"
+      }, _react.default.createElement("input", {
+        type: "text",
+        className: "navbar-search",
+        placeholder: "Search"
+      }))), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("div", {
+        className: "switch"
+      }, _react.default.createElement("span", {
+        className: "switch-icon-container"
+      }, _react.default.createElement("span", {
+        className: "icon-tasks"
+      })))), _react.default.createElement("div", {
+        className: "col col-lg-2 d-flex justify-content-end"
+      }, _react.default.createElement("div", {
+        className: "user-menu"
+      }, _react.default.createElement("img", {
+        className: "avatar",
+        src: "/images/avatar.jpg",
+        alt: "Kate"
+      })))), _react.default.createElement("div", {
+        className: "taksk-listing mt-4"
+      }, _react.default.createElement("div", {
+        className: "color-coded-row code-red task-row"
+      }, _react.default.createElement("div", {
+        className: "row no-gutters align-items-center"
+      }, _react.default.createElement("div", {
+        className: "col-md-auto task-status"
+      }, _react.default.createElement("span", {
+        className: "icon-info-circled"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "icon-hash"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-key"
+      }, "ICC-215")), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "vertical-divider"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-title"
+      }, "Blocker task, requires immediate attention")), _react.default.createElement("div", {
+        className: "col"
+      }, _react.default.createElement("div", {
+        className: "row no-gutters align-items-center d-flex justify-content-end"
+      }, _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-due"
+      }, "Apr/01/19")), _react.default.createElement("div", {
+        className: "col-md-auto task-assignee-avatar"
+      }, _react.default.createElement("img", {
+        className: "avatar",
+        src: "/images/avatar.jpg",
+        alt: "Kate"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-assignee"
+      }, "Kate Wilson")))))), _react.default.createElement("div", {
+        className: "color-coded-row code-yellow task-row"
+      }, _react.default.createElement("div", {
+        className: "row no-gutters align-items-center"
+      }, _react.default.createElement("div", {
+        className: "col-md-auto task-status"
+      }, _react.default.createElement("span", {
+        className: "icon-attention"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "icon-hash"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-key"
+      }, "ICC-215")), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "vertical-divider"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-title"
+      }, "Important task that requires special attention")), _react.default.createElement("div", {
+        className: "col"
+      }, _react.default.createElement("div", {
+        className: "row no-gutters align-items-center d-flex justify-content-end"
+      }, _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-due"
+      }, "Apr/01/19")), _react.default.createElement("div", {
+        className: "col-md-auto task-assignee-avatar"
+      }, _react.default.createElement("img", {
+        className: "avatar",
+        src: "/images/avatar.jpg",
+        alt: "Kate"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-assignee"
+      }, "Kate Wilson")))))), _react.default.createElement("div", {
+        className: "color-coded-row code-green task-row"
+      }, _react.default.createElement("div", {
+        className: "row no-gutters align-items-center"
+      }, _react.default.createElement("div", {
+        className: "col-md-auto task-status"
+      }, _react.default.createElement("span", {
+        className: "icon-info-circled"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "icon-hash"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-key"
+      }, "ICC-215")), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "vertical-divider"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-title"
+      }, "Higher than regular priority task")), _react.default.createElement("div", {
+        className: "col"
+      }, _react.default.createElement("div", {
+        className: "row no-gutters align-items-center d-flex justify-content-end"
+      }, _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-due"
+      }, "Apr/01/19")), _react.default.createElement("div", {
+        className: "col-md-auto task-assignee-avatar"
+      }, _react.default.createElement("img", {
+        className: "avatar",
+        src: "/images/avatar.jpg",
+        alt: "Kate"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-assignee"
+      }, "Kate Wilson")))))), _react.default.createElement("div", {
+        className: "color-coded-row code-grey task-row"
+      }, _react.default.createElement("div", {
+        className: "row no-gutters align-items-center"
+      }, _react.default.createElement("div", {
+        className: "col-md-auto task-status"
+      }, _react.default.createElement("span", {
+        className: "icon-info"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "icon-hash"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-key"
+      }, "ICC-215")), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "vertical-divider"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-title"
+      }, "Regular priority task")), _react.default.createElement("div", {
+        className: "col"
+      }, _react.default.createElement("div", {
+        className: "row no-gutters align-items-center d-flex justify-content-end"
+      }, _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-due"
+      }, "Apr/01/19")), _react.default.createElement("div", {
+        className: "col-md-auto task-assignee-avatar"
+      }, _react.default.createElement("img", {
+        className: "avatar",
+        src: "/images/avatar.jpg",
+        alt: "Kate"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-assignee"
+      }, "Kate Wilson")))))), _react.default.createElement("div", {
+        className: "color-coded-row code-grey task-row new-task-input"
+      }, _react.default.createElement("div", {
+        className: "row no-gutters align-items-center"
+      }, _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "icon-hash"
+      })), _react.default.createElement("div", {
+        className: "col"
+      }, _react.default.createElement("input", {
+        type: "text",
+        name: "new-task",
+        autoFocus: true,
+        placeholder: "New task"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("div", {
+        className: "row no-gutters align-items-center d-flex justify-content-end"
+      }, _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-due"
+      }, "Apr/01/19")), _react.default.createElement("div", {
+        className: "col-md-auto task-assignee-avatar"
+      }, _react.default.createElement("img", {
+        className: "avatar",
+        src: "/images/avatar.jpg",
+        alt: "Kate"
+      })), _react.default.createElement("div", {
+        className: "col-md-auto"
+      }, _react.default.createElement("span", {
+        className: "task-assignee"
+      }, "Kate Wilson")))))))));
+    }
+  }]);
+
+  return TasksListing;
+}(_react.default.Component);
 
 var _default = TasksListing;
 exports.default = _default;
 
-},{"react":63,"react-transition-group":58}]},{},[73]);
+},{"react":125,"react-date-range":83,"react-transition-group":120}]},{},[135]);
