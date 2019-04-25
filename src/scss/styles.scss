@@ -16,6 +16,10 @@
 
 @import 'node_modules/bootstrap-4-grid/scss/grid.scss';
 
+@import 'node_modules/react-date-range/dist/styles';
+@import 'node_modules/react-date-range/dist/theme/default';
+
+
 // font-family: 'Source Sans Pro', sans-serif;   Main content font. Also supports cyrilic and other languages
 // font-family: 'Lato', sans-serif;  Main font ??? is it??
 // font-family: 'Raleway', sans-serif;   Main header font
@@ -36,8 +40,9 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Raleway', sans-serif;
 }
 
-p, ul, ol, dl, span, b, i {
+p, ul, ol, dl, span, b, i, input {
     font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
 }
 
 #root {
