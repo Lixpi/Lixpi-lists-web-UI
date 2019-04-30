@@ -1,80 +1,51 @@
 import React from 'react';
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Calendar } from 'react-date-range';
+import Select from 'react-select';
 
+import TopNavBar from './TopNavBar';
+
+
+//Select
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+];
 
 
 
 class TasksListing extends React.Component {
 
     state = {
-    dates: null
-  }
+        dates: null,
+        selectedOption: null,
+    }
 
-  onSelect = dates => this.setState({dates})
+    onSelect = dates => this.setState({dates})
 
 
+    handleChange = (selectedOption) => {
+        this.setState({ selectedOption });
+        console.log(`Option selected:`, selectedOption);
+    }
 
 
     render() {
+        const { selectedOption } = this.state;
+
         return (
             <CSSTransition timeout={11000} classNames="post">
 
 
                 <div className="container full-height" id="login-page-container">
-                <Calendar
-                date={new Date()}
-                onChange={this.handleSelect} />
+                {/*<Calendar
+                    date={new Date()}
+                    onChange={this.handleSelect}
+                />*/}
 
-                    <div className="row align-items-center " id="nav-bar">
-                        <div className="col-md-auto">
-                            <img className="logo" src="/images/logo.png" alt="Lixpi Lists" />
-                        </div>
-                        <div className="col-md-auto">
-                            <span className="mr-4">Feed</span>
-                        </div>
+                    <TopNavBar />
 
-                        <div className="col-md-auto">
-                            <span>Projscts</span>
-                        </div>
-
-                        <div className="col-md-auto">
-                            <span>Tasks</span>
-                        </div>
-
-                        <div className="col-md-auto">
-                            <div className="create-new-wrapper">
-                                <button className="create-new mr-1">Create</button>
-                                <ul>
-                                    <li>Task</li>
-                                    <li>List</li>
-                                    <li>Project</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div className="col">
-                            <div className="navbar-search-wrapper">
-                                <input type="text" className="navbar-search" placeholder="Search"/>
-                            </div>
-                        </div>
-                        <div className="col-md-auto">
-                            <div className="switch">
-                                <span className="switch-icon-container">
-                                    <span className="icon-tasks"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <div className="col col-lg-2 d-flex justify-content-end">
-                            <div className="user-menu">
-                                <img className="avatar" src="/images/avatar.jpg" alt="Kate" />
-                            </div>
-                        </div>
-                        {/*<div className="col align-self-center d-flex flex-column" >
-                        asdf
-                            <img src="images/logo.png" alt="Lixpi Lists" />
-                        </div>*/}
-                    </div>
 
                     <div className="taksk-listing mt-4">
 
@@ -104,7 +75,12 @@ class TasksListing extends React.Component {
                                             <img className="avatar" src="/images/avatar.jpg" alt="Kate" />
                                         </div>
                                         <div className="col-md-auto">
-                                            <span className="task-assignee">Kate Wilson</span>
+                                            {/*<span className="task-assignee">Kate Wilson</span>*/}
+                                            <Select
+                                                value={selectedOption}
+                                                onChange={this.handleChange}
+                                                options={options}
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -213,12 +189,12 @@ class TasksListing extends React.Component {
 
                         <div className="color-coded-row code-grey task-row new-task-input">
                             <div className="row no-gutters align-items-center">
-                                
+
                                 <div className="col-md-auto">
                                     <span className="icon-hash"></span>
                                 </div>
-                                
-                                
+
+
                                 <div className="col">
                                     {/*<span className="task-title">Regular priority task</span>*/}
                                     <input type="text" name="new-task" autoFocus={true} placeholder="New task" />
