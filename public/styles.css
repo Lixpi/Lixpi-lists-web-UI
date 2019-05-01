@@ -164,71 +164,6 @@ input {
   content: '\f029'; }
 
 /* '' */
-.route-enter-active {
-  display: none; }
-
-#login-page-container {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden; }
-  #login-page-container.route-exit-active #logo-container {
-    background: #fff; }
-    #login-page-container.route-exit-active #logo-container img {
-      transform: translateY(-600%); }
-  #login-page-container.route-exit-active #login-form-container form {
-    transform: translateY(206%); }
-  #login-page-container #logo-container {
-    height: 50%;
-    background: #7FA950;
-    -webkit-transition: all 1s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-    -moz-transition: all 1s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-    -ms-transition: all 1s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-    -o-transition: all 1s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-    transition: all 1s cubic-bezier(0.585, -0.6, 0.43, 1.65); }
-    #login-page-container #logo-container img {
-      margin: auto;
-      -webkit-transition: all 0.5s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-      -moz-transition: all 0.5s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-      -ms-transition: all 0.5s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-      -o-transition: all 0.5s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-      transition: all 0.5s cubic-bezier(0.585, -0.6, 0.43, 1.65); }
-  #login-page-container #login-form-container {
-    height: 50%; }
-    #login-page-container #login-form-container form {
-      -webkit-transition: all 0.45s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-      -moz-transition: all 0.45s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-      -ms-transition: all 0.45s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-      -o-transition: all 0.45s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-      transition: all 0.45s cubic-bezier(0.585, -0.6, 0.43, 1.65);
-      box-sizing: border-box;
-      max-width: 600px;
-      height: 100%;
-      margin: auto; }
-      #login-page-container #login-form-container form h2 {
-        font-size: 2rem;
-        margin: 2rem 0; }
-      #login-page-container #login-form-container form input {
-        margin: .5em 0;
-        font-size: 1em;
-        padding: .3em;
-        border-radius: 2px;
-        border: 1px solid #e1e1e1; }
-      #login-page-container #login-form-container form button {
-        text-transform: uppercase;
-        background: #7FA950;
-        color: #fff;
-        border: none;
-        padding: .5em .9em;
-        font-size: .9em;
-        border-radius: 3px;
-        cursor: pointer;
-        margin: 1em 0; }
-        #login-page-container #login-form-container form button:hover {
-          background: #8cb35f; }
-
 #nav-bar {
   background: #42494f;
   height: 65px;
@@ -333,6 +268,38 @@ input {
     height: auto;
     border-radius: 999px; }
 
+.switch {
+  position: relative;
+  width: 43px;
+  transform: translate(0, 2px); }
+  .switch:before, .switch .switch-icon-container {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    text-align: center;
+    border-radius: 999px; }
+  .switch:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 10px;
+    background: #78828a;
+    z-index: 4;
+    left: 50%;
+    -webkit-box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.9);
+    box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.9); }
+  .switch .switch-icon-container {
+    left: 10px;
+    width: 28px;
+    height: 28px;
+    font-size: .9em;
+    line-height: 28px;
+    z-index: 5;
+    background: #5c656d;
+    vertical-align: middle;
+    -webkit-box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.6); }
+
 .color-coded-row {
   background: #fff;
   margin-right: auto;
@@ -369,37 +336,31 @@ input {
   .color-coded-row.code-grey:hover {
     background: #f1f1f1; }
 
-.switch {
-  position: relative;
-  width: 43px;
-  transform: translate(0, 2px); }
-  .switch:before, .switch .switch-icon-container {
+.datepicker-container {
+  position: relative; }
+  .datepicker-container .rdrCalendarWrapper {
     position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    text-align: center;
-    border-radius: 999px; }
-  .switch:before {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 10px;
-    background: #78828a;
-    z-index: 4;
-    left: 50%;
-    -webkit-box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.9);
-    box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.9); }
-  .switch .switch-icon-container {
-    left: 10px;
-    width: 28px;
-    height: 28px;
-    font-size: .9em;
-    line-height: 28px;
-    z-index: 5;
-    background: #5c656d;
-    vertical-align: middle;
-    -webkit-box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.6);
-    box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.6); }
+    z-index: 3;
+    right: 0;
+    top: 1.5em;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15); }
+  .datepicker-container .rdrMonthAndYearWrapper {
+    position: relative; }
+    .datepicker-container .rdrMonthAndYearWrapper:after {
+      bottom: 100%;
+      right: 1em;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(136, 183, 213, 0);
+      border-bottom-color: #fff;
+      border-width: 13px;
+      margin-left: -13px; }
 
 .project-row {
   padding: 10px 7px 10px 14px; }
@@ -436,7 +397,7 @@ input {
   .task-row span.task-title, .task-row span.task-key, .task-row input {
     font-size: 1em; }
   .task-row .task-status {
-    font-size: 1.3em;
+    font-size: 1.1em;
     color: #757575; }
   .task-row span.icon-hash {
     color: #aeaeae;
@@ -470,6 +431,71 @@ input {
 
 .projects-listing .color-coded-row {
   margin-bottom: 1em; }
+
+.route-enter-active {
+  display: none; }
+
+#login-page-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden; }
+  #login-page-container.route-exit-active #logo-container {
+    background: #fff; }
+    #login-page-container.route-exit-active #logo-container img {
+      transform: translateY(-600%); }
+  #login-page-container.route-exit-active #login-form-container form {
+    transform: translateY(206%); }
+  #login-page-container #logo-container {
+    height: 50%;
+    background: #7FA950;
+    -webkit-transition: all 1s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+    -moz-transition: all 1s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+    -ms-transition: all 1s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+    -o-transition: all 1s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+    transition: all 1s cubic-bezier(0.585, -0.6, 0.43, 1.65); }
+    #login-page-container #logo-container img {
+      margin: auto;
+      -webkit-transition: all 0.5s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      -moz-transition: all 0.5s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      -ms-transition: all 0.5s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      -o-transition: all 0.5s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      transition: all 0.5s cubic-bezier(0.585, -0.6, 0.43, 1.65); }
+  #login-page-container #login-form-container {
+    height: 50%; }
+    #login-page-container #login-form-container form {
+      -webkit-transition: all 0.45s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      -moz-transition: all 0.45s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      -ms-transition: all 0.45s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      -o-transition: all 0.45s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      transition: all 0.45s cubic-bezier(0.585, -0.6, 0.43, 1.65);
+      box-sizing: border-box;
+      max-width: 600px;
+      height: 100%;
+      margin: auto; }
+      #login-page-container #login-form-container form h2 {
+        font-size: 2rem;
+        margin: 2rem 0; }
+      #login-page-container #login-form-container form input {
+        margin: .5em 0;
+        font-size: 1em;
+        padding: .3em;
+        border-radius: 2px;
+        border: 1px solid #e1e1e1; }
+      #login-page-container #login-form-container form button {
+        text-transform: uppercase;
+        background: #7FA950;
+        color: #fff;
+        border: none;
+        padding: .5em .9em;
+        font-size: .9em;
+        border-radius: 3px;
+        cursor: pointer;
+        margin: 1em 0; }
+        #login-page-container #login-form-container form button:hover {
+          background: #8cb35f; }
 
 /*!
  * Bootstrap Grid v4.1.2 (https://getbootstrap.com/)

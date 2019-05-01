@@ -68,8 +68,11 @@ class TasksListing extends React.Component {
                                 </div>
                                 <div className="col">
                                     <div className="row no-gutters align-items-center d-flex justify-content-end">
-                                        <div className="col-md-auto">
+                                        <div className="col-md-auto datepicker-container">
                                             <span className="task-due">Apr/01/19</span>
+                                            <Calendar
+                date={new Date()}
+                onChange={this.handleSelect} />
                                         </div>
                                         <div className="col-md-auto task-assignee-avatar">
                                             <img className="avatar" src="/images/avatar.jpg" alt="Kate" />
