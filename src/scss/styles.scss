@@ -5,14 +5,17 @@
 @import 'components/_fonts';
 @import 'components/_icons';
 
-@import 'components/_nano-components';
-@import 'components/_login-page';
 @import 'components/_nav-bar';
-@import 'components/_color-coded-rows';
 @import 'components/_switch';
+@import 'components/_color-coded-rows';
+@import 'components/_dateppicker';
+@import 'components/_nano-components';
+
 @import 'components/_project-row';
 @import 'components/_task-row';
 @import 'components/_projects-listing';
+
+@import 'components/_login-page';
 
 @import 'node_modules/bootstrap-4-grid/scss/grid.scss';
 
