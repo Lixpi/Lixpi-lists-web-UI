@@ -25,12 +25,13 @@
     "@babel/preset-react": "^7.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babelify": "^10.0.0",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.12.0",
     "react-transition-group": "^2.5.0",
     "watchify": "^3.11.0"
   },
   "dependencies": {
     "bootstrap-4-grid": "^2.4.1",
+    "classnames": "^2.2.6",
     "live-server": "^1.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",

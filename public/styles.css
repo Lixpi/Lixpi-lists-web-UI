@@ -362,6 +362,12 @@ input {
       border-width: 13px;
       margin-left: -13px; }
 
+.user-select img.avatar {
+  border-radius: 999px;
+  width: 20px;
+  height: 20px;
+  margin-right: .2em; }
+
 .project-row {
   padding: 10px 7px 10px 14px; }
   .project-row:hover {
