@@ -1,5 +1,7 @@
 <script>
-    export let segment;
+    import ColorCodedRow from './ColorCodedRow.svelte';
+
+    // export let segment;
 
     export let colorCode;
     export let taskType;
@@ -9,59 +11,7 @@
 <style lang="scss">
 @import "../../sass/_variables";
 
-.color-coded-row {
-    background: #fff;
-    margin-right: auto;
-    margin-left: auto;
-    max-width: 900px;
-    border-radius: 3px;
-    -webkit-box-shadow: 0 0 7px 0 rgba(0,0,0,.02);
-    box-shadow: 0 0 7px 0 rgba(0,0,0,.02);
-    position: relative;
-    padding-left: $color-coded-row-border-size;
-    &:before {
-        content: "";
-        display: block;
-        width: $color-coded-row-border-size;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background: $red;
-    }
-    &.code-red {
-        &:before {
-            background: $code-red;
-        }
-        &:hover {
-            background: $code-red-hover;
-        }
-    }
-    &.code-yellow {
-        &:before {
-            background: $code-yellow;
-        }
-        &:hover {
-            background: $code-yellow-hover;
-        }
-    }
-    &.code-green {
-        &:before {
-            background: $code-green;
-        }
-        &:hover {
-            background: $code-green-hover;
-        }
-    }
-    &.code-grey {
-        &:before {
-            background: $code-grey;
-        }
-        &:hover {
-            background: $code-grey-hover;
-        }
-    }
-}
+
 
 .task-row {
     padding: 5px 7px 5px $task-color-coded-row-border-size + 2px;
@@ -132,8 +82,8 @@
 </style>
 
 
-<div class="color-coded-row task-row code-{colorCode}">
-    <div class="row no-gutters align-items-center">
+<ColorCodedRow colorCode={colorCode}>
+    <div class="row no-gutters align-items-center task-row">
         <div class="col-md-auto task-status">
             <span class="icon-{taskType}"></span>
         </div>
@@ -159,12 +109,13 @@
                     /> -->
                 </div>
                 <div class="col-md-auto task-assignee-avatar">
-                    <img class="avatar" src="/images/avatar.jpg" alt="Kate" />
+                    <img class="avatar" src="system-images/avatar.jpg" alt="Kate" />
                 </div>
                 <div class="col-md-auto">
                     <!-- <TaskAssignee isEditing={this.props.isEditing} selectedOption={selectedOption} handleChange={this.handleChange} /> -->
+                    <span class="task-assignee">Kate Wilson</span>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</ColorCodedRow>
