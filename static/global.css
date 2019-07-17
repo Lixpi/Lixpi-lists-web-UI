@@ -1,0 +1,145 @@
+/*reset*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+// HTML5 display-role reset for older browsers
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+*:focus {
+    outline: none;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*icons*/
+
+@font-face {
+  font-family: 'lixpi-icons';
+  src: url('fonts/lixpi-icons.eot?75276810');
+  src: url('fonts/lixpi-icons.eot?75276810#iefix') format('embedded-opentype'),
+       url('fonts/lixpi-icons.woff2?75276810') format('woff2'),
+       url('fonts/lixpi-icons.woff?75276810') format('woff'),
+       url('fonts/lixpi-icons.ttf?75276810') format('truetype'),
+       url('fonts/lixpi-icons.svg?75276810#lixpi-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'lixpi-icons';
+    src: url('/fonts/lixpi-icons.svg?75276810#lixpi-icons') format('svg');
+  }
+}
+*/
+
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "lixpi-icons";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-user:before { content: '\e800'; } /* '' */
+.icon-search:before { content: '\e801'; } /* '' */
+.icon-attention:before { content: '\e803'; } /* '' */
+.icon-stop:before { content: '\e804'; } /* '' */
+.icon-tags:before { content: '\e805'; } /* '' */
+.icon-flow-cascade:before { content: '\e806'; } /* '' */
+.icon-clock:before { content: '\e807'; } /* '' */
+.icon-back-in-time:before { content: '\e808'; } /* '' */
+.icon-tasks:before { content: '\e809'; } /* '' */
+.icon-info-circled:before { content: '\e80a'; } /* '' */
+.icon-info:before { content: '\e80b'; } /* '' */
+.icon-help-circled:before { content: '\e80c'; } /* '' */
+.icon-tag:before { content: '\e80d'; } /* '' */
+.icon-cog-alt:before { content: '\e80e'; } /* '' */
+.icon-cog:before { content: '\e80f'; } /* '' */
+.icon-hash:before { content: '\f029'; } /* '' */
