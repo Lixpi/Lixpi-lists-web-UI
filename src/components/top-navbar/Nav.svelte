@@ -10,7 +10,13 @@
 nav {
     background: #42494f;
     height: 65px;
-    color: #fff;
+    &, a {
+        color: #fff;
+    }
+    a {
+        text-decoration: none;
+        font-weight: 400;
+    }
     .logo {
         height: auto;
         width: 35px;
@@ -165,11 +171,11 @@ nav {
     </div>
 
     <div class="col-md-auto">
-        <span>Projscts</span>
+        <a href='projects'><span>Projscts</span></a>
     </div>
 
     <div class="col-md-auto">
-        <span>Tasks</span>
+        <a href='tasks'><span>Tasks</span></a>
     </div>
 
     <div class="col-md-auto">

@@ -1,8 +1,8 @@
-import tasks from './_tasks.js';
+import projects from './_projects.js';
 
 const lookup = new Map();
-tasks.forEach(task => {
-	lookup.set(task.slug, JSON.stringify(task));
+projects.forEach(project => {
+	lookup.set(project.slug, JSON.stringify(project));
 });
 
 export function get(req, res, next) {

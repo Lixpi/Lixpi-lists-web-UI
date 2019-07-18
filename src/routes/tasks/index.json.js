@@ -3,7 +3,7 @@ import tasks from './_tasks.js';
 const contents = JSON.stringify(tasks.map(task => {
 	return {
 		title: task.title,
-		slug: task.slug,
+		taskKey: task.taskKey,
         colorCode: task.colorCode,
         taskType: task.taskType
 	};
