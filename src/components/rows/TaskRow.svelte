@@ -6,6 +6,7 @@
     export let colorCode;
     export let taskType;
     export let title;
+    export let taskKey;
 </script>
 
 <style lang="scss">
@@ -22,10 +23,13 @@
         width: $task-color-coded-row-border-size;
     }
 
-    span.task-title, span.task-key, input {
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+    span.task-title, a.task-key, input {
         font-size: 1em;
     }
-
     .task-status {
         font-size: 1.1em;
         color: #757575; // TBM
@@ -90,8 +94,8 @@
         <div class="col-md-auto">
             <span class="icon-hash"></span>
         </div>
-        <div class="col-md-auto">
-            <span class="task-key">ICC-215</span>
+        <div class="col-auto">
+            <a rel='prefetch' href='tasks/{taskKey}' class="task-key"><span>{taskKey}</span></a>
         </div>
         <div class="col-md-auto">
             <span class="vertical-divider"></span>

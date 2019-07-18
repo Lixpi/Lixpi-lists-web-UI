@@ -9,10 +9,39 @@
 
 const tasks = [
 	{
-		title: 'What is Sapper?',
+		taskKey: 'LIX-11',
 		colorCode: 'red',
 		taskType: 'info-circled',
-		slug: 'what-is-sapper',
+		title: 'What is Sapper?',
+
+		type: 'Feature',
+		priority: 'High',
+		version: '0.1',
+		labels: ['UI', 'UX'],
+		reporter: 'Kate',
+		assignees: [
+			{
+				name: 'Kate',
+				role: 'World Class UI/UX specialist'
+			},
+			{
+				name: 'Nargiza',
+				role: 'Cheap Backend'
+			},
+			{
+				name: 'Nargiza',
+				role: 'Cheap QA'
+			}
+		],
+		timestamps: {
+			created: 1563431685,
+			modified: 1563431719,
+			due: 1563431685
+		},
+		timeTracking: {
+			estimated: '7d',
+			spent: '2d 1h'
+		},
 		html: `
 			<p>First, you have to know what <a href='https://svelte.dev'>Svelte</a> is. Svelte is a UI framework with a bold new idea: rather than providing a library that you write code with (like React or Vue, for example), it's a compiler that turns your components into highly optimized vanilla JavaScript. If you haven't already read the <a href='https://svelte.dev/blog/frameworks-without-the-framework'>introductory blog task</a>, you should!</p>
 
@@ -33,7 +62,7 @@ const tasks = [
 		title: 'How to use Sapper',
 		colorCode: 'yellow',
 		taskType: 'info',
-		slug: 'how-to-use-sapper',
+		taskKey: 'LIX-10',
 		html: `
 			<h2>Step one</h2>
 			<p>Create a new project, using <a href='https://github.com/Rich-Harris/degit'>degit</a>:</p>
@@ -59,7 +88,7 @@ const tasks = [
 		title: 'Why the name?',
 		colorCode: 'green',
 		taskType: 'info-circled',
-		slug: 'why-the-name',
+		taskKey: 'LIX-12',
 		html: `
 			<p>In war, the soldiers who build bridges, repair roads, clear minefields and conduct demolitions — all under combat conditions — are known as <em>sappers</em>.</p>
 
@@ -71,7 +100,7 @@ const tasks = [
 		title: 'How is Sapper different from Next.js?',
 		colorCode: 'yellow',
 		taskType: 'info-circled',
-		slug: 'how-is-sapper-different-from-next',
+		taskKey: 'LIX-13',
 		html: `
 			<p><a href='https://github.com/zeit/next.js'>Next.js</a> is a React framework from <a href='https://zeit.co'>Zeit</a>, and is the inspiration for Sapper. There are a few notable differences, however:</p>
 
@@ -88,7 +117,7 @@ const tasks = [
 		title: 'How can I get involved?',
 		colorCode: 'grey',
 		taskType: 'info-circled',
-		slug: 'how-can-i-get-involved',
+		taskKey: 'LIX-30',
 		html: `
 			<p>We're so glad you asked! Come on over to the <a href='https://github.com/sveltejs/svelte'>Svelte</a> and <a href='https://github.com/sveltejs/sapper'>Sapper</a> repos, and join us in the <a href='https://svelte.dev/chat'>Discord chatroom</a>. Everyone is welcome, especially you!</p>
 		`

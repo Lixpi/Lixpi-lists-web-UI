@@ -1,8 +1,8 @@
 <script context="module">
 	export async function preload({ params, query }) {
-		// the `slug` parameter is available because
-		// this file is called [slug].svelte
-		const res = await this.fetch(`tasks/${params.slug}.json`);
+		// the `taskKey` parameter is available because
+		// this file is called [taskKey].svelte
+		const res = await this.fetch(`tasks/${params.taskKey}.json`);
 		const data = await res.json();
 
 		if (res.status === 200) {

@@ -3,11 +3,11 @@
 // avoid unnecessary dependencies in the starter template, and in the
 // service of obviousness, we're just going to leave it here.
 
-// This file is called `_tasks.js` rather than `tasks.js`, because
-// we don't want to create an `/blog/tasks` route — the leading
+// This file is called `_projects.js` rather than `projects.js`, because
+// we don't want to create an `/blog/projects` route — the leading
 // underscore tells Sapper not to do that.
 
-const tasks = [
+const projects = [
 	{
 		title: 'What is Sapper?',
 		colorCode: 'red',
@@ -95,8 +95,8 @@ const tasks = [
 	}
 ];
 
-tasks.forEach(task => {
+projects.forEach(task => {
 	task.html = task.html.replace(/^\t{3}/gm, '');
 });
 
-export default tasks;
+export default projects;

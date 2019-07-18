@@ -2,6 +2,7 @@
     // export let segment;
 
     export let colorCode;
+    export let classNames;
 </script>
 
 <style lang="scss">
@@ -64,6 +65,6 @@
 </style>
 
 
-<div class="color-coded-row code-{colorCode}">
+<div class="color-coded-row code-{colorCode} {classNames}">
     <slot></slot>
 </div>

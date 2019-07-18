@@ -1,11 +1,11 @@
-import tasks from './_tasks.js';
+import projects from './_projects.js';
 
-const contents = JSON.stringify(tasks.map(task => {
+const contents = JSON.stringify(projects.map(project => {
 	return {
-		title: task.title,
-		slug: task.slug,
-        colorCode: task.colorCode,
-        taskType: task.taskType
+		title: project.title,
+		slug: project.slug,
+        colorCode: project.colorCode,
+        projectType: project.projectType
 	};
 }));
 

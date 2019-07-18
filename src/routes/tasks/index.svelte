@@ -14,10 +14,7 @@
 </script>
 
 <style>
-	ul {
-		margin: 0 0 1em 0;
-		line-height: 1.5;
-	}
+
 </style>
 
 <svelte:head>
@@ -33,7 +30,7 @@
 				the user hovers over the link or taps it, instead of
 				waiting for the 'click' event -->
 		<!-- <li><a rel='prefetch' href='tasks/{task.slug}'>{task.title}</a></li> -->
-		<TaskRow colorCode={task.colorCode} taskType={task.taskType} title={task.title}  />
+		<TaskRow colorCode={task.colorCode} taskType={task.taskType} title={task.title} taskKey={task.taskKey}  />
 	{/each}
 	<NewTaskRow />
 </div>
