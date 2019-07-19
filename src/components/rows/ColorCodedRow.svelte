@@ -10,10 +10,6 @@
 
 .color-coded-row {
     background: #fff;
-    margin-right: auto;
-    margin-left: auto;
-    max-width: 900px;
-    border-radius: 3px;
     -webkit-box-shadow: 0 0 7px 0 rgba(0,0,0,.02);
     box-shadow: 0 0 7px 0 rgba(0,0,0,.02);
     position: relative;
