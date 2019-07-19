@@ -13,8 +13,11 @@
 	export let projects;
 </script>
 
-<style>
-
+<style lang="scss">
+	.projects-listing {
+		max-width: 900px;
+		margin: auto;
+	}
 </style>
 
 <svelte:head>

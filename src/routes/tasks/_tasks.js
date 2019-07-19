@@ -10,6 +10,7 @@
 const tasks = [
 	{
 		taskKey: 'LIX-11',
+		project: 'Lixpi Lists',
 		colorCode: 'red',
 		taskType: 'info-circled',
 		title: 'What is Sapper?',
@@ -55,6 +56,88 @@ const tasks = [
 			</ul>
 
 			<p>It's implemented as Express middleware. Everything is set up and waiting for you to get started, but you keep complete control over the server, service worker, webpack config and everything else, so it's as flexible as you need it to be.</p>
+		`
+	},
+
+	{
+		taskKey: 'LIX-01',
+		project: 'Lixpi Lists',
+		colorCode: 'green',
+		taskType: 'info-circled',
+		title: 'Generate global.css from SASS file',
+
+		type: 'Improvement',
+		priority: 'Medium',
+		version: '0.1',
+		labels: [
+			{
+				color: 'pink',
+				title: 'Build scripts'
+			},
+			{
+				color: 'orange',
+				title: 'Front-end'
+			}
+		],
+		reporter: 'Kate',
+		assignees: [
+			{
+				name: 'Kate',
+				role: 'Developer'
+			}
+		],
+		timestamps: {
+			created: null,
+			modified: null,
+			due: null
+		},
+		timeTracking: {
+			estimated: null,
+			spent: null
+		},
+		html: `
+			<p>I'm not sure if this is related <a href='https://github.com/sveltejs/sapper/issues/474'>https://github.com/sveltejs/sapper/issues/474</a> but this is for sure mentions the solution <a href='https://github.com/sveltejs/sapper/issues/377'>https://github.com/sveltejs/sapper/issues/377</a>, but I don't know how to make it work...</p>
+		`
+	},
+
+		{
+		taskKey: 'LIX-02',
+		project: 'Lixpi Lists',
+		colorCode: 'yellow',
+		taskType: 'info-circled',
+		title: 'Properly manage JS variables in CSS',
+
+		type: 'Improvement',
+		priority: 'Medium',
+		version: '0.2',
+		labels: [
+			{
+				color: 'green',
+				title: 'CSS in JS or vice-versa'
+			},
+			{
+				color: 'blue',
+				title: 'Front-end'
+			}
+		],
+		reporter: 'Kate',
+		assignees: [
+			{
+				name: 'Kate',
+				role: 'Developer'
+			}
+		],
+		timestamps: {
+			created: null,
+			modified: null,
+			due: null
+		},
+		timeTracking: {
+			estimated: null,
+			spent: null
+		},
+		html: `
+			<p>Right now it's very hacky way, watch for this issue <a href='https://github.com/sveltejs/svelte/issues/758'>https://github.com/sveltejs/svelte/issues/758</a></p>
 		`
 	},
 
