@@ -6,6 +6,7 @@
 
 <style lang="scss">
 @import "../../sass/_variables";
+@import "../../sass/_helpers";
 
 nav {
     background: #42494f;
@@ -21,6 +22,7 @@ nav {
         text-decoration: none;
         font-weight: 400;
         &.selected {
+            text-shadow: 1px 0px 0px #fff;
         }
     }
     .logo {
@@ -160,7 +162,7 @@ nav {
 
 <nav class="row align-items-center ">
     <div class="col-auto">
-        <img class="logo" src="system-images/logo.png" alt="Lixpi Lists" />
+        <img class="logo noselect" src="system-images/logo.png" alt="Lixpi Lists" />
     </div>
     <div class="col-auto">
         <span class="mr-4">Feed</span>
@@ -195,7 +197,7 @@ nav {
     </div>
     <div class="col col-lg-2 d-flex justify-content-end">
         <div class="user-menu">
-            <img class="avatar" src="system-images/avatar.jpg" alt="Kate" />
+            <img class="avatar noselect" src="system-images/avatar.jpg" alt="Kate" />
         </div>
     </div>
     <!-- <div class="col align-self-center d-flex flex-column" >

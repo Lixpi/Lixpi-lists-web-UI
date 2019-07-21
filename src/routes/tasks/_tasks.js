@@ -15,6 +15,7 @@ const tasks = [
 		title: 'What is Sapper?',
 
 		type: 'Bug',
+		status: 'Open',
 		priority: 'High',
 		version: '0.1',
 		labels: [
@@ -74,6 +75,7 @@ const tasks = [
 		title: 'Generate global.css from SASS file',
 
 		type: 'Improvement',
+		status: 'Open',
 		priority: 'Medium',
 		version: '0.1',
 		labels: [
@@ -84,6 +86,62 @@ const tasks = [
 			{
 				color: 'orange',
 				title: 'Front-end'
+			},
+			{
+				color: 'pink',
+				title: 'Build scripts'
+			},
+			{
+				color: 'pink',
+				title: 'Build scripts'
+			},
+			{
+				color: 'green',
+				title: 'CSS in JS or vice-versa'
+			},
+			{
+				color: 'orange',
+				title: 'Front-end'
+			},
+			{
+				color: 'blue',
+				title: 'Front-end'
+			},
+			{
+				color: 'pink',
+				title: 'Build scripts'
+			},
+			{
+				color: 'orange',
+				title: 'Front-end'
+			},
+			{
+				color: 'pink',
+				title: 'Build scripts'
+			},
+			{
+				color: 'blue',
+				title: 'Front-end'
+			},
+			{
+				color: 'blue',
+				title: 'Front-end'
+			},
+			{
+				color: 'orange',
+				title: 'Front-end'
+			},
+			{
+				color: 'orange',
+				title: 'Front-end'
+			},
+			{
+				color: 'green',
+				title: 'CSS in JS or vice-versa'
+			},
+			{
+				color: 'pink',
+				title: 'Build scripts'
 			}
 		],
 		reporter: 'Kate',
@@ -114,6 +172,7 @@ const tasks = [
 		title: 'Properly manage JS variables in CSS',
 
 		type: 'Research',
+		status: 'Open',
 		priority: 'Medium',
 		version: '0.2',
 		labels: [
@@ -154,6 +213,7 @@ const tasks = [
 		title: 'Looks like hackpad source code is now open!!! Use it!',
 
 		type: 'Research',
+		status: 'Open',
 		priority: 'Hight',
 		version: '0.1',
 		labels: [
