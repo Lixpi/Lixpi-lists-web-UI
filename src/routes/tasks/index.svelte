@@ -26,7 +26,7 @@
 
 <!-- <h1>Recent tasks</h1> -->
 
-<div class="taksks-listing mt-4">
+<div class="taksks-listing pt-4">
 	{#each tasks as task}
 		<!-- we're using the non-standard `rel=prefetch` attribute to
 				tell Sapper to load the data for the page as soon as

@@ -4,7 +4,6 @@
     // export let segment;
 
     export let colorCode;
-    export let taskType;
     export let title;
     export let taskKey;
 </script>
@@ -32,7 +31,16 @@
     }
     .task-status {
         font-size: 1.1em;
-        color: #757575; // TBM
+        color: #8a8a8a;
+        /*color: $code-green;*/
+        &:hover {
+            color: $code-green;
+            transform:scale(1.3);
+            -ms-transform:scale(1.3);
+            -moz-transform:scale(1.3);
+            -webkit-transform:scale(1.3);
+            -o-transform:scale(1.3);
+        }
 
     }
     span.icon-hash {
@@ -88,34 +96,34 @@
 
 <ColorCodedRow colorCode={colorCode}>
     <div class="row no-gutters align-items-center task-row">
-        <div class="col-md-auto task-status">
-            <span class="icon-{taskType}"></span>
+        <div class="col-sm-auto task-status">
+            <span class="icon-ok-circle"></span>
         </div>
-        <div class="col-md-auto">
+        <div class="col-sm-auto">
             <span class="icon-hash"></span>
         </div>
         <div class="col-auto">
             <a rel='prefetch' href='tasks/{taskKey}' class="task-key"><span>{taskKey}</span></a>
         </div>
-        <div class="col-md-auto">
+        <div class="col-sm-auto">
             <span class="vertical-divider"></span>
         </div>
-        <div class="col-md-auto">
+        <div class="col-sm-auto">
             <span class="task-title">{title}</span>
         </div>
         <div class="col">
             <div class="row no-gutters align-items-center d-flex justify-content-end">
-                <div class="col-md-auto datepicker-container">
+                <div class="col-sm-auto datepicker-container">
                     <span class="task-due">Apr/01/19</span>
                      <!-- <Calendar
                         date={new Date()}
                         onChange={this.handleSelect}
                     /> -->
                 </div>
-                <div class="col-md-auto task-assignee-avatar">
+                <div class="col-sm-auto task-assignee-avatar">
                     <img class="avatar" src="system-images/avatar.jpg" alt="Kate" />
                 </div>
-                <div class="col-md-auto">
+                <div class="col-sm-auto">
                     <!-- <TaskAssignee isEditing={this.props.isEditing} selectedOption={selectedOption} handleChange={this.handleChange} /> -->
                     <span class="task-assignee">Kate Wilson</span>
                 </div>

@@ -10,6 +10,10 @@
 nav {
     background: #42494f;
     height: 65px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    /*left: 0;*/
     &, a {
         color: #fff;
     }
@@ -163,22 +167,22 @@ nav {
 	<li><a rel=prefetch class='{segment === "blog" ? "selected" : ""}' href='blog'>blog</a></li>
 </ul> -->
 <nav class="row align-items-center ">
-    <div class="col-md-auto">
+    <div class="col-auto">
         <img class="logo" src="system-images/logo.png" alt="Lixpi Lists" />
     </div>
-    <div class="col-md-auto">
+    <div class="col-auto">
         <span class="mr-4">Feed</span>
     </div>
 
-    <div class="col-md-auto">
+    <div class="col-auto">
         <a href='projects'><span>Projscts</span></a>
     </div>
 
-    <div class="col-md-auto">
+    <div class="col-auto">
         <a href='tasks'><span>Tasks</span></a>
     </div>
 
-    <div class="col-md-auto">
+    <div class="col-auto">
         <div class="create-new-wrapper">
             <button class="create-new mr-1">Create</button>
             <ul>
@@ -194,7 +198,7 @@ nav {
             <input type="text" class="navbar-search" placeholder="Search"/>
         </div>
     </div>
-    <div class="col-md-auto">
+    <div class="col-auto">
        <ToggleSwitch />
     </div>
     <div class="col col-lg-2 d-flex justify-content-end">

@@ -28,7 +28,7 @@
         &:before {
             background: $code-red;
         }
-        &:hover {
+        &:not(.no-hover):hover {
             background: $code-red-hover;
         }
     }
@@ -36,7 +36,7 @@
         &:before {
             background: $code-yellow;
         }
-        &:hover {
+        &:not(.no-hover):hover {
             background: $code-yellow-hover;
         }
     }
@@ -44,7 +44,7 @@
         &:before {
             background: $code-green;
         }
-        &:hover {
+        &:not(.no-hover):hover {
             background: $code-green-hover;
         }
     }
@@ -52,7 +52,7 @@
         &:before {
             background: $code-grey;
         }
-        &:hover {
+        &:not(.no-hover):hover {
             background: $code-grey-hover;
         }
     }
