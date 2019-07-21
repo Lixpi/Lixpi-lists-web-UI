@@ -12,18 +12,26 @@ const tasks = [
 		taskKey: 'LIX-11',
 		project: 'Lixpi Lists',
 		colorCode: 'red',
-		taskType: 'info-circled',
 		title: 'What is Sapper?',
 
-		type: 'Feature',
+		type: 'Bug',
 		priority: 'High',
 		version: '0.1',
-		labels: ['UI', 'UX'],
+		labels: [
+			{
+				color: 'pink',
+				title: 'UI'
+			},
+			{
+				color: 'orange',
+				title: 'UX'
+			}
+		],
 		reporter: 'Kate',
 		assignees: [
 			{
 				name: 'Kate',
-				role: 'World Class UI/UX specialist'
+				role: 'Front-end'
 			},
 			{
 				name: 'Nargiza',
@@ -63,7 +71,6 @@ const tasks = [
 		taskKey: 'LIX-01',
 		project: 'Lixpi Lists',
 		colorCode: 'green',
-		taskType: 'info-circled',
 		title: 'Generate global.css from SASS file',
 
 		type: 'Improvement',
@@ -100,14 +107,13 @@ const tasks = [
 		`
 	},
 
-		{
+	{
 		taskKey: 'LIX-02',
 		project: 'Lixpi Lists',
 		colorCode: 'yellow',
-		taskType: 'info-circled',
 		title: 'Properly manage JS variables in CSS',
 
-		type: 'Improvement',
+		type: 'Research',
 		priority: 'Medium',
 		version: '0.2',
 		labels: [
@@ -142,9 +148,48 @@ const tasks = [
 	},
 
 	{
+		taskKey: 'LIX-03',
+		project: 'Lixpi Lists',
+		colorCode: 'grey',
+		title: 'Looks like hackpad source code is now open!!! Use it!',
+
+		type: 'Research',
+		priority: 'Hight',
+		version: '0.1',
+		labels: [
+			{
+				color: 'pink',
+				title: 'Front-end'
+			},
+			{
+				color: 'blue',
+				title: 'UI'
+			}
+		],
+		reporter: 'Kate',
+		assignees: [
+			{
+				name: 'Kate',
+				role: 'Developer'
+			}
+		],
+		timestamps: {
+			created: 'Jul 20 2019',
+			modified: 'Jul 20 2019',
+			due: 'Aug 01 2019'
+		},
+		timeTracking: {
+			estimated: '1w',
+			spent: null
+		},
+		html: `
+			<p>Bingo!!! I can't believe my eyes!!! Dropbox has opened hackpad code? The dreams come true: <a href='https://github.com/dropbox/hackpad'>https://github.com/dropbox/hackpad</a></p>
+		`
+	},
+
+	{
 		title: 'How to use Sapper',
 		colorCode: 'yellow',
-		taskType: 'info',
 		taskKey: 'LIX-10',
 		html: `
 			<h2>Step one</h2>
@@ -170,7 +215,6 @@ const tasks = [
 	{
 		title: 'Why the name?',
 		colorCode: 'green',
-		taskType: 'info-circled',
 		taskKey: 'LIX-12',
 		html: `
 			<p>In war, the soldiers who build bridges, repair roads, clear minefields and conduct demolitions — all under combat conditions — are known as <em>sappers</em>.</p>
@@ -182,7 +226,6 @@ const tasks = [
 	{
 		title: 'How is Sapper different from Next.js?',
 		colorCode: 'yellow',
-		taskType: 'info-circled',
 		taskKey: 'LIX-13',
 		html: `
 			<p><a href='https://github.com/zeit/next.js'>Next.js</a> is a React framework from <a href='https://zeit.co'>Zeit</a>, and is the inspiration for Sapper. There are a few notable differences, however:</p>
@@ -199,7 +242,6 @@ const tasks = [
 	{
 		title: 'How can I get involved?',
 		colorCode: 'grey',
-		taskType: 'info-circled',
 		taskKey: 'LIX-30',
 		html: `
 			<p>We're so glad you asked! Come on over to the <a href='https://github.com/sveltejs/svelte'>Svelte</a> and <a href='https://github.com/sveltejs/sapper'>Sapper</a> repos, and join us in the <a href='https://svelte.dev/chat'>Discord chatroom</a>. Everyone is welcome, especially you!</p>

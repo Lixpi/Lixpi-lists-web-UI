@@ -26,7 +26,7 @@
 
 <!-- <h1>Recent projects</h1> -->
 
-<div class="projects-listing mt-4">
+<div class="projects-listing pt-4">
 	{#each projects as project}
 		<!-- we're using the non-standard `rel=prefetch` attribute to
 				tell Sapper to load the data for the page as soon as

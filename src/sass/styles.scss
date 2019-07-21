@@ -1,27 +1,12 @@
-// @import '_variables';
+@import '_variables';
 // @import '_helpers';
+
+@import '_typography';
 
 // @import 'components/_reset';
 // @import 'components/_fonts';
 // @import 'components/_icons';
 
-// @import 'components/_nav-bar';
-// @import 'components/_switch';
-// @import 'components/_color-coded-rows';
-// @import 'components/_dateppicker';
-// @import 'components/_nano-components';
-// @import 'components/_react-select';
-
-// @import 'components/_project-row';
-// @import 'components/_task-row';
-// @import 'components/_projects-listing';
-
-// @import 'components/_login-page';
-
-// @import 'node_modules/bootstrap-4-grid/scss/grid.scss';
-
-// @import 'node_modules/react-date-range/dist/styles';
-// @import 'node_modules/react-date-range/dist/theme/default';
 
 
 // // font-family: 'Source Sans Pro', sans-serif;   Main content font. Also supports cyrilic and other languages
@@ -31,47 +16,16 @@
 
 
 html, body {
-    font-family: 'Lato', sans-serif; // Is it used at all????? Consider removing
-    font-weight: 300;
-    color: #4f525c;;
-    &, > div, #root > div {
+    &, > div, #root, #root > div, main {
         width: 100%;
         height: 100%;
     }
 }
 
-h1, h2, h3, h4, h5, h6 {
-    // font-family: 'Raleway', sans-serif;
-    font-family: 'Lato', sans-serif; // Is it used at all????? Consider removing
-    font-weight: 500;
-}
-h1 {
-    font-size: 3em;
-}
-h2 {
-    font-size: 2em;
-}
-h3 {
-    font-size: 1.5em;
-}
-h4 {
-    font-size: 1em;
-}
-h5 {
-    font-size: .9em;
-}
-h6 {
-    font-size: .7em;
-}
-
-p, ul, ol, dl, span, b, i, input {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 300;
-}
-
 #root {
     width: 100%;
     height: 100%;
+    padding-top: 65px;
 }
 
 img {
