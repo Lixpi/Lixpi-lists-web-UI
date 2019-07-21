@@ -11,15 +11,17 @@ nav {
     background: #42494f;
     height: 65px;
     position: fixed;
+    z-index: 999;
     width: 100%;
     top: 0;
-    /*left: 0;*/
     &, a {
         color: #fff;
     }
     a {
         text-decoration: none;
         font-weight: 400;
+        &.selected {
+        }
     }
     .logo {
         height: auto;
@@ -154,18 +156,8 @@ nav {
         }
     }
 }
-
 </style>
 
-
-<!-- <ul>
-	<li><a class='{segment === undefined ? "selected" : ""}' href='.'>home</a></li>
-	<li><a class='{segment === "about" ? "selected" : ""}' href='about'>about</a></li>
-
-	for the blog link, we're using rel=prefetch so that Sapper prefetches
-	     the blog data when we hover over the link or tap it on a touchscreen
-	<li><a rel=prefetch class='{segment === "blog" ? "selected" : ""}' href='blog'>blog</a></li>
-</ul> -->
 <nav class="row align-items-center ">
     <div class="col-auto">
         <img class="logo" src="system-images/logo.png" alt="Lixpi Lists" />
@@ -175,11 +167,11 @@ nav {
     </div>
 
     <div class="col-auto">
-        <a href='projects'><span>Projscts</span></a>
+        <a class="{segment === 'projects' ? 'selected' : ''}" href='projects' rel=prefetch><span>Projscts</span></a>
     </div>
 
     <div class="col-auto">
-        <a href='tasks'><span>Tasks</span></a>
+        <a class="{segment === 'tasks' ? 'selected' : ''}" href='tasks' rel=prefetch><span>Tasks</span></a>
     </div>
 
     <div class="col-auto">
