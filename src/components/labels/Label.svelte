@@ -13,6 +13,8 @@
     padding: .6em .4em .682em .4em;
     line-height: 0;
     display: inline-block;
+    font-size: .9em;
+    margin-bottom: .25em;
     &:last-of-type {
         margin-right: 0;
     }

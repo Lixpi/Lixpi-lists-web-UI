@@ -31,7 +31,7 @@
         }
     }
     :global(.task-details-meta-row) {
-        padding: 0em 1em .17rem 1em;
+        padding: 0em 1em 0 1em;
     }
 }
 .assignees {
@@ -56,7 +56,7 @@
 
     <div class="task-header">
         <div class="d-flex justify-content-start align-items-center mb-4">
-            <img class="project-logo" src="system-images/logo.png" alt="Lixpi Lists" />
+            <img class="project-logo noselect" src="system-images/logo.png" alt="Lixpi Lists" />
             <h2 class="project-title"><span>{task.project} <i>/</i></span> {task.taskKey}</h2>
         </div>
 
@@ -67,7 +67,7 @@
             <div class="row">
                 <div class="col-sm">
                     <Labels labels={task.labels} classNames="mb-2" />
-
+                    <p>Status: <b>{task.status}</b></p>
                     <p>Version: <b>{task.version}</b></p>
                     <p>Created: <b>{task.timestamps.created}</b></p>
                     <p>Due: <b>{task.timestamps.due}</b></p>
@@ -75,7 +75,7 @@
                     <p>Reporter: <b>{task.reporter}</b></p>
 
                 </div>
-                <div class="col-sm">
+                <div class="col-sm mt-2  mt-md-0">
                     <div class="row mb-2">
                         <div class="col-sm-2">
                             <p>Assignees:</p>
@@ -94,8 +94,8 @@
                         </div>
                         <div class="col-sm-auto">
                             <ul class="assignees">
-                                <li>Estimated<b class="ml-1">{task.timeTracking.estimated}</b></li>
-                                <li>Spent<b class="ml-1">{task.timeTracking.spent}</b></li>
+                                <li>Estimated:<b class="ml-1">{task.timeTracking.estimated}</b></li>
+                                <li>Spent:<b class="ml-1">{task.timeTracking.spent}</b></li>
                             </ul>
                         </div>
                     </div>
