@@ -1,7 +1,4 @@
 <script context="module">
-	import TaskRow from '../../components/rows/TaskRow.svelte';
-	import NewTaskRow from '../../components/rows/NewTaskRow.svelte';
-
 	export function preload({ params, query }) {
 		return this.fetch(`tasks.json`).then(r => r.json()).then(tasks => {
 			return { tasks };
@@ -10,6 +7,9 @@
 </script>
 
 <script>
+	import TaskRow from '../../components/rows/TaskRow.svelte';
+	import NewTaskRow from '../../components/rows/NewTaskRow.svelte';
+
 	export let tasks;
 </script>
 
