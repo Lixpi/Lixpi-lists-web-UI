@@ -90,10 +90,6 @@
         }
     }
 }
-.asdf {
-    color: orange;
-}
-
 </style>
 
 
