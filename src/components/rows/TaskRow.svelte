@@ -90,6 +90,9 @@
         }
     }
 }
+.asdf {
+    color: orange;
+}
 
 </style>
 
@@ -102,9 +105,12 @@
         <div class="col-sm-auto">
             <span class="icon-hash"></span>
         </div>
-        <div class="col-auto">
+        <div class="col-auto asdf">
             <a rel='prefetch' href='tasks/{taskKey}' class="task-key"><span>{taskKey}</span></a>
         </div>
+        <!-- <div class="col-auto">
+            <a rel='prefetch' href='tasks/{taskKey}' class="task-key"><span>{taskKey}</span></a>
+        </div> -->
         <div class="col-sm-auto">
             <span class="vertical-divider"></span>
         </div>
