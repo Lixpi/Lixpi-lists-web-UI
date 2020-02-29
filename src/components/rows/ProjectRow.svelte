@@ -4,8 +4,8 @@
     // export let segment;
 
     export let colorCode;
-    export let taskType;
-    export let title;
+    // export let taskType;
+    // export let title;
 </script>
 
 <style lang="scss">
