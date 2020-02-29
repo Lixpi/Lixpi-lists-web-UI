@@ -1,6 +1,6 @@
-import resolve from 'rollup-plugin-node-resolve';
-import replace from 'rollup-plugin-replace';
-import commonjs from 'rollup-plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
 import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
@@ -19,7 +19,6 @@ const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
-const dedupe = importee => importee === 'svelte' || importee.startsWith('svelte/');
 
 export default {
 	client: {
@@ -33,7 +32,6 @@ export default {
 			svelte({
 				dev,
 				hydratable: true,
-				// Emit CSS as "files" for other plugins to process
 				emitCss: true,
 				// Extract CSS into a separate file (recommended).
 				// See note below
@@ -49,7 +47,7 @@ export default {
 			}),
 			resolve({
 				browser: true,
-				dedupe
+				dedupe: ['svelte']
 			}),
 			commonjs(),
 
@@ -92,7 +90,7 @@ export default {
 				preprocess
 			}),
 			resolve({
-				dedupe
+				dedupe: ['svelte']
 			}),
 			commonjs()
 		],
