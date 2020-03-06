@@ -13,7 +13,9 @@
 
 
  <div class="container full-height">
-    <Nav {segment}/>
+    {#if segment !== 'login'}
+        <Nav {segment}/>
+    {/if}
 
 	<main>
 		<slot></slot>
