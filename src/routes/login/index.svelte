@@ -119,9 +119,6 @@
 		&.has-error {
 			border: 1px solid red !important;
 		}
-		&.has-warning {
-			border: 1px solid orange !important;
-		}
 	}
 </style>
 
