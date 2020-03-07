@@ -8,13 +8,13 @@
 	export let data;
 	async function handleSubmit(event) {
         // Call an authenication microservice to handle the authentication.
-        const response = await fetch("http://localhost:3001/login",
-		{
+        const response = await fetch("http://localhost:3001/login", {
 		    method: 'POST',
 		    headers: {
 		        'Accept': 'application/json',
 		        'Content-Type': 'application/json'
 		    },
+		    credentials: 'include',
 		    body: JSON.stringify({username: event.target.username.value, password: event.target.password.value})
 		})
 
@@ -22,6 +22,7 @@
 	    if (response.status === 200) {
 	     	sapper.goto(`/tasks`);
 	    }
+
 	    return { data };
     }
 </script>
