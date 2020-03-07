@@ -1,7 +1,5 @@
 <script context="module">
 	// https://stackoverflow.com/questions/57853539/fetch-content-from-wordpress-api-in-sapper
-	export async function preload({ params, query }) {
-	}
 </script>
 
 <script>
@@ -18,15 +16,13 @@
 		        'Content-Type': 'application/json'
 		    },
 		    body: JSON.stringify({username: event.target.username.value, password: event.target.password.value})
-		});
+		})
+
 		data = await response.json();
-		console.log('data')
-		console.log(data)
-
-		if (data) {
-			// sapper.goto(`/tasks`);
-		}
-
+	    if (response.status === 200) {
+	     	sapper.goto(`/tasks`);
+	    }
+	    return { data };
     }
 </script>
 
@@ -117,27 +113,38 @@
 	        }
 	    }
 	}
+
+	input[type=text], input[type=password] {
+		&.has-error {
+			border: 1px solid red !important;
+		}
+		&.has-warning {
+			border: 1px solid orange !important;
+		}
+	}
 </style>
 
+
 <svelte:head>
-	<title>Blog</title>
+	<title>Security first!</title>
 </svelte:head>
 
-
 <div class="container full-height" id="login-page-container">
-{JSON.stringify(data)}
-<div class="row full-height " id="logo-container">
-<div class="col align-self-center d-flex flex-column" >
+	<div class="row full-height " id="logo-container">
+		<div class="col align-self-center d-flex flex-column" >
 			<img src="logo-512.png" alt="Lixpi Lists" />
 		</div>
 	</div>
 	<div class="row full-height " id="login-form-container">
-	<form class="store-selector  d-flex flex-column" on:submit|preventDefault="{handleSubmit}" >
+		<form class="store-selector  d-flex flex-column" on:submit|preventDefault="{handleSubmit}" >
 			<h2>Who are you?</h2>
-			<input type="text" name="username" id="username" required placeholder="Username" defaultValue="jira-admin" />
-			<input type="password" id="password" required placeholder="Password" defaultValue="asdf" />
+			<input id="username" class="{(data && data.error) && 'has-error'}" type="text" required placeholder="Username" defaultValue="jira-admin" />
+			<input id="password" class="{(data && data.error) && 'has-error'}" type="password" required placeholder="Password" defaultValue="asdf" />
+			{#if data && data.error}
+				<span>{data.error.message}</span>
+			{/if}
 			<div class=" d-flex justify-content-end">
-			<button class="" type="submit">Go</button>
+				<button class="" type="submit">Go</button>
 			</div>
 		</form>
 	</div>
