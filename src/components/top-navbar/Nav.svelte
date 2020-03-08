@@ -1,5 +1,6 @@
 <script>
     import ToggleSwitch from './ToggleSwitch.svelte';
+    import { fly } from 'svelte/transition';
 
 	export let segment;
 </script>
@@ -160,7 +161,7 @@ nav {
 }
 </style>
 
-<nav class="row align-items-center ">
+<nav class="row align-items-center" transition:fly="{{ y: -200, duration: 700 }}">
     <div class="col-auto">
         <img class="logo noselect" src="system-images/logo.png" alt="Lixpi Lists" />
     </div>
@@ -196,6 +197,11 @@ nav {
        <ToggleSwitch />
     </div>
     <div class="col col-lg-2 d-flex justify-content-end">
+        <a href='logout' rel=prefetch><span>Logout</span></a>
+    </div>
+
+    <div class="col-auto d-flex justify-content-end">
+    <!-- <div class="col col-lg-2 d-flex justify-content-end"> -->
         <div class="user-menu">
             <img class="avatar noselect" src="system-images/avatar.jpg" alt="Kate" />
         </div>
