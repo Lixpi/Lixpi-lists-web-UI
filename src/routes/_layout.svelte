@@ -12,7 +12,7 @@
     @import '../sass/styles.scss';
 </style>
 
-<div class="container full-height">
+<div class="full-height">
     {#if segment !== 'login'}
         <Nav {segment}/>
     {/if}

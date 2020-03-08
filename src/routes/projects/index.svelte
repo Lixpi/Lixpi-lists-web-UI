@@ -10,6 +10,8 @@
 </script>
 
 <script>
+	import { fade } from 'svelte/transition';
+
 	export let projects;
 </script>
 
@@ -26,7 +28,7 @@
 
 <!-- <h1>Recent projects</h1> -->
 
-<div class="projects-listing pt-4">
+<div class="projects-listing pt-4" in:fade="{{ duration: 250 }}">
 	{#each projects as project}
 		<!-- we're using the non-standard `rel=prefetch` attribute to
 				tell Sapper to load the data for the page as soon as
