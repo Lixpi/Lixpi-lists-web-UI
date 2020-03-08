@@ -1,3 +1,6 @@
+<script context="module">
+</script>
+
 <script>
 	import Nav from '../components/top-navbar/Nav.svelte';
 
@@ -9,15 +12,12 @@
     @import '../sass/styles.scss';
 </style>
 
-
-
-
- <div class="container full-height">
+<div class="container full-height">
     {#if segment !== 'login'}
         <Nav {segment}/>
     {/if}
 
-	<main>
-		<slot></slot>
-	</main>
+    <main>
+        <slot></slot>
+    </main>
 </div>
