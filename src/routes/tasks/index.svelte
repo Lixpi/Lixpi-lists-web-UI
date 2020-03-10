@@ -1,6 +1,6 @@
 <script context="module">
 	export async function preload({ params, query }) {
-		const response = await this.fetch("http://localhost:3001/testauth", {
+		const response = await this.fetch("http://localhost:3001/tasks", {
 		    method: 'GET',
 		    headers: {
 		        'Accept': 'application/json',
@@ -13,14 +13,13 @@
 	     	return this.redirect(302, 'login');
 	    }
 
-		return this.fetch(`tasks.json`).then(r => r.json()).then(tasks => {
-			return { tasks };
-		});
+	    return await response.json();
 	}
 </script>
 
 <script>
 	import { fade } from 'svelte/transition';
+	import mapPriorityToColor from '../../helpers/_mapColorToTaskProperty.js';
 
 	import TaskRow from '../../components/rows/TaskRow.svelte';
 	import NewTaskRow from '../../components/rows/NewTaskRow.svelte';
@@ -30,7 +29,7 @@
 </script>
 
 <style lang="scss">
-	.taksks-listing {
+	.tasks-listing {
 		max-width: 900px;
 		margin: auto;
 	}
@@ -40,14 +39,15 @@
 	<title>Tasks</title>
 </svelte:head>
 
-<div class="taksks-listing pt-4" in:fade="{{ duration: 250 }}">
+<div class="tasks-listing pt-4" in:fade="{{ duration: 250 }}">
 	{#each tasks as task}
 		<!-- we're using the non-standard `rel=prefetch` attribute to
 				tell Sapper to load the data for the page as soon as
 				the user hovers over the link or taps it, instead of
 				waiting for the 'click' event -->
 		<!-- <li><a rel='prefetch' href='tasks/{task.slug}'>{task.title}</a></li> -->
-		<TaskRow colorCode={task.colorCode} taskType={task.taskType} title={task.title} taskKey={task.taskKey}  />
+		<!-- <TaskRow colorCode={task.colorCode} taskType={task.taskType} title={task.title} taskKey={task.taskKey}  /> -->
+		<TaskRow colorCode={mapPriorityToColor(task.priority)} taskType={task.type} title={task.title} taskKey={task.key} dueAt={task.dueAt}  />
 	{/each}
 	<NewTaskRow />
 </div>
