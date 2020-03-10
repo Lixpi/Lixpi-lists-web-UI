@@ -1,9 +1,8 @@
 <script context="module">
+    import Nav from '../components/top-navbar/Nav.svelte';
 </script>
 
 <script>
-	import Nav from '../components/top-navbar/Nav.svelte';
-
 	export let segment;
 </script>
 

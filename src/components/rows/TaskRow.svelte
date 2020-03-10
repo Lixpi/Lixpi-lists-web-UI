@@ -1,10 +1,11 @@
-<script>
+<script context="module">
     import moment from 'moment'
     import ColorCodedRow from './ColorCodedRow.svelte'
     import config from '../../config.js'
+</script>
 
+<script>
     const { dateFormat } = config
-
     export let colorCode
     export let title
     export let taskKey
