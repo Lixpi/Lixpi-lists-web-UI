@@ -35,7 +35,7 @@
 				the user hovers over the link or taps it, instead of
 				waiting for the 'click' event -->
 		<!-- <li><a rel='prefetch' href='projects/{project.slug}'>{project.title}</a></li> -->
-		<ProjectRow colorCode={project.colorCode} title={project.title}  />
+		<ProjectRow colorCode={project.colorCode} classNames="project-row-wrapper" title={project.title}  />
 	{/each}
 	<!-- <NewProjectRow /> -->
 </div>

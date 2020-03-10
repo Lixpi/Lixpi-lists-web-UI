@@ -9,6 +9,7 @@
     export let title
     export let taskKey
     export let dueAt
+    // export let assignees
 </script>
 
 <style lang="scss">
@@ -19,20 +20,26 @@
         margin-bottom: .4em;
         font-size: 1.1em;
         cursor: pointer;
-        &:before {
+        /*&:before {
+            // TODO refactor this ugly hack when JS variables in styles will be ready
+            // https://github.com/sveltejs/svelte/issues/758
             width: $task-color-coded-row-border-size;
-        }
-
+        }*/
         a {
             text-decoration: none;
-            color: #000;
+            color: $secondary-text-color;
         }
-        span.task-title, a.task-key, input {
+        a.task-key {
+            font-size: .9em;
+        }
+        span.task-title, input {
             font-size: 1em;
+            /*color: #5d5d5d;*/
+            color: $main-text-color;
         }
         .task-status {
             font-size: 1.1em;
-            color: #8a8a8a;
+            color: $secondary-text-color;
             /*color: $code-green;*/
             &:hover {
                 color: $code-green;
@@ -46,9 +53,11 @@
         }
         span.icon-hash {
             color: $light-grey;
-            margin: 0 .13em 0 .3em;
+            margin: 0 .03em 0 .1em;
             &:before {
                 margin: 0;
+                font-size: .6em;
+                vertical-align: .09em;
             }
         }
         h4.project-name {
@@ -93,8 +102,7 @@
     }
 </style>
 
-
-<ColorCodedRow colorCode={colorCode}>
+<ColorCodedRow colorCode={colorCode} classNames="task-row-wrapper">
     <div class="row no-gutters align-items-center task-row">
         <div class="col-sm-auto task-status">
             <span class="icon-ok-circle"></span>
@@ -125,7 +133,7 @@
                 </div>
                 <div class="col-sm-auto">
                     <!-- <TaskAssignee isEditing={this.props.isEditing} selectedOption={selectedOption} handleChange={this.handleChange} /> -->
-                    <span class="task-assignee">Kate Wilson</span>
+                    <span class="task-assignee">Kate</span>
                 </div>
             </div>
         </div>
