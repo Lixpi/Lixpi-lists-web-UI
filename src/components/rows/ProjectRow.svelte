@@ -46,7 +46,7 @@
 </style>
 
 
-<ColorCodedRow colorCode={colorCode} classNames="no-hover mb-3">
+<ColorCodedRow colorCode={colorCode} classNames="no-hover mb-3 project-row-wrapper">
     <div class="row no-gutters align-items-center project-row mb-2">
         <div class="col">
             <div class="row no-gutters align-items-center">
