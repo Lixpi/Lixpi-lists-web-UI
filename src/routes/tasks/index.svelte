@@ -13,7 +13,8 @@
 	     	return this.redirect(302, 'login');
 	    }
 
-	    return await response.json();
+	    const tasks = await response.json();
+	    return { tasks };
 	}
 </script>
 
@@ -23,7 +24,6 @@
 
 	import TaskRow from '../../components/rows/TaskRow.svelte';
 	import NewTaskRow from '../../components/rows/NewTaskRow.svelte';
-
 
 	export let tasks;
 </script>
@@ -47,7 +47,7 @@
 				waiting for the 'click' event -->
 		<!-- <li><a rel='prefetch' href='tasks/{task.slug}'>{task.title}</a></li> -->
 		<!-- <TaskRow colorCode={task.colorCode} taskType={task.taskType} title={task.title} taskKey={task.taskKey}  /> -->
-		<TaskRow colorCode={mapPriorityToColor(task.priority)} taskType={task.type} title={task.title} taskKey={task.key} dueAt={task.dueAt}  />
+		<TaskRow colorCode={mapPriorityToColor(task.priority)} taskType={task.type} title={task.title} taskKey={task.key} dueAt={task.dueAt} assignees={task.assignees} />
 	{/each}
 	<NewTaskRow />
 </div>
