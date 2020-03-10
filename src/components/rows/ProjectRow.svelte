@@ -1,50 +1,44 @@
 <script>
     import ColorCodedRow from './ColorCodedRow.svelte';
-
-    // export let segment;
-
     export let colorCode;
-    // export let taskType;
-    // export let title;
 </script>
 
 <style lang="scss">
-@import "../../sass/_variables";
-@import "../../sass/_helpers";
+    @import "../../sass/_variables";
+    @import "../../sass/_helpers";
 
-.project-row {
-    padding: 10px 7px 10px $project-color-coded-row-border-size + 7px;
-    .project-logo {
-        img {
-            width: 30px;
+    .project-row {
+        padding: 10px 7px 10px $project-color-coded-row-border-size + 7px;
+        .project-logo {
+            img {
+                width: 30px;
+            }
+            span {
+                display: block;
+                border: 2px solid $dark-asphalt;
+                color: $dark-asphalt-wet;
+                width: 30px;
+                height: 30px;
+                text-align: center;
+                border-radius: 999px;
+                font-size: 1.2em;
+                line-height: 1.3em;
+                font-weight: 700;
+                vertical-align: middle;
+                @extend .noselect;
+            }
         }
-        span {
-            display: block;
-            border: 2px solid $dark-asphalt;
-            color: $dark-asphalt-wet;
-            width: 30px;
-            height: 30px;
-            text-align: center;
-            border-radius: 999px;
-            font-size: 1.2em;
-            line-height: 1.3em;
-            font-weight: 700;
-            vertical-align: middle;
-            @extend .noselect;
+        h4.project-name {
+            font-weight: 600;
+        }
+        p {
+            margin-bottom: .4em;
+            &:last-of-type {
+                margin-bottom: 0;
+            }
         }
     }
-    h4.project-name {
-        font-weight: 600;
-    }
-    p {
-        margin-bottom: .4em;
-        &:last-of-type {
-            margin-bottom: 0;
-        }
-    }
-}
 </style>
-
 
 <ColorCodedRow colorCode={colorCode} classNames="no-hover mb-3 project-row-wrapper">
     <div class="row no-gutters align-items-center project-row mb-2">
@@ -76,5 +70,4 @@
             <p><span class="icon-attention"/>3: issues requires your attention</p>
         </div>
     </div>
-
 </ColorCodedRow>

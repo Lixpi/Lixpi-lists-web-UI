@@ -2,30 +2,35 @@
 	import TaskDetails from '../../components/task-details/TaskDetails.svelte';
 
 	export async function preload({ params, query }) {
-		// the `taskKey` parameter is available because
-		// this file is called [taskKey].svelte
-		const res = await this.fetch(`tasks/${params.taskKey}.json`);
-		const data = await res.json();
+		const { taskKey } = params
+		const response = await this.fetch(`http://localhost:3001/task/${taskKey}`, {
+		    method: 'GET',
+		    headers: {
+		        'Accept': 'application/json',
+		        'Content-Type': 'application/json'
+		    },
+		    credentials: 'include'
+		});
 
-		if (res.status === 200) {
-			return { task: data };
-		} else {
-			this.error(res.status, data.message);
-		}
+	    if (response.status === 401) {
+	     	return this.redirect(302, 'login');
+	    }
+
+	    const task = await response.json();
+	    return { task };
 	}
 </script>
 
 <script>
-	export let task;
+	export let task
 </script>
 
 <style lang="scss">
-// @import "../../sass/_variables";
-
+	// @import "../../sass/_variables";
 </style>
 
 <svelte:head>
-	<title>{task.taskKey} # {task.title}</title>
+	<title>{task.key} # {task.title}</title>
 </svelte:head>
 
 <TaskDetails task={task} classNames="pt-4" />

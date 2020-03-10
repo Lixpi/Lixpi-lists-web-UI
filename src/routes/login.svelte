@@ -1,10 +1,11 @@
 <script context="module">
+	import * as sapper from '@sapper/app';
+ 	import { fade, fly } from 'svelte/transition';
 	// https://stackoverflow.com/questions/57853539/fetch-content-from-wordpress-api-in-sapper
 </script>
 
 <script>
- 	import * as sapper from '@sapper/app';
- 	import { fade, fly } from 'svelte/transition';
+
 
 	export let data;
 	async function handleSubmit(event) {

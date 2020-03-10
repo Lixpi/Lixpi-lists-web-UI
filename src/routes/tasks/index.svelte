@@ -1,4 +1,9 @@
 <script context="module">
+	import { fade } from 'svelte/transition';
+	import mapPriorityToColor from '../../helpers/_mapColorToTaskProperty.js';
+	import TaskRow from '../../components/rows/TaskRow.svelte';
+	import NewTaskRow from '../../components/rows/NewTaskRow.svelte';
+
 	export async function preload({ params, query }) {
 		const response = await this.fetch("http://localhost:3001/tasks", {
 		    method: 'GET',
@@ -19,12 +24,6 @@
 </script>
 
 <script>
-	import { fade } from 'svelte/transition';
-	import mapPriorityToColor from '../../helpers/_mapColorToTaskProperty.js';
-
-	import TaskRow from '../../components/rows/TaskRow.svelte';
-	import NewTaskRow from '../../components/rows/NewTaskRow.svelte';
-
 	export let tasks;
 </script>
 
