@@ -9,6 +9,7 @@
     .task-row {
         padding: 5px 7px 5px $task-color-coded-row-border-size + 2px;
         margin-bottom: .4em;
+        margin-top: .4em;
         font-size: 1.1em;
         cursor: pointer;
         /*&:before {

@@ -10,7 +10,7 @@
     export let title
     export let taskKey
     export let dueAt
-    // export let assignees
+    export let assignees
 </script>
 
 <style lang="scss">
@@ -18,7 +18,7 @@
 
     .task-row {
         padding: 5px 7px 5px $task-color-coded-row-border-size + 2px;
-        margin-bottom: .4em;
+        margin-bottom: .1em;
         font-size: 1.1em;
         cursor: pointer;
         /*&:before {
@@ -129,13 +129,25 @@
                         onChange={this.handleSelect}
                     /> -->
                 </div>
-                <div class="col-sm-auto task-assignee-avatar">
-                    <img class="avatar" src="system-images/avatar.jpg" alt="Kate" />
-                </div>
-                <div class="col-sm-auto">
-                    <!-- <TaskAssignee isEditing={this.props.isEditing} selectedOption={selectedOption} handleChange={this.handleChange} /> -->
-                    <span class="task-assignee">Kate</span>
-                </div>
+                {(console.log(assignees), '')}
+                {#each assignees as assignee}
+                {(console.log(assignee.username), '')}
+            		<!-- we're using the non-standard `rel=prefetch` attribute to
+            				tell Sapper to load the data for the page as soon as
+            				the user hovers over the link or taps it, instead of
+            				waiting for the 'click' event -->
+            		<!-- <li><a rel='prefetch' href='tasks/{task.slug}'>{task.title}</a></li> -->
+            		<!-- <TaskRow colorCode={task.colorCode} taskType={task.taskType} title={task.title} taskKey={task.taskKey}  /> -->
+                    <div class="col-sm-auto task-assignee-avatar">
+                        <img class="avatar" src="system-images/avatar.jpg" alt="Kate" />
+                    </div>
+                    <div class="col-sm-auto">
+
+                        <!-- <TaskAssignee isEditing={this.props.isEditing} selectedOption={selectedOption} handleChange={this.handleChange} /> -->
+                        <span class="task-assignee"></span>
+                    </div>
+            	{/each}
+
             </div>
         </div>
     </div>

@@ -8,10 +8,9 @@
 
 .color-coded-row {
     background: #fff;
-    /*-webkit-box-shadow: 0 0 7px 0 rgba(0,0,0,.02);
-    box-shadow: 0 0 7px 0 rgba(0,0,0,.02);*/
-    -webkit-box-shadow: 0px 2px 1px 0 rgba(0,0,0,.09);
-    box-shadow: 0px 2px 1px 0 rgba(0,0,0,.09);   // TODO version with no BG and shadow as a divider
+    -webkit-box-shadow: 0 0 7px 0 rgba(0,0,0,.02);
+    box-shadow: 0 0 7px 0 rgba(0,0,0,.02);
+    /*box-shadow: 0px 2px 1px 0 rgba(0,0,0,.09);*/   // TODO version with no BG and shadow as a divider
     position: relative;
     padding-left: $color-coded-row-border-size;
     &:before {

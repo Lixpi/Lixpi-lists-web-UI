@@ -1,16 +1,16 @@
 <script context="module">
-	import * as sapper from '@sapper/app';
- 	import { fade, fly } from 'svelte/transition';
+	// import * as sapper from '@sapper/app'
+ 	import { fade, fly } from 'svelte/transition'
 	// https://stackoverflow.com/questions/57853539/fetch-content-from-wordpress-api-in-sapper
 </script>
 
 <script>
 
-
+	//
 	export let data;
 	async function handleSubmit(event) {
         // Call an authenication microservice to handle the authentication.
-        const response = await fetch("http://localhost:3001/login", {
+        const response = await fetch("http://localhost:3005/login", {
 		    method: 'POST',
 		    headers: {
 		        'Accept': 'application/json',
@@ -20,14 +20,41 @@
 		    body: JSON.stringify({username: event.target.username.value, password: event.target.password.value})
 		})
 
-		data = await response.json();
+		data = await response.json()
 	    if (response.status === 200) {
-	     	sapper.goto(`/tasks`);
+	     	// sapper.goto(`/tasks`)
+			alert('Say high!')
 	    }
 
 	    return { data };
     }
 </script>
+
+<svelte:head>
+	<title>Security first!</title>
+</svelte:head>
+
+
+<div class="full-height" id="login-page-container" in:fade="{{ duration: 700 }}" out:fade="{{ duration: 1250 }}">
+	<div class="row full-height " id="logo-container" in:fly="{{ y: -1000, duration: 700 }}" out:fly="{{ y: -1000, duration: 1100 }}">
+		<div class="col align-self-center d-flex flex-column">
+			<img src="logo-512.png" alt="Lixpi Lists" />
+		</div>
+	</div>
+	<div class="row full-height " id="login-form-container" in:fly="{{ y: 1000, duration: 700 }}" out:fly="{{ y: 1000, duration: 1100 }}">
+		<form class="store-selector  d-flex flex-column" on:submit|preventDefault="{handleSubmit}" >
+			<h2>Who are you?</h2>
+			<input id="username" class="{(data && data.error) && 'has-error'}" type="text" required placeholder="Username" defaultValue="jira-admin" />
+			<input id="password" class="{(data && data.error) && 'has-error'}" type="password" required placeholder="Password" defaultValue="asdf" />
+			{#if data && data.error}
+				<span>{data.error.message}</span>
+			{/if}
+			<div class=" d-flex justify-content-end">
+				<button class="" type="submit">Go</button>
+			</div>
+		</form>
+	</div>
+</div>
 
 
 <style lang="scss">
@@ -123,29 +150,3 @@
 		}
 	}
 </style>
-
-
-<svelte:head>
-	<title>Security first!</title>
-</svelte:head>
-
-<div class="full-height" id="login-page-container" in:fade="{{ duration: 700 }}" out:fade="{{ duration: 1250 }}">
-	<div class="row full-height " id="logo-container" in:fly="{{ y: -1000, duration: 700 }}" out:fly="{{ y: -1000, duration: 1100 }}">
-		<div class="col align-self-center d-flex flex-column">
-			<img src="logo-512.png" alt="Lixpi Lists" />
-		</div>
-	</div>
-	<div class="row full-height " id="login-form-container" in:fly="{{ y: 1000, duration: 700 }}" out:fly="{{ y: 1000, duration: 1100 }}">
-		<form class="store-selector  d-flex flex-column" on:submit|preventDefault="{handleSubmit}" >
-			<h2>Who are you?</h2>
-			<input id="username" class="{(data && data.error) && 'has-error'}" type="text" required placeholder="Username" defaultValue="jira-admin" />
-			<input id="password" class="{(data && data.error) && 'has-error'}" type="password" required placeholder="Password" defaultValue="asdf" />
-			{#if data && data.error}
-				<span>{data.error.message}</span>
-			{/if}
-			<div class=" d-flex justify-content-end">
-				<button class="" type="submit">Go</button>
-			</div>
-		</form>
-	</div>
-</div>

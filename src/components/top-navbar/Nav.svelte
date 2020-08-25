@@ -12,6 +12,7 @@
     nav {
         background: #42494f;
         height: 65px;
+        min-height: 65px;
         /*position: fixed;*/
         flex-grow: 0;
         margin: 0;
