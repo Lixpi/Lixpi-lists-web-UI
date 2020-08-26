@@ -1,9 +1,61 @@
 <script>
+    import { Navigate } from 'svelte-router-spa'
     import ToggleSwitch from './ToggleSwitch.svelte';
     import { fly } from 'svelte/transition';
 
 	export let segment;
 </script>
+
+<nav class="row align-items-center" transition:fly="{{ y: -100, duration: 700 }}">
+    <div class="col-auto">
+        <img class="logo noselect" src="/system-images/logo.png" alt="Lixpi Lists" />
+    </div>
+    <div class="col-auto">
+        <span class="mr-4">Feed</span>
+    </div>
+
+    <div class="col-auto">
+        <Navigate to="projects"><span>Projects</span></Navigate>
+    </div>
+
+    <div class="col-auto">
+        <Navigate to="tasks" styles="active"><span>Tasks</span></Navigate>
+    </div>
+
+    <div class="col-auto">
+        <div class="create-new-wrapper">
+            <button class="create-new mr-1">Create</button>
+            <ul>
+                <li>Task</li>
+                <li>List</li>
+                <li>Project</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="navbar-search-wrapper">
+            <input type="text" class="navbar-search" placeholder="Search"/>
+        </div>
+    </div>
+    <div class="col-auto">
+       <ToggleSwitch />
+    </div>
+    <div class="col col-lg-2 d-flex justify-content-end">
+        <a href='logout' rel=prefetch><span>Logout</span></a>
+    </div>
+
+    <div class="col-auto d-flex justify-content-end">
+    <!-- <div class="col col-lg-2 d-flex justify-content-end"> -->
+        <div class="user-menu">
+            <img class="avatar noselect" src="/system-images/avatar.jpg" alt="Kate" />
+        </div>
+    </div>
+    <!-- <div class="col align-self-center d-flex flex-column" >
+    asdf
+        <img src="images/logo.png" alt="Lixpi Lists" />
+    </div> -->
+</nav>
 
 <style lang="scss">
     @import "../../sass/_variables";
@@ -19,10 +71,10 @@
         z-index: 999;
         width: 100%;
         top: 0;
-        &, a {
+        &, :global(a) {
             color: #fff;
         }
-        a {
+        :global(a) {
             text-decoration: none;
             font-weight: 400;
             &.selected {
@@ -163,54 +215,3 @@
         }
     }
 </style>
-
-<nav class="row align-items-center" transition:fly="{{ y: -100, duration: 700 }}">
-    <div class="col-auto">
-        <img class="logo noselect" src="system-images/logo.png" alt="Lixpi Lists" />
-    </div>
-    <div class="col-auto">
-        <span class="mr-4">Feed</span>
-    </div>
-
-    <div class="col-auto">
-        <a class="{segment === 'projects' ? 'selected' : ''}" href='projects' rel=prefetch><span>Projscts</span></a>
-    </div>
-
-    <div class="col-auto">
-        <a class="{segment === 'tasks' ? 'selected' : ''}" href='tasks' rel=prefetch><span>Tasks</span></a>
-    </div>
-
-    <div class="col-auto">
-        <div class="create-new-wrapper">
-            <button class="create-new mr-1">Create</button>
-            <ul>
-                <li>Task</li>
-                <li>List</li>
-                <li>Project</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="navbar-search-wrapper">
-            <input type="text" class="navbar-search" placeholder="Search"/>
-        </div>
-    </div>
-    <div class="col-auto">
-       <ToggleSwitch />
-    </div>
-    <div class="col col-lg-2 d-flex justify-content-end">
-        <a href='logout' rel=prefetch><span>Logout</span></a>
-    </div>
-
-    <div class="col-auto d-flex justify-content-end">
-    <!-- <div class="col col-lg-2 d-flex justify-content-end"> -->
-        <div class="user-menu">
-            <img class="avatar noselect" src="system-images/avatar.jpg" alt="Kate" />
-        </div>
-    </div>
-    <!-- <div class="col align-self-center d-flex flex-column" >
-    asdf
-        <img src="images/logo.png" alt="Lixpi Lists" />
-    </div> -->
-</nav>

@@ -1,4 +1,5 @@
 <script context="module">
+    import { Navigate } from 'svelte-router-spa'
     import moment from 'moment'
     import ColorCodedRow from './ColorCodedRow.svelte'
     import config from '../../config.js'
@@ -13,6 +14,49 @@
     export let assignees
 </script>
 
+<ColorCodedRow colorCode={colorCode} classNames="task-row-wrapper">
+    <div class="row no-gutters align-items-center task-row">
+        <div class="col-sm-auto task-status">
+            <span class="icon-ok-circle"></span>
+        </div>
+        <div class="col-sm-auto">
+            <span class="icon-hash"></span>
+        </div>
+        <div class="col-auto">
+            <Navigate to="task/{taskKey}" styles="task-key"><span>{taskKey}</span></Navigate>
+            <!-- <a rel='prefetch' href='task/{taskKey}' class="task-key"><span>{taskKey}</span></a> -->
+        </div>
+        <div class="col-sm-auto">
+            <span class="vertical-divider"></span>
+        </div>
+        <div class="col-sm-auto">
+            <span class="task-title">{title}</span>
+        </div>
+        <div class="col">
+            <div class="row no-gutters align-items-center d-flex justify-content-end">
+                <div class="col-sm-auto datepicker-container">
+                    <span class="task-due">{moment(dueAt).format(dateFormat)}</span>
+                     <!-- <Calendar
+                        date={new Date()}
+                        onChange={this.handleSelect}
+                    /> -->
+                </div>
+                {#each assignees as assignee}
+                    <div class="col-sm-auto task-assignee-avatar">
+                        <img class="avatar" src="/system-images/avatar.jpg" alt="Kate" />
+                    </div>
+                    <div class="col-sm-auto">
+                        <!-- <TaskAssignee isEditing={this.props.isEditing} selectedOption={selectedOption} handleChange={this.handleChange} /> -->
+                        <span class="task-assignee">{assignee.username}</span>
+                    </div>
+            	{/each}
+
+            </div>
+        </div>
+    </div>
+</ColorCodedRow>
+
+
 <style lang="scss">
     @import "../../sass/_variables";
 
@@ -26,11 +70,11 @@
             // https://github.com/sveltejs/svelte/issues/758
             width: $task-color-coded-row-border-size;
         }*/
-        a {
+        :global(a) {
             text-decoration: none;
             color: $secondary-text-color;
         }
-        a.task-key {
+        :global(a.task-key) {
             font-size: .9em;
         }
         span.task-title, input {
@@ -102,53 +146,3 @@
         }
     }
 </style>
-
-<ColorCodedRow colorCode={colorCode} classNames="task-row-wrapper">
-    <div class="row no-gutters align-items-center task-row">
-        <div class="col-sm-auto task-status">
-            <span class="icon-ok-circle"></span>
-        </div>
-        <div class="col-sm-auto">
-            <span class="icon-hash"></span>
-        </div>
-        <div class="col-auto">
-            <a rel='prefetch' href='tasks/{taskKey}' class="task-key"><span>{taskKey}</span></a>
-        </div>
-        <div class="col-sm-auto">
-            <span class="vertical-divider"></span>
-        </div>
-        <div class="col-sm-auto">
-            <span class="task-title">{title}</span>
-        </div>
-        <div class="col">
-            <div class="row no-gutters align-items-center d-flex justify-content-end">
-                <div class="col-sm-auto datepicker-container">
-                    <span class="task-due">{moment(dueAt).format(dateFormat)}</span>
-                     <!-- <Calendar
-                        date={new Date()}
-                        onChange={this.handleSelect}
-                    /> -->
-                </div>
-                {(console.log(assignees), '')}
-                {#each assignees as assignee}
-                {(console.log(assignee.username), '')}
-            		<!-- we're using the non-standard `rel=prefetch` attribute to
-            				tell Sapper to load the data for the page as soon as
-            				the user hovers over the link or taps it, instead of
-            				waiting for the 'click' event -->
-            		<!-- <li><a rel='prefetch' href='tasks/{task.slug}'>{task.title}</a></li> -->
-            		<!-- <TaskRow colorCode={task.colorCode} taskType={task.taskType} title={task.title} taskKey={task.taskKey}  /> -->
-                    <div class="col-sm-auto task-assignee-avatar">
-                        <img class="avatar" src="system-images/avatar.jpg" alt="Kate" />
-                    </div>
-                    <div class="col-sm-auto">
-
-                        <!-- <TaskAssignee isEditing={this.props.isEditing} selectedOption={selectedOption} handleChange={this.handleChange} /> -->
-                        <span class="task-assignee"></span>
-                    </div>
-            	{/each}
-
-            </div>
-        </div>
-    </div>
-</ColorCodedRow>

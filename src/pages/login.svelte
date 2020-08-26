@@ -1,12 +1,9 @@
-<script context="module">
-	// import * as sapper from '@sapper/app'
- 	import { fade, fly } from 'svelte/transition'
-	// https://stackoverflow.com/questions/57853539/fetch-content-from-wordpress-api-in-sapper
-</script>
+<!-- // https://stackoverflow.com/questions/57853539/fetch-content-from-wordpress-api-in-sapper -->
 
 <script>
+    import { fade, fly } from 'svelte/transition'
+    import { navigateTo } from 'svelte-router-spa'
 
-	//
 	export let data;
 	async function handleSubmit(event) {
         // Call an authenication microservice to handle the authentication.
@@ -21,9 +18,10 @@
 		})
 
 		data = await response.json()
+        console.log('data')
+        console.log(data)
 	    if (response.status === 200) {
-	     	// sapper.goto(`/tasks`)
-			alert('Say high!')
+			navigateTo('tasks')
 	    }
 
 	    return { data };

@@ -9,14 +9,12 @@
 </script>
 
 <style global lang="scss">
-    :global{
-        @import '../../../node_modules/bootstrap-4-grid/scss/grid.scss';
-        @import '../../sass/styles.scss';
-    }
+    @import '../../../node_modules/bootstrap-4-grid/scss/grid.scss';
+    @import '../../sass/styles.scss';
 </style>
 
 <div class="full-height">
-    {#if segment !== 'login'}
+    {#if !currentRoute.path.includes('login')}
         <Nav {segment}/>
     {/if}
 
