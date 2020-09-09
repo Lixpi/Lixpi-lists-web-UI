@@ -7,6 +7,7 @@ import Logout from './pages/logout.svelte'
 import Tasks from './pages/tasks/tasks.svelte'
 import Task from './pages/tasks/task.svelte'
 import Projects from './pages/projects/projects.svelte'
+import NotFound from './pages/404.svelte'
 
 // import AdminLayout from './views/admin/layout.svelte'
 // import AdminIndex from './views/admin/index.svelte'
@@ -40,6 +41,7 @@ const routes = [
   },
   { name: 'task/:key', component: Task, layout: Layout },
   { name: 'projects', component: Projects, layout: Layout },
+  { name: '404', path: '404', component: NotFound }
   // {
   //   name: 'admin',
   //   component: AdminLayout,
