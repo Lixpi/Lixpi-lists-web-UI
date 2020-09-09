@@ -1,11 +1,16 @@
 <script>
-    import { fade } from 'svelte/transition'
-    import { navigateTo } from 'svelte-router-spa'
+	import { Route } from 'svelte-router-spa'
+  import { fade } from 'svelte/transition'
+  import { navigateTo } from 'svelte-router-spa'
+  import ProjectRow from '../../components/rows/ProjectRow.svelte';
 
-	import ProjectRow from '../../components/rows/ProjectRow.svelte';
-	// export let currentRoute
+	export let currentRoute
+	export let handleTaskRowClick
+	export let hasExpandedTaskDetails
 
-	const preload = (async () => {
+	let projects = []
+
+	const fetchProjects = async () => {
 		const response = await fetch("http://localhost:3005/projects", {
 			method: 'GET',
 			headers: {
@@ -13,16 +18,17 @@
 				'Content-Type': 'application/json'
 			},
 			credentials: 'include'
-		});
+		})
 
 		if (response.status === 401) {
-			return this.redirect(302, 'login');
+			return this.redirect(302, 'login')
 		}
 
-		return await response.json();
-	})()
-</script>
+		projects = await response.json()
+	}
+	$: currentRoute && fetchProjects()
 
+</script>
 
 <style lang="scss">
 	.projects-listing {
@@ -35,18 +41,10 @@
 	<title>Projects</title>
 </svelte:head>
 
-<!-- <h1>Recent projects</h1> -->
-
 <div class="projects-listing pt-4" in:fade="{{ duration: 250 }}">
-	{#await preload}
-		<p>...spinner will be here one day...</p>
-	{:then projects}
-		{#each projects as project}
-			<ProjectRow colorCode={project.colorCode} classNames="project-row-wrapper" title={project.title}  />
-		{/each}
-	{:catch error}
-		{console.log(error)}
-		<p>An error occurred!</p>
-	{/await}
+
+	{#each projects as project}
+		<ProjectRow colorCode={project.colorCode} classNames="project-row-wrapper" title={project.title}  />
+	{/each}
 
 </div>

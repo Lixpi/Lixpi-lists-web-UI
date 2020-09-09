@@ -10,7 +10,7 @@
 <div class="full-height" id="login-page-container" in:fade="{{ duration: 700 }}" out:fade="{{ duration: 1250 }}">
 	<div class="row full-height " id="logo-container" in:fly="{{ y: -1000, duration: 700 }}" out:fly="{{ y: -1000, duration: 1100 }}">
 		<div class="col align-self-center d-flex flex-column">
-			<img src="logo-512.png" alt="Lixpi Lists" />
+			<img src="/logo-512.png" alt="Lixpi Lists" />
 		</div>
 	</div>
 	<div class="row full-height " id="not-found-container" in:fly="{{ y: 1000, duration: 700 }}" out:fly="{{ y: 1000, duration: 1100 }}">

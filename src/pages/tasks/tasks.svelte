@@ -1,7 +1,7 @@
 <script>
 	import { Route } from 'svelte-router-spa'
   import { fade } from 'svelte/transition'
-  import { Navigate, navigateTo } from 'svelte-router-spa'
+  import { navigateTo } from 'svelte-router-spa'
 	import mapPriorityToColor from '../../helpers/_mapColorToTaskProperty.js'
 	import TaskRow from '../../components/rows/TaskRow.svelte'
 	import NewTaskRow from '../../components/rows/NewTaskRow.svelte'
