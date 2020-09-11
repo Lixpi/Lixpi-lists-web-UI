@@ -35,22 +35,25 @@
         <div class="col">
             <div class="row no-gutters align-items-center d-flex justify-content-end">
                 <div class="col-sm-auto datepicker-container">
-                    <span class="task-due">{moment(dueAt).format(dateFormat)}</span>
+                {#if dueAt}
+                  <span class="task-due">{moment(dueAt).format(dateFormat)}</span>
+                {/if}
                      <!-- <Calendar
                         date={new Date()}
                         onChange={this.handleSelect}
                     /> -->
                 </div>
-                {#each assignees as assignee}
-                    <div class="col-sm-auto task-assignee-avatar">
-                        <img class="avatar" src="/system-images/avatar.jpg" alt="Kate" />
-                    </div>
-                    <div class="col-sm-auto">
-                        <!-- <TaskAssignee isEditing={this.props.isEditing} selectedOption={selectedOption} handleChange={this.handleChange} /> -->
-                        <span class="task-assignee">{assignee.username}</span>
-                    </div>
-            	{/each}
-
+                {#if assignees && assignees.length}
+                  {#each assignees as assignee}
+                      <div class="col-sm-auto task-assignee-avatar">
+                          <img class="avatar" src="/system-images/avatar.jpg" alt="Kate" />
+                      </div>
+                      <div class="col-sm-auto">
+                          <!-- <TaskAssignee isEditing={this.props.isEditing} selectedOption={selectedOption} handleChange={this.handleChange} /> -->
+                          <span class="task-assignee">{assignee.username}</span>
+                      </div>
+              	{/each}
+              {/if}
             </div>
         </div>
     </div>

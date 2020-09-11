@@ -31,12 +31,40 @@
 	$: currentRoute && fetchTasks()
 	$: hasExpandedTaskDetails = currentRoute.path.includes('show')
 
+	const createNewTask = async (newTaskdata) => {
+		newTaskdata = {
+			projectId: 1,
+			...newTaskdata
+		}
+		const response = await fetch("http://localhost:3005/tasks", {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include',
+			body: JSON.stringify(newTaskdata)
+		})
+
+		if (response.status === 401) {
+			return this.redirect(302, 'login')
+		}
+
+		const task = await response.json()
+		$: tasks = [...tasks, task]
+	}
+
 	const params = {}
 
 	handleTaskRowClick = key => {
 		navigateTo(`tasks/show/${key}`)
 		hasExpandedTaskDetails = true
 	}
+
+	const handleCreateNewTask = title => {
+		createNewTask({title})
+	}
+
 </script>
 
 <svelte:head>
@@ -61,7 +89,7 @@
 					</div>
 				{/each}
 
-			<NewTaskRow />
+			<NewTaskRow createNewTask={handleCreateNewTask} />
 		</div>
 
 		{#if currentRoute.path.includes('show')}
