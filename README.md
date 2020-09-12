@@ -2,7 +2,9 @@
 
 svelte-router    https://github.com/jorgegorka/svelte-router
 
-svelte-calendar  https://github.com/6eDesign/svelte-calendar#readme
+svelte-select    https://github.com/rob-balfre/svelte-select
+
+svelte-calendar  https://github.com/6eDesign/svelte-calendar
 
 moment.js
 
