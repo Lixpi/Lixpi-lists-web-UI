@@ -1,16 +1,16 @@
 
 // CONST Types = {
-//     "red": "Bug",
-//     "yellow": "Improvement",
-//     "green": "Research",
-//     "grey": ""
+//     'red': 'Bug',
+//     'yellow': 'Improvement',
+//     'green': 'Research',
+//     'grey': '
 // }
 
 const PRIORITIES = {
-    "Critical": "red",
-    "High": "yellow",
-    "Normal": "green",
-    "Low": "grey"
+    'critical': 'red',
+    'high': 'yellow',
+    'regular': 'green',
+    'low': 'grey'
 }
 
 const mapPriorityToColor = priority => {
