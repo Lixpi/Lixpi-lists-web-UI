@@ -1,13 +1,14 @@
 <script>
 	import { Route } from 'svelte-router-spa'
-  import { fade } from 'svelte/transition'
-  import { navigateTo } from 'svelte-router-spa'
+	import { fade } from 'svelte/transition'
+	import { navigateTo } from 'svelte-router-spa'
 	import mapPriorityToColor from '../../helpers/_mapColorToTaskProperty.js'
 	import TaskRow from '../../components/rows/TaskRow.svelte'
 	import NewTaskRow from '../../components/rows/NewTaskRow.svelte'
 
+	import { taskData } from '../../stores/taskData.js'
+
 	export let currentRoute
-	export let handleTaskRowClick
 	export let hasExpandedTaskDetails
 
 	let tasks = []
@@ -29,7 +30,7 @@
 		tasks = await response.json()
 	}
 	$: currentRoute && fetchTasks()
-	$: hasExpandedTaskDetails = currentRoute.path.includes('show')
+	$: hasExpandedTaskDetails = currentRoute.path.includes('show') || currentRoute.path.includes('create')
 
 	const createNewTask = async (newTaskdata) => {
 		newTaskdata = {
@@ -51,18 +52,24 @@
 		}
 
 		const task = await response.json()
+
+		taskData.set(task)
 		$: tasks = [...tasks, task]
 	}
 
-	const params = {}
+	const params = {
+		createNewTask
+	}
 
-	handleTaskRowClick = key => {
+
+	const handleTaskRowClick = key => {
 		navigateTo(`tasks/show/${key}`)
 		hasExpandedTaskDetails = true
 	}
 
-	const handleCreateNewTask = title => {
-		createNewTask({title})
+	const handleNewTaskRowClick = key => {
+		navigateTo('tasks/create')
+		hasExpandedTaskDetails = true
 	}
 
 </script>
@@ -89,7 +96,10 @@
 					</div>
 				{/each}
 
-			<NewTaskRow createNewTask={handleCreateNewTask} />
+				<div on:click={handleNewTaskRowClick}>
+					<p>alsdfj</p>
+					<NewTaskRow {createNewTask} />
+				</div>
 		</div>
 
 		{#if currentRoute.path.includes('show')}
@@ -97,6 +107,13 @@
 				<Route {currentRoute} {params} />
 			</div>
 		{/if}
+
+		{#if currentRoute.path.includes('create')}
+			<div class="col">
+				<Route {currentRoute} {params} />
+			</div>
+		{/if}
+
 	</div>
 
 

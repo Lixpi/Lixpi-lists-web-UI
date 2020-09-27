@@ -6,6 +6,7 @@ import Login from './pages/login.svelte'
 import Logout from './pages/logout.svelte'
 import Tasks from './pages/tasks/tasks.svelte'
 import Task from './pages/tasks/task.svelte'
+import TaskCreate from './pages/tasks/taskCreate.svelte'
 import Projects from './pages/projects/projects.svelte'
 import NotFound from './pages/404.svelte'
 
@@ -25,17 +26,14 @@ const routes = [
   { name: 'login', component: Login, layout: Layout },
   { name: 'login', component: Logout, layout: Layout },
   { name: 'tasks', component: Tasks, layout: Layout,
-    // nestedRoutes: [
-    //     { name: ':key', component: Task }
-    // ]
     nestedRoutes: [
       {
         name: 'show/:key',
-        // component: Layout,
-        nestedRoutes: [
-          { name: 'index', component: Task },
-          // { name: 'list', component: EmployeesShowList },
-        ]
+        nestedRoutes: [{ name: 'index', component: Task }]
+      },
+      {
+        name: 'create',
+        nestedRoutes: [{ name: 'index', component: TaskCreate }]
       }
     ]
   },

@@ -9,8 +9,8 @@
 
 <script>
     const { dateFormat } = config
-    export let task;
-    export let classNames;
+    export let task
+    export let classNames
 </script>
 
 <div class="task-details {classNames}">
@@ -20,10 +20,15 @@
             <h2 class="project-title"><span>{task.project.title} <i>/</i></span> {task.key}</h2>
         </div>
         <ColorCodedRow colorCode={mapPriorityToColor(task.priority.title)} classNames="no-hover task-details-meta-row">
-            <h4 class="task-title mb-3"><span class="text-color-{mapPriorityToColor(task.priority.title)} no-hover">{task.type.title}:</span> {task.title}</h4>
+            <h4 class="task-title mb-3">
+                <!-- <span class="text-color-{mapPriorityToColor(task.priority.title)} no-hover">{task.type.title}:</span>  -->
+                {task.title}
+            </h4>
             <div class="row">
                 <div class="col-sm">
-                    <Labels labels={task.labels} classNames="mb-2" />
+                    {#if task.labels && task.labels.length}
+                        <Labels labels={task.labels} classNames="mb-2" />
+                    {/if}
                     <p>Status: <b>{task.status.title}</b></p>
                     <p>Version: <b>{task.version}</b></p>
                     <p>Priority: <b class="text-color-{mapPriorityToColor(task.priority.title)}">{task.priority.title}</b></p>
@@ -36,9 +41,11 @@
                         </div>
                         <div class="col-sm-auto">
                             <ul class="assignees">
-                                {#each task.assignees as assignee}
-                                <li><b>{assignee.username}</b><span class="role ml-1">[{assignee.assigneeRoleTitle}]</span></li>
-                                {/each}
+                                {#if task.assignees && task.assignees.length}
+                                    {#each task.assignees as assignee}
+                                    <li><b>{assignee.username}</b><span class="role ml-1">[{assignee.assigneeRoleTitle}]</span></li>
+                                    {/each}
+                                {/if}
                             </ul>
                         </div>
                     </div>
@@ -48,9 +55,9 @@
                         </div>
                         <div class="col-sm-auto">
                             <ul class="assignees">
-                                <!-- <li>Estimated:<b class="ml-1">{task.timeTracking.estimated}</b></li> -->
-                                <!-- <li>Spent:<b class="ml-1">{task.timeTracking.spent}</b></li> -->
-                                <!-- <li>Created: <b>{moment(task.timestamps.createdAt).format(dateFormat)}</b></li> -->
+                                <li>Estimated:<b class="ml-1">{task.timeEstimated}</b></li>
+                                <li>Spent:<b class="ml-1">{task.timeSpent}</b></li>
+                                <li>Created: <b>{moment(task.createdAt).format(dateFormat)}</b></li>
                                 <li>Due: <b>{moment(task.dueAt).format(dateFormat)}</b></li>
                             </ul>
                         </div>

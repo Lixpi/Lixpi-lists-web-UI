@@ -2,8 +2,10 @@
 	import { onMount } from 'svelte'
 	import mapPriorityToColor from '../../helpers/_mapColorToTaskProperty.js';
 	import TaskDetails from '../../components/task-details/TaskDetails.svelte';
+	import TaskDetailsEdit from '../../components/task-details/TaskDetailsEdit.svelte';
 
 	export let currentRoute
+	export let params
 
 	let task = false
 
@@ -37,5 +39,11 @@
 </svelte:head>
 
 {#if task}
-	<TaskDetails task={task} classNames="pt-4" />
+	{#if task.key === 'PAR-1'}
+		<TaskDetails task={task} classNames="pt-4" />
+	{:else}
+		<TaskDetailsEdit task={task} createNewTask={params.createNewTask} classNames="pt-4" />
+	{/if}
+
+
 {/if}

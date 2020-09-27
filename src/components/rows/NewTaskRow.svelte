@@ -1,16 +1,16 @@
 <script>
-    import moment from 'moment';
+    import moment from 'moment'
     import ColorCodedRow from './ColorCodedRow.svelte'
-    export let createNewTask
 
-    let newTaskTitle = ''
+    import { taskData } from '../../stores/taskData.js'
+
+    export let createNewTask
 
     const onKeyPress = e => {
       if (e.charCode === 13 && e.target.value !== '') {
-        createNewTask(e.target.value)
-        newTaskTitle = ''
+        createNewTask({title: e.target.value})
+        $taskData.title = ''
       }
-
     };
 </script>
 
@@ -21,20 +21,20 @@
         </div> -->
         <div class="col">
             <!-- <span class="task-title">Regular priority task</span> -->
-            <input type="text" name="new-task" placeholder="New task" bind:value={newTaskTitle} on:keypress={onKeyPress} />
+            <input type="text" name="new-task" placeholder="New task" bind:value={$taskData.title} on:keypress={onKeyPress} />
         </div>
         <div class="col-md-auto">
             <div class="row no-gutters align-items-center d-flex justify-content-end">
                 <!-- <div class="col-md-auto">
                     <span class="task-due">Apr/01/19</span>
                 </div> -->
-                <div class="col-md-auto task-assignee-avatar">
+
+                <!-- <div class="col-md-auto task-assignee-avatar">
                     <span>U</span>
-                    <!-- <img class="avatar" src="system-images/avatar.jpg" alt="Kate" /> -->
                 </div>
                 <div class="col-md-auto">
                     <span class="task-assignee">Unassigned</span>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

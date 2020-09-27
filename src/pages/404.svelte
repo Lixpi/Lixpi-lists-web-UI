@@ -1,4 +1,5 @@
 <script>
+    import { fade, fly } from 'svelte/transition'
     import { Navigate } from 'svelte-router-spa'
 </script>
 
