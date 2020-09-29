@@ -1,8 +1,9 @@
 <script>
 	import { onMount } from 'svelte'
-	import mapPriorityToColor from '../../helpers/_mapColorToTaskProperty.js';
-	import TaskDetails from '../../components/task-details/TaskDetails.svelte';
-	import TaskDetailsEdit from '../../components/task-details/TaskDetailsEdit.svelte';
+	import mapPriorityToColor from '../../helpers/_mapColorToTaskProperty.js'
+	import TaskDetails from '../../components/task-details/TaskDetails.svelte'
+	import TaskDetailsEdit from '../../components/task-details/TaskDetailsEdit.svelte'
+	import { taskData } from '../../stores/taskData.js'
 
 	export let currentRoute
 	export let params
@@ -20,10 +21,11 @@
 		})
 
 		if (response.status === 401) {
-			return this.redirect(302, 'login');
+			return this.redirect(302, 'login')
 		}
 
-		task = await response.json();
+		task = await response.json()
+		taskData.set(task)
 	}
 
 	$: currentRoute && fetchTask()
@@ -35,7 +37,7 @@
 </style>
 
 <svelte:head>
-	<title>{task.key} # {task.title}</title>
+	<title>{$taskData.key} # {$taskData.title}</title>
 </svelte:head>
 
 {#if task}

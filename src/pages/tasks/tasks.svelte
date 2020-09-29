@@ -7,11 +7,111 @@
 	import NewTaskRow from '../../components/rows/NewTaskRow.svelte'
 
 	import { taskData } from '../../stores/taskData.js'
+	import { typesData } from '../../stores/typesData.js'
+	import { statusesData } from '../../stores/statusesData.js'
+	import { prioritiesData } from '../../stores/prioritiesData.js'
+	import { labelsData } from '../../stores/labelsData.js'
+	import { versionsData } from '../../stores/versionsData.js'
 
 	export let currentRoute
 	export let hasExpandedTaskDetails
 
 	let tasks = []
+
+	const fetchTypes = async () => {
+		const response = await fetch("http://localhost:3005/types", {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include'
+		})
+
+		if (response.status === 401) {
+			return this.redirect(302, 'login')
+		}
+
+		const types = await response.json()
+		typesData.set(types)
+	}
+	fetchTypes()
+
+	const fetchStatuses = async () => {
+		const response = await fetch("http://localhost:3005/statuses", {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include'
+		})
+
+		if (response.status === 401) {
+			return this.redirect(302, 'login')
+		}
+
+		const statuses = await response.json()
+		statusesData.set(statuses)
+	}
+	fetchStatuses()
+
+	const fetchPriorities = async () => {
+		const response = await fetch("http://localhost:3005/priorities", {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include'
+		})
+
+		if (response.status === 401) {
+			return this.redirect(302, 'login')
+		}
+
+		const priorities = await response.json()
+		prioritiesData.set(priorities)
+	}
+	fetchPriorities()
+
+	const fetchLabels = async () => {
+		const response = await fetch("http://localhost:3005/labels", {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include'
+		})
+
+		if (response.status === 401) {
+			return this.redirect(302, 'login')
+		}
+
+		const labels = await response.json()
+		labelsData.set(labels)
+	}
+	fetchLabels()
+
+	const fetchVersions = async () => {
+		const response = await fetch("http://localhost:3005/versions", {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include'
+		})
+
+		if (response.status === 401) {
+			return this.redirect(302, 'login')
+		}
+
+		const versions = await response.json()
+		versionsData.set(versions)
+	}
+	fetchVersions()
 
 	const fetchTasks = async () => {
 		const response = await fetch("http://localhost:3005/tasks", {
@@ -28,11 +128,13 @@
 		}
 
 		tasks = await response.json()
+		console.log('tasks')
+		console.log(tasks)
 	}
 	$: currentRoute && fetchTasks()
 	$: hasExpandedTaskDetails = currentRoute.path.includes('show') || currentRoute.path.includes('create')
 
-	const createNewTask = async (newTaskdata) => {
+	const createNewTask = async (newTaskdata, navigateToNewTaskAfter) => {
 		newTaskdata = {
 			projectId: 1,
 			...newTaskdata
@@ -53,8 +155,18 @@
 
 		const task = await response.json()
 
-		taskData.set(task)
+
 		$: tasks = [...tasks, task]
+
+		if (navigateToNewTaskAfter) {
+			console.log('navigateToNewTaskAfter')
+			taskData.set(task)
+			console.log('task')
+			console.log(task)
+			handleTaskRowClick(task.key)
+		} else {
+			taskData.set({})
+		}
 	}
 
 	const params = {

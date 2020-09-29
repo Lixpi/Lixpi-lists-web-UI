@@ -9,7 +9,6 @@
     const onKeyPress = e => {
       if (e.charCode === 13 && e.target.value !== '') {
         createNewTask({title: e.target.value})
-        $taskData.title = ''
       }
     };
 </script>
@@ -21,7 +20,7 @@
         </div> -->
         <div class="col">
             <!-- <span class="task-title">Regular priority task</span> -->
-            <input type="text" name="new-task" placeholder="New task" bind:value={$taskData.title} on:keypress={onKeyPress} />
+            <input type="text" name="new-task" placeholder="New task" autocomplete="off" bind:value={$taskData.title} on:keypress={onKeyPress} />
         </div>
         <div class="col-md-auto">
             <div class="row no-gutters align-items-center d-flex justify-content-end">
