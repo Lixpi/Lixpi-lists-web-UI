@@ -24,20 +24,24 @@
     const { dateFormat } = config
 
     const types = $typesData.map(type => ({ value: type.id, label: type.title }))
-    const selectedType = $taskData.type && types.find(type => type.value === $taskData.type.id)
+    let selectedType = $taskData.type && types.find(type => type.value === $taskData.type.id)
+    $: $taskData.type = selectedType && {id: selectedType.value, title: selectedType.label}
 
     const labels = $labelsData.map(label => ({ value: label.id, color: label.color, label: label.title }))
-    const selectedLabel = $taskData.labels && labels.filter(label => $taskData.labels.find(taskLabel => taskLabel.id === label.value))
+    let selectedLabel = $taskData.labels && labels.filter(label => $taskData.labels.find(taskLabel => taskLabel.id === label.value))
+    $: $taskData.labels = selectedLabel && selectedLabel.map(label => ({id: label.value, title: label.label}))
 
     const statuses = $statusesData.map(status => ({ value: status.id, label: status.title }))
-    const selectedStatus = statuses.find(status => status.value === $taskData.status.id)
-
+    let selectedStatus = $taskData.status && statuses.find(status => status.value === $taskData.status.id)
+    $: $taskData.status = selectedStatus && {id: selectedStatus.value, title: selectedStatus.label}
 
     const versions = $versionsData.map(version => ({ value: version.id, color: version.color, label: version.title }))
-    const selectedVersion = $taskData.versions && versions.filter(verision => $taskData.versions.find(taskLabel => taskLabel.id === verision.value))
+    let selectedVersion = $taskData.versions && versions.filter(verision => $taskData.versions.find(taskLabel => taskLabel.id === verision.value))
+    $: $taskData.versions = selectedVersion && selectedVersion.map(version => ({id: version.value, title: version.label}))
 
     const priorities = $prioritiesData.map(priority => ({ value: priority.id, label: priority.title }))
-    const selectedPriority = priorities.find(priority => priority.value === $taskData.priority.id)
+    let selectedPriority = $taskData.priority && priorities.find(priority => priority.value === $taskData.priority.id)
+    $: $taskData.priority = selectedPriority && {id: selectedPriority.value, title: selectedPriority.label}
 
     let users = [
       {value: 1, label: 'Shelby'},
@@ -79,7 +83,7 @@
                     <!-- <span class="text-color-{mapPriorityToColor('task.priority.title')} no-hover">task.type.title:</span> -->
                     <Select
                         items={types}
-                        selectedValue={selectedType}
+                        bind:selectedValue={selectedType}
                         isMulti={false}
                         isCreatable={false}
                         isClearable={false}
@@ -104,7 +108,7 @@
                         <div class="col-auto">
                             <Select
                                 items={labels}
-                                selectedValue={selectedLabel}
+                                bind:selectedValue={selectedLabel}
                                 isMulti={true}
                                 isCreatable={true}
                                 isClearable={true}
@@ -120,7 +124,7 @@
                         <div class="col-auto">
                             <Select
                                 items={statuses}
-                                selectedValue={selectedStatus}
+                                bind:selectedValue={selectedStatus}
                                 isMulti={false}
                                 isCreatable={false}
                                 isClearable={false}
@@ -139,7 +143,7 @@
                         <div class="col-auto">
                             <Select
                                 items={versions}
-                                selectedValue={selectedVersion}
+                                bind:selectedValue={selectedVersion}
                                 isMulti={true}
                                 isCreatable={true}
                                 isClearable={true}
@@ -155,7 +159,7 @@
                         <div class="col-auto">
                             <Select
                                 items={priorities}
-                                selectedValue={selectedPriority}
+                                bind:selectedValue={selectedPriority}
                                 isMulti={false}
                                 isCreatable={false}
                                 isClearable={false}
