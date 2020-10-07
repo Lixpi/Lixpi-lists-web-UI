@@ -12,6 +12,7 @@
 	import { prioritiesData } from '../../stores/prioritiesData.js'
 	import { labelsData } from '../../stores/labelsData.js'
 	import { versionsData } from '../../stores/versionsData.js'
+	import { usersData } from '../../stores/usersData.js'
 
 	export let currentRoute
 	export let hasExpandedTaskDetails
@@ -113,6 +114,26 @@
 	}
 	fetchVersions()
 
+	const fetchUsers = async () => {
+		const response = await fetch("http://localhost:3005/users", {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include'
+		})
+
+		if (response.status === 401) {
+			return this.redirect(302, 'login')
+		}
+
+		const users = await response.json()
+		usersData.set(users)
+	}
+	fetchUsers()
+
+
 	const fetchTasks = async () => {
 		const response = await fetch("http://localhost:3005/tasks", {
 			method: 'GET',
@@ -128,8 +149,6 @@
 		}
 
 		tasks = await response.json()
-		console.log('tasks')
-		console.log(tasks)
 	}
 	$: currentRoute && fetchTasks()
 	$: hasExpandedTaskDetails = currentRoute.path.includes('show') || currentRoute.path.includes('create')
@@ -159,10 +178,7 @@
 		$: tasks = [...tasks, task]
 
 		if (navigateToNewTaskAfter) {
-			console.log('navigateToNewTaskAfter')
 			taskData.set(task)
-			console.log('task')
-			console.log(task)
 			handleTaskRowClick(task.key)
 		} else {
 			taskData.set({})

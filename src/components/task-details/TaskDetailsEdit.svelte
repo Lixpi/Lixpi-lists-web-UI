@@ -16,6 +16,7 @@
     import { prioritiesData } from '../../stores/prioritiesData.js'
     import { labelsData } from '../../stores/labelsData.js'
     import { versionsData } from '../../stores/versionsData.js'
+    import { usersData } from '../../stores/usersData.js'
 
     export let task
     export let classNames
@@ -43,11 +44,15 @@
     let selectedPriority = $taskData.priority && priorities.find(priority => priority.value === $taskData.priority.id)
     $: $taskData.priority = selectedPriority && {id: selectedPriority.value, title: selectedPriority.label}
 
-    let users = [
-      {value: 1, label: 'Shelby'},
-      {value: 2, label: 'Nargiza'}
-    ]
-    let selectedReporter = undefined
+    const users = $usersData.map(user => ({ value: user.id, avatar: user.avatar, label: user.username }))
+    let selectedAssignee = $taskData.assignees && users.filter(users => $taskData.assignees.find(taskAssignee => taskAssignee.userId === users.value))
+    $: $taskData.assignees = selectedAssignee && selectedAssignee.map(user => ({
+        userId: user.value,
+        username: user.label,
+        assigneeRoleId: 1,
+        assigneeRoleTitle: 'developer'
+    }))
+
 
     const onKeyPress = e => {
         if (e.charCode === 13 && e.target.value !== '') {
@@ -178,6 +183,13 @@
                             <p>Assignees:</p>
                         </div>
                         <div class="col-sm-auto">
+                            <Select
+                                items={users}
+                                bind:selectedValue={selectedAssignee}
+                                isMulti={true}
+                                isCreatable={false}
+                                isClearable={true}
+                            />
                             <ul class="assignees">
                                 <!-- {#each task.assignees as assignee}
                                 <li><b>{assignee.username}</b><span class="role ml-1">[{assignee.assigneeRoleTitle}]</span></li>
