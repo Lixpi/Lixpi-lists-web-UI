@@ -18,7 +18,7 @@
     import { versionsData } from '../../stores/versionsData.js'
     import { usersData } from '../../stores/usersData.js'
 
-    export let task
+    // export let task
     export let classNames
     export let createNewTask
 
@@ -52,6 +52,9 @@
         assigneeRoleId: 1,
         assigneeRoleTitle: 'developer'
     }))
+
+    let selectedDueAt = moment($taskData.dueAt)._d
+    $: $taskData.dueAt = moment(selectedDueAt).format(dateFormat)
 
 
     const onKeyPress = e => {
@@ -208,7 +211,9 @@
                                 <!-- <li>Created: <b>{moment(task.timestamps.createdAt).format(dateFormat)}</b></li> -->
                                 <!-- <li>Due: <b>{moment(task.dueAt).format(dateFormat)}</b></li> -->
                                 <li>Due: </li>
-                                <Datepicker/>
+                                <Datepicker
+                                    bind:selected={selectedDueAt}
+                                />
                             </ul>
                         </div>
                     </div>
@@ -221,7 +226,7 @@
 
     <div class='content'>
         <!-- {@html task.description} -->
-        <textarea id="description" name="description" rows="4" cols="50"></textarea>
+        <textarea id="description" name="description" rows="4" cols="50" bind:value={$taskData.description} ></textarea>
     </div>
 </div>
 

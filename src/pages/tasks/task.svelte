@@ -46,6 +46,4 @@
 	{:else}
 		<TaskDetailsEdit task={task} createNewTask={params.createNewTask} classNames="pt-4" />
 	{/if}
-
-
 {/if}
