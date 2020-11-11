@@ -59,8 +59,6 @@
 
     const onKeyPress = e => {
         if (e.charCode === 13 && e.target.value !== '') {
-            console.log('$taskData')
-            console.log($taskData)
             createNewTask($taskData, true)
         }
     };
@@ -233,7 +231,6 @@
 <style lang="scss">
     @import "../../sass/_variables";
 
-
     .themmed-svelte-select {
       --multiItemMargin: 0 3px 0 0;
       --multiSelectPadding: 0;
@@ -246,7 +243,6 @@
       // border: 1px solid red;
     }
 
-
     .task-title {
         font-size: 1.3em;
         // border: 1px solid #a79595;
@@ -254,7 +250,6 @@
         display: inline-block;
         border-radius: 3px;
     }
-
 
     .task-details {
         max-width: 960px;

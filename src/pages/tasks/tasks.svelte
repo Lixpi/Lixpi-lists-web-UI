@@ -154,9 +154,11 @@
 	$: hasExpandedTaskDetails = currentRoute.path.includes('show') || currentRoute.path.includes('create')
 
 	const createNewTask = async (newTaskdata, navigateToNewTaskAfter) => {
+		console.log('taskData')
+		console.log($taskData)
 		newTaskdata = {
 			projectId: 1,
-			...newTaskdata
+			...$taskData
 		}
 		const response = await fetch("http://localhost:3005/tasks", {
 			method: 'POST',
@@ -172,14 +174,13 @@
 			return this.redirect(302, 'login')
 		}
 
-		const task = await response.json()
+		const createdTask = await response.json()
 
-
-		$: tasks = [...tasks, task]
+		tasks = [...tasks, createdTask]
 
 		if (navigateToNewTaskAfter) {
-			taskData.set(task)
-			handleTaskRowClick(task.key)
+			taskData.set(createdTask)
+			handleTaskRowClick(createdTask.key)
 		} else {
 			taskData.set({})
 		}
@@ -196,6 +197,9 @@
 	}
 
 	const handleNewTaskRowClick = key => {
+		if (currentRoute.path.includes('show')) {
+			taskData.set({})
+		}
 		navigateTo('tasks/create')
 		hasExpandedTaskDetails = true
 	}
@@ -215,6 +219,7 @@
 					<div on:click={handleTaskRowClick(task.key)}>
 						<TaskRow
 							colorCode={mapPriorityToColor(task.priority)}
+							taskStatus={task.status && task.status.title}
 							taskType={task.type}
 							title={task.title}
 							taskKey={task.key}
@@ -225,8 +230,8 @@
 				{/each}
 
 				<div on:click={handleNewTaskRowClick}>
-					<p>alsdfj</p>
-					<NewTaskRow {createNewTask} />
+					<!-- <p>Create new task</p> -->
+					<NewTaskRow {createNewTask} isActive={currentRoute.path.includes('create') && true} />
 				</div>
 		</div>
 
@@ -243,7 +248,6 @@
 		{/if}
 
 	</div>
-
 
 	<div class="mb-5"></div>
 </div>

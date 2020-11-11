@@ -8,6 +8,7 @@
 <script>
     const { dateFormat } = config
     export let colorCode
+    export let taskStatus
     export let title
     export let taskKey
     export let dueAt
@@ -16,7 +17,7 @@
 
 <ColorCodedRow colorCode={colorCode} classNames="task-row-wrapper">
     <div class="row no-gutters align-items-center task-row">
-        <div class="col-sm-auto task-status">
+        <div class="col-sm-auto task-status {taskStatus === 'closed' && 'active'}">
             <span class="icon-ok-circle"></span>
         </div>
         <div class="col-sm-auto">
@@ -89,13 +90,15 @@
             font-size: 1.1em;
             color: $secondary-text-color;
             /*color: $code-green;*/
-            &:hover {
+            &:hover, &.active {
                 color: $code-green;
-                transform:scale(1.3);
-                -ms-transform:scale(1.3);
-                -moz-transform:scale(1.3);
-                -webkit-transform:scale(1.3);
-                -o-transform:scale(1.3);
+            }
+            &:hover {
+              transform:scale(1.3);
+              -ms-transform:scale(1.3);
+              -moz-transform:scale(1.3);
+              -webkit-transform:scale(1.3);
+              -o-transform:scale(1.3);
             }
 
         }

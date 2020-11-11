@@ -5,10 +5,11 @@
     import { taskData } from '../../stores/taskData.js'
 
     export let createNewTask
+    export let isActive
 
     const onKeyPress = e => {
       if (e.charCode === 13 && e.target.value !== '') {
-        createNewTask({title: e.target.value})
+        createNewTask()
       }
     };
 </script>
@@ -20,7 +21,11 @@
         </div> -->
         <div class="col">
             <!-- <span class="task-title">Regular priority task</span> -->
-            <input type="text" name="new-task" placeholder="New task" autocomplete="off" bind:value={$taskData.title} on:keypress={onKeyPress} />
+            {#if isActive}
+        			<input type="text" name="new-task" placeholder="New task" autocomplete="off" bind:value={$taskData.title} on:keypress={onKeyPress} />
+            {:else}
+              <input type="text" name="new-task" placeholder="New task" autocomplete="off" />
+        		{/if}
         </div>
         <div class="col-md-auto">
             <div class="row no-gutters align-items-center d-flex justify-content-end">
