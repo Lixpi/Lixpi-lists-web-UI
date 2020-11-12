@@ -211,53 +211,61 @@
 </svelte:head>
 
 <div class="tasks-listing pt-4 {hasExpandedTaskDetails ? 'has-expanded-task' : ''}" in:fade="{{ duration: 250 }}">
-	<h3 class="mb-3">List name here</h3>
+	<!-- <h3 class="mb-3">List name here</h3> -->
 
-	<div class="row ">
-		<div class="col">
-				{#each tasks as task}
-					<div on:click={handleTaskRowClick(task.key)}>
-						<TaskRow
-							colorCode={mapPriorityToColor(task.priority)}
-							taskStatus={task.status && task.status.title}
-							taskType={task.type}
-							title={task.title}
-							taskKey={task.key}
-							dueAt={task.dueAt}
-							assignees={task.assignees}
-						/>
+	<div class="container ">
+		<div class="row ">
+			<div class="col scroll-container">
+				<div class="scroll-content">
+					{#each tasks as task}
+						<div on:click={handleTaskRowClick(task.key)}>
+							<TaskRow
+								colorCode={mapPriorityToColor(task.priority)}
+								taskStatus={task.status && task.status.title}
+								taskType={task.type}
+								title={task.title}
+								taskKey={task.key}
+								dueAt={task.dueAt}
+								assignees={task.assignees}
+							/>
+						</div>
+					{/each}
+
+					<div on:click={handleNewTaskRowClick}>
+						<!-- <p>Create new task</p> -->
+						<NewTaskRow {createNewTask} isActive={currentRoute.path.includes('create') && true} />
 					</div>
-				{/each}
-
-				<div on:click={handleNewTaskRowClick}>
-					<!-- <p>Create new task</p> -->
-					<NewTaskRow {createNewTask} isActive={currentRoute.path.includes('create') && true} />
 				</div>
+			</div>
+
+			{#if currentRoute.path.includes('show')}
+				<div class="col">
+					<Route {currentRoute} {params} />
+				</div>
+			{/if}
+
+			{#if currentRoute.path.includes('create')}
+				<div class="col">
+					<Route {currentRoute} {params} />
+				</div>
+			{/if}
+
 		</div>
-
-		{#if currentRoute.path.includes('show')}
-			<div class="col">
-				<Route {currentRoute} {params} />
-			</div>
-		{/if}
-
-		{#if currentRoute.path.includes('create')}
-			<div class="col">
-				<Route {currentRoute} {params} />
-			</div>
-		{/if}
-
 	</div>
-
-	<div class="mb-5"></div>
+	<!-- <div class="mb-5"></div> -->
 </div>
 
 <style lang="scss">
+	.container {
+		max-width: 100%;
+	}
 	.tasks-listing {
 		max-width: 900px;
 		margin: auto;
+		// display: flex;
+		// flex-direction: column;
 	}
 	.has-expanded-task {
-		max-width: 98%;
+		max-width: 100%;
 	}
 </style>

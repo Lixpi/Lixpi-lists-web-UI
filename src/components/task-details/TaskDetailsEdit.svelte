@@ -25,8 +25,10 @@
     const { dateFormat } = config
 
     const types = $typesData.map(type => ({ value: type.id, label: type.title }))
-    let selectedType = $taskData.type && types.find(type => type.value === $taskData.type.id)
-    $: $taskData.type = selectedType && {id: selectedType.value, title: selectedType.label}
+    // let selectedType = $taskData.type && types.find(type => type.value === $taskData.type.id)
+    // let selectedType
+    $: selectedType = $taskData.type && types.find(type => type.value === $taskData.type.id)
+    // $: $taskData.type = selectedType && {id: selectedType.value, title: selectedType.label}
 
     const labels = $labelsData.map(label => ({ value: label.id, color: label.color, label: label.title }))
     let selectedLabel = $taskData.labels && labels.filter(label => $taskData.labels.find(taskLabel => taskLabel.id === label.value))
@@ -62,10 +64,7 @@
             createNewTask($taskData, true)
         }
     };
-
 </script>
-
-
 
 <div class="task-details {classNames}">
     <div class="task-header">

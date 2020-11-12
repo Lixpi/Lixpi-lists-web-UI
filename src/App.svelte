@@ -8,5 +8,5 @@
 
 <main>
 	<Router {routes} />
-	<div>without this extra div transition fails, I'll figure out this later....</div>
+	<!-- <div>without this extra div transition fails, I'll figure out this later....</div> -->
 </main>
