@@ -10,6 +10,7 @@ export let isSearchable = true
 export let isCreatable = false
 export let isClearable = true
 export let showIndicator = false
+export let props = {}
 
 
 let selectInputRef
@@ -30,14 +31,15 @@ function handleWindowClick(event) {
 
 <div class="themmed-svelte-select" on:click={handleEditLabelsClick} bind:this={selectInputRef} >
     <Select
-      {items}
-      {isMulti}
-      {isCreatable}
-      {isSearchable}
-      {isClearable}
-      {showIndicator}
-      bind:selectedValue
-      bind:isDisabled={clickToEdit}
+        {...props}
+        {items}
+        {isMulti}
+        {isCreatable}
+        {isSearchable}
+        {isClearable}
+        {showIndicator}
+        bind:selectedValue
+        bind:isDisabled={clickToEdit}
     ></Select>
 </div>
 

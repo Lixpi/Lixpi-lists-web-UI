@@ -238,18 +238,17 @@
 				</div>
 			</div>
 
-			{#if currentRoute.path.includes('show')}
-				<div class="col">
-					<Route {currentRoute} {params} />
-				</div>
-			{/if}
+			<div class="col scroll-container">
+				<div class="scroll-content">
+					{#if currentRoute.path.includes('show')}
+						<Route {currentRoute} {params} />
+					{/if}
 
-			{#if currentRoute.path.includes('create')}
-				<div class="col">
-					<Route {currentRoute} {params} />
+					{#if currentRoute.path.includes('create')}
+						<Route {currentRoute} {params} />
+					{/if}
 				</div>
-			{/if}
-
+			</div>
 		</div>
 	</div>
 	<!-- <div class="mb-5"></div> -->

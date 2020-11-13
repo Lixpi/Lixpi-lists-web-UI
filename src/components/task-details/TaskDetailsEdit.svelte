@@ -24,39 +24,32 @@
 
     const { dateFormat } = config
 
-    const types = $typesData.map(type => ({ value: type.id, label: type.title }))
-    // let selectedType = $taskData.type && types.find(type => type.value === $taskData.type.id)
-    // let selectedType
-    $: selectedType = $taskData.type && types.find(type => type.value === $taskData.type.id)
-    // $: $taskData.type = selectedType && {id: selectedType.value, title: selectedType.label}
+    const selectProps = {
+        optionIdentifier: 'id',
+        getOptionLabel: option => option.title,
+        getSelectionLabel: option => option.title
+    }
 
-    const labels = $labelsData.map(label => ({ value: label.id, color: label.color, label: label.title }))
-    let selectedLabel = $taskData.labels && labels.filter(label => $taskData.labels.find(taskLabel => taskLabel.id === label.value))
-    $: $taskData.labels = selectedLabel && selectedLabel.map(label => ({id: label.value, title: label.label}))
+    const selectedAssigneeProps = {
+        optionIdentifier: 'userId',
+        getOptionLabel: option => option.username,
+        getSelectionLabel: option => option.username
+    }
 
-    const statuses = $statusesData.map(status => ({ value: status.id, label: status.title }))
-    let selectedStatus = $taskData.status && statuses.find(status => status.value === $taskData.status.id)
-    $: $taskData.status = selectedStatus && {id: selectedStatus.value, title: selectedStatus.label}
-
-    const versions = $versionsData.map(version => ({ value: version.id, color: version.color, label: version.title }))
-    let selectedVersion = $taskData.versions && versions.filter(verision => $taskData.versions.find(taskLabel => taskLabel.id === verision.value))
-    $: $taskData.versions = selectedVersion && selectedVersion.map(version => ({id: version.value, title: version.label}))
-
-    const priorities = $prioritiesData.map(priority => ({ value: priority.id, label: priority.title }))
-    let selectedPriority = $taskData.priority && priorities.find(priority => priority.value === $taskData.priority.id)
-    $: $taskData.priority = selectedPriority && {id: selectedPriority.value, title: selectedPriority.label}
-
-    const users = $usersData.map(user => ({ value: user.id, avatar: user.avatar, label: user.username }))
-    let selectedAssignee = $taskData.assignees && users.filter(users => $taskData.assignees.find(taskAssignee => taskAssignee.userId === users.value))
-    $: $taskData.assignees = selectedAssignee && selectedAssignee.map(user => ({
-        userId: user.value,
-        username: user.label,
-        assigneeRoleId: 1,
-        assigneeRoleTitle: 'developer'
-    }))
+    // const users = $usersData.map(user => ({ value: user.id, avatar: user.avatar, label: user.username }))
+    // let selectedAssignee = $taskData.assignees && users.filter(users => $taskData.assignees.find(taskAssignee => taskAssignee.userId === users.value))
+    // $: $taskData.assignees = selectedAssignee && selectedAssignee.map(user => ({
+    //     userId: user.value,
+    //     username: user.label,
+    //     assigneeRoleId: 1,
+    //     assigneeRoleTitle: 'developer'
+    // }))
 
     let selectedDueAt = moment($taskData.dueAt)._d
     $: $taskData.dueAt = moment(selectedDueAt).format(dateFormat)
+
+    $: console.log('$taskData.dueAt')
+    $: console.log($taskData.dueAt)
 
 
     const onKeyPress = e => {
@@ -85,10 +78,12 @@
                     <b class="mr-2">Type: </b>
                 </div>
                 <div class="col-auto">
+                    <div id="df"></div>
                     <!-- <span class="text-color-{mapPriorityToColor('task.priority.title')} no-hover">task.type.title:</span> -->
                     <Select
-                        items={types}
-                        bind:selectedValue={selectedType}
+                        props={selectProps}
+                        items={$typesData}
+                        bind:selectedValue={$taskData.type}
                         isMulti={false}
                         isCreatable={false}
                         isClearable={false}
@@ -112,8 +107,9 @@
                         </div>
                         <div class="col-auto">
                             <Select
-                                items={labels}
-                                bind:selectedValue={selectedLabel}
+                                props={selectProps}
+                                items={$labelsData}
+                                bind:selectedValue={$taskData.labels}
                                 isMulti={true}
                                 isCreatable={true}
                                 isClearable={true}
@@ -128,8 +124,9 @@
                         </div>
                         <div class="col-auto">
                             <Select
-                                items={statuses}
-                                bind:selectedValue={selectedStatus}
+                                props={selectProps}
+                                items={$statusesData}
+                                bind:selectedValue={$taskData.status}
                                 isMulti={false}
                                 isCreatable={false}
                                 isClearable={false}
@@ -147,8 +144,9 @@
                         </div>
                         <div class="col-auto">
                             <Select
-                                items={versions}
-                                bind:selectedValue={selectedVersion}
+                                props={selectProps}
+                                items={$versionsData}
+                                bind:selectedValue={$taskData.versions}
                                 isMulti={true}
                                 isCreatable={true}
                                 isClearable={true}
@@ -163,8 +161,9 @@
                         </div>
                         <div class="col-auto">
                             <Select
-                                items={priorities}
-                                bind:selectedValue={selectedPriority}
+                                props={selectProps}
+                                items={$prioritiesData}
+                                bind:selectedValue={$taskData.priority}
                                 isMulti={false}
                                 isCreatable={false}
                                 isClearable={false}
@@ -184,8 +183,9 @@
                         </div>
                         <div class="col-sm-auto">
                             <Select
-                                items={users}
-                                bind:selectedValue={selectedAssignee}
+                                props={selectedAssigneeProps}
+                                items={$usersData}
+                                bind:selectedValue={$taskData.assignees}
                                 isMulti={true}
                                 isCreatable={false}
                                 isClearable={true}
