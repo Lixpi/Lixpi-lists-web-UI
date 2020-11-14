@@ -21,6 +21,7 @@
     // export let task
     export let classNames
     export let createNewTask
+    export let updateTask
 
     const { dateFormat } = config
 
@@ -48,9 +49,10 @@
     let selectedDueAt = moment($taskData.dueAt)._d
     $: $taskData.dueAt = moment(selectedDueAt).format(dateFormat)
 
-    $: console.log('$taskData.dueAt')
-    $: console.log($taskData.dueAt)
+    // $: console.log('$taskData')
+    // $: console.log($taskData)
 
+    $: $taskData && updateTask($taskData)
 
     const onKeyPress = e => {
         if (e.charCode === 13 && e.target.value !== '') {

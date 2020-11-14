@@ -44,6 +44,6 @@
 	{#if task.key === 'PAR-1'}
 		<TaskDetails task={task} classNames="pt-4" />
 	{:else}
-		<TaskDetailsEdit task={task} createNewTask={params.createNewTask} classNames="pt-4" />
+		<TaskDetailsEdit task={task} createNewTask={params.createNewTask} updateTask={params.updateTask} classNames="pt-4" />
 	{/if}
 {/if}

@@ -154,8 +154,6 @@
 	$: hasExpandedTaskDetails = currentRoute.path.includes('show') || currentRoute.path.includes('create')
 
 	const createNewTask = async (newTaskdata, navigateToNewTaskAfter) => {
-		console.log('taskData')
-		console.log($taskData)
 		newTaskdata = {
 			projectId: 1,
 			...$taskData
@@ -186,9 +184,41 @@
 		}
 	}
 
-	const params = {
-		createNewTask
+	const updateTask = async (taskData) => {
+		taskData = {
+			projectId: 1,
+			...taskData
+		}
+		// console.log('taskData**')
+		// console.log(taskData)
+		// return
+		const response = await fetch("http://localhost:3005/task", {
+			method: 'PUT',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include',
+			body: JSON.stringify(taskData)
+		})
+
+		if (response.status === 401) {
+			return this.redirect(302, 'login')
+		}
+
+		const createdTask = await response.json()
+
+		// tasks = [...tasks, createdTask]
+
+		taskData.set(createdTask)
 	}
+
+	const params = {
+		createNewTask,
+		updateTask
+	}
+
+	console.log(params)
 
 
 	const handleTaskRowClick = key => {
