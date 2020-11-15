@@ -49,9 +49,6 @@
     let selectedDueAt = moment($taskData.dueAt)._d
     $: $taskData.dueAt = moment(selectedDueAt).format(dateFormat)
 
-    // $: console.log('$taskData')
-    // $: console.log($taskData)
-
     $: $taskData && updateTask($taskData)
 
     const onKeyPress = e => {

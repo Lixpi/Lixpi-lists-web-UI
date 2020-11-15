@@ -129,7 +129,10 @@
 		}
 
 		const users = await response.json()
-		usersData.set(users)
+		usersData.set(users.map(user => ({
+			userId: user.id,
+			username: user.username
+		})))
 	}
 	fetchUsers()
 
@@ -189,9 +192,6 @@
 			projectId: 1,
 			...taskData
 		}
-		// console.log('taskData**')
-		// console.log(taskData)
-		// return
 		const response = await fetch("http://localhost:3005/task", {
 			method: 'PUT',
 			headers: {
@@ -210,7 +210,7 @@
 
 		// tasks = [...tasks, createdTask]
 
-		taskData.set(createdTask)
+		// taskData.set(createdTask)
 	}
 
 	const params = {
