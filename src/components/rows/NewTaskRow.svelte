@@ -22,10 +22,10 @@
         <div class="col">
             <!-- <span class="task-title">Regular priority task</span> -->
             {#if isActive}
-        			<input type="text" name="new-task" placeholder="New task" autocomplete="off" bind:value={$taskData.title} on:keypress={onKeyPress} />
+    			<input type="text" name="new-task" placeholder="New task" autocomplete="off" bind:value={$taskData.title} on:keypress={onKeyPress} />
             {:else}
-              <input type="text" name="new-task" placeholder="New task" autocomplete="off" />
-        		{/if}
+                <input type="text" name="new-task" placeholder="New task" autocomplete="off" />
+        	{/if}
         </div>
         <div class="col-md-auto">
             <div class="row no-gutters align-items-center d-flex justify-content-end">

@@ -1,11 +1,10 @@
-<script context="module">
+<script>
     import { Navigate } from 'svelte-router-spa'
     import moment from 'moment'
     import ColorCodedRow from './ColorCodedRow.svelte'
     import config from '../../config.js'
-</script>
+    import { taskData } from '../../stores/taskData.js'
 
-<script>
     const { dateFormat } = config
     export let colorCode
     export let taskStatus
@@ -13,9 +12,19 @@
     export let taskKey
     export let dueAt
     export let assignees
+
+    // let isCurrentTask = false
+
+    $: isCurrent = taskKey === $taskData.key || false
+
 </script>
 
-<ColorCodedRow colorCode={colorCode} classNames="task-row-wrapper">
+<!-- {#if isActive}
+    <input type="text" name="new-task" placeholder="New task" autocomplete="off" bind:value={$taskData.title} on:keypress={onKeyPress} />
+{:else}
+    <input type="text" name="new-task" placeholder="New task" autocomplete="off" />
+{/if} -->
+<ColorCodedRow colorCode={colorCode} classNames="task-row-wrapper {isCurrent && 'selected'}">
     <div class="row no-gutters align-items-center task-row">
         <div class="col-sm-auto task-status {taskStatus === 'closed' && 'active'}">
             <span class="icon-ok-circle"></span>
@@ -30,39 +39,81 @@
         <div class="col-sm-auto">
             <span class="vertical-divider"></span>
         </div>
-        <div class="col-sm-auto">
-            <span class="task-title">{title}</span>
-        </div>
+        <!-- <div class="col-sm-auto"> -->
         <div class="col">
+            {#if isCurrent}
+                <!-- <span class="task-title">{$taskData.title}</span> -->
+                <input type="text" name="new-task" placeholder="Start typing new task title here" autocomplete="off" bind:value={$taskData.title} />
+            {:else}
+                <span class="task-title">{title}</span>
+            {/if}
+        </div>
+        <!-- <div class="col"> -->
+        <div class="col-auto">
             <div class="row no-gutters align-items-center d-flex justify-content-end">
                 <div class="col-sm-auto datepicker-container">
-                {#if dueAt}
-                  <span class="task-due">{moment(dueAt).format(dateFormat)}</span>
+
+                {#if isCurrent}
+                    {#if $taskData.dueAt}
+                      <span class="task-due">{moment($taskData.dueAt).format(dateFormat)}</span>
+                    {/if}
+                {:else}
+                    {#if dueAt}
+                      <span class="task-due">{moment(dueAt).format(dateFormat)}</span>
+                    {/if}
                 {/if}
+
                      <!-- <Calendar
                         date={new Date()}
                         onChange={this.handleSelect}
                     /> -->
                 </div>
-                {#if assignees && assignees.length}
-                  {#each assignees as assignee}
-                      <div class="col-sm-auto task-assignee-avatar">
-                          <img class="avatar" src="/system-images/avatar.jpg" alt="Kate" />
-                      </div>
-                      <div class="col-sm-auto">
-                          <!-- <TaskAssignee isEditing={this.props.isEditing} selectedOption={selectedOption} handleChange={this.handleChange} /> -->
-                          <span class="task-assignee">{assignee.username}</span>
-                      </div>
-              	{/each}
-              {/if}
+                {#if isCurrent}
+                    {#if $taskData.assignees && $taskData.assignees.length}
+                        {#each $taskData.assignees as assignee}
+                            <div class="col-sm-auto task-assignee-avatar">
+                                <img class="avatar" src="/system-images/avatar.jpg" alt="Kate" />
+                            </div>
+                            <div class="col-sm-auto">
+                                <!-- <TaskAssignee isEditing={this.props.isEditing} selectedOption={selectedOption} handleChange={this.handleChange} /> -->
+                                <span class="task-assignee">{assignee.username}</span>
+                            </div>
+                        {/each}
+                    {/if}
+                {:else}
+                    {#if assignees && assignees.length}
+                        {#each assignees as assignee}
+                            <div class="col-sm-auto task-assignee-avatar">
+                                <img class="avatar" src="/system-images/avatar.jpg" alt="Kate" />
+                            </div>
+                            <div class="col-sm-auto">
+                                <!-- <TaskAssignee isEditing={this.props.isEditing} selectedOption={selectedOption} handleChange={this.handleChange} /> -->
+                                <span class="task-assignee">{assignee.username}</span>
+                            </div>
+                        {/each}
+                    {/if}
+                {/if}
+
             </div>
         </div>
     </div>
 </ColorCodedRow>
 
 
+
 <style lang="scss">
     @import "../../sass/_variables";
+
+    :global(.task-row-wrapper) {
+        &.selected{
+            &, input {
+                background: #f3f4f5;
+            }
+        }
+        &:not(.selected):hover {
+            background: #f9f9f9;
+        }
+    }
 
     .task-row {
         padding: 5px 7px 5px $task-color-coded-row-border-size + 2px;
@@ -85,6 +136,15 @@
             font-size: 1em;
             /*color: #5d5d5d;*/
             color: $main-text-color;
+            padding: 0;
+            width: 100%;
+            line-height: 1em;
+            vertical-align: baseline;
+            display: inline-block;
+        }
+        input {
+            color: $almost-black;
+            vertical-align: 2.9px; ///WTF text jumps when alterates between span and input
         }
         .task-status {
             font-size: 1.1em;
