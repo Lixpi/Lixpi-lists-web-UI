@@ -8,6 +8,8 @@ svelte-calendar  https://github.com/6eDesign/svelte-calendar
 
 moment.js
 
+Editor:  https://prosemirror.net/docs/
+
 
 ## Get started
 
