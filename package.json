@@ -22,7 +22,7 @@
     "svelte-select": "^3.14.1"
   },
   "dependencies": {
-    "postcss": "^7.0.32",
+    "postcss": "^8.2.10",
     "sirv-cli": "^1.0.0",
     "svelte-router-spa": "^5.7.3"
   }
